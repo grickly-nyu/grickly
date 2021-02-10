@@ -22,7 +22,7 @@ $ export DATABASE_URL="postgresql://username:password@localhost/mydatabase"
 
 or
 
-$ export DATABASE_URL="mysql+mysqlconnector://username:password@localhost/mydatabase"
+$ export DATABASE_URL="mysql://username:password@localhost/mydatabase"
 
 or
 
@@ -39,6 +39,10 @@ To update database after creating new migrations, use:
 
 ```sh
 $ python manage.py db upgrade
+```
+### Install Back-End Requirements
+```sh
+$ pip install -r requirements.txt
 ```
 
 ### Install Front-End Requirements
@@ -71,33 +75,6 @@ $ npm start
 ```sh
 $ npm run build:production
 ```
-
-### New to Python?
-
-If you are approaching this demo as primarily a frontend dev with limited or no python experience, you may need to install a few things that a seasoned python dev would already have installed.
-
-Most Macs already have python 2.7 installed but you may not have pip install. You can check to see if you have them installed:
-
-```
-$ python --version
-$ pip --version 
-```
-
-If pip is not installed, you can follow this simple article to [get both homebrew and python](https://howchoo.com/g/mze4ntbknjk/install-pip-on-mac-os-x)
-
-After you install python, you can optionally also install python 3
-
-```
-$ brew install python3
-```
-
-Now you can check again to see if both python and pip are installed. Once pip is installed, you can download the required flask modules:
-
-```
-$ sudo pip install flask flask_script flask_migrate flask_bcrypt 
-```
-
-Now, you can decide on which database you wish to use. 
 
 #### New to MySQL? 
 
