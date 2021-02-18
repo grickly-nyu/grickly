@@ -6,10 +6,9 @@ import { styles } from './styles.scss';
 export const Footer = () =>
     <footer className={`${styles}`}>
         <div className="container">
-            <div className="row">
-                <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <p>© DZT 2016</p>
+                <div>
+                    <p>© Grickly 2021</p>
+                    <a href="https://github.com/grickly-nyu/grickly">More about this project</a>
                 </div>
-            </div>
         </div>
     </footer>;

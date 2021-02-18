@@ -24,11 +24,14 @@ function mapDispatchToProps(dispatch) {
 
 const style = {
     marginTop: 50,
-    paddingBottom: 50,
+    paddingBottom: 40,
     paddingTop: 25,
     width: '100%',
     textAlign: 'center',
     display: 'inline-block',
+    color: "white",
+    backgroundColor: "rgba(255, 255, 255, 0.25)",
+    fontFamily: "AvenirNext-Medium"
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -40,6 +43,7 @@ export default class RegisterView extends React.Component {
         this.state = {
             email: '',
             password: '',
+            username: '',
             email_error_text: null,
             password_error_text: null,
             redirectTo: redirectRoute,
@@ -83,11 +87,17 @@ export default class RegisterView extends React.Component {
 
         }
 
-        if (email_is_valid && password_is_valid) {
+        if (email_is_valid && password_is_valid && this.state.username) {
             this.setState({
                 disabled: false,
             });
         }
+        else{
+            this.setState({
+                disabled: true,
+            });
+        }
+
 
     }
 
@@ -110,7 +120,7 @@ export default class RegisterView extends React.Component {
 
     login(e) {
         e.preventDefault();
-        this.props.registerUser(this.state.email, this.state.password, this.state.redirectTo);
+        this.props.registerUser(this.state.email, this.state.password, this.state.username, this.state.redirectTo);
     }
 
     render() {
@@ -118,14 +128,22 @@ export default class RegisterView extends React.Component {
             <div className="col-md-6 col-md-offset-3" onKeyPress={(e) => this._handleKeyPress(e)}>
                 <Paper style={style}>
                     <div className="text-center">
-                        <h2>Register to view protected content!</h2>
+                        <h2>Register to Grickly now!</h2>
                         {
                             this.props.registerStatusText &&
                                 <div className="alert alert-info">
                                     {this.props.registerStatusText}
                                 </div>
                         }
-
+                        <div className="col-md-12">
+                            <TextField
+                              hintText="Username"
+                              floatingLabelText="Username"
+                              type="username"
+                              errorText={null}
+                              onChange={(e) => this.changeValue(e, 'username')}
+                            />
+                        </div>
                         <div className="col-md-12">
                             <TextField
                               hintText="Email"

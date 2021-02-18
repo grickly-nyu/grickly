@@ -1,34 +1,20 @@
-# React-Redux-Flask #
+# Grickly #
 
-Boilerplate application for a Flask JWT Backend and a React/Redux Front-End with Material UI.
+Grickly application is the senior design project for Ge, Hengning, Kejian, Lujie, and Sicong at New York University. More details about the project can be found in project management document under this repository. The application is built with a Flask JWT Backend, a React/Redux Front-End, and Material UI framework.
 
-* Python 2.7+ or 3.x
-* Pytest
-* Heroku
-* Flask
-* React
-* Redux
-* React-Router 2.0
-* React-Router-Redux
-* Babel 6
-* SCSS processing
-* Webpack
-
-![screenshot](http://i.imgur.com/ZIS4qkw.png)
+## Procedures to Run the Project Locally
 
 ### Create DB
 ```sh
 $ export DATABASE_URL="postgresql://username:password@localhost/mydatabase"
-
 or
-
 $ export DATABASE_URL="mysql://username:password@localhost/mydatabase"
-
 or
-
 $ export DATABASE_URL="sqlite:///your.db"
 ```
+
 (More about connection strings in this [flask config guide](http://flask-sqlalchemy.pocoo.org/2.1/config/).)
+
 ```
 $ python manage.py create_db
 $ python manage.py db upgrade
@@ -76,13 +62,13 @@ $ npm start
 $ npm run build:production
 ```
 
-#### New to MySQL? 
+## New to MySQL? 
 
-If you decide on MySQL, install the free community edition of [MySQL](https://dev.mysql.com/downloads/mysql/) and [MySQL Workbench](https://www.mysql.com/products/workbench/)
+If you decide on MySQL, install the free community edition of [MySQL](https://dev.mysql.com/downloads/mysql/) and [MySQL Workbench](https://www.mysql.com/products/workbench/).
 
-1. start MySQL from the System Preferences
-2. open MySQL Workbench and [create a database](http://stackoverflow.com/questions/5515745/create-a-new-database-with-mysql-workbench) called mydatabase but don't create the tables since python will do that for you
-3. Install the MySQL connector for Python, add the DATABASE_URL configuration, and create the database and tables
+1. Start MySQL from the System Preferences.
+2. Open MySQL Workbench and [create a database](http://stackoverflow.com/questions/5515745/create-a-new-database-with-mysql-workbench) called mydatabase but don't create the tables since python will do that for you.
+3. Install the MySQL connector for Python, add the `DATABASE_URL` configuration, and create the database and tables.
 
 ```
 $ sudo pip install mysql-connector-python-rf
@@ -90,9 +76,9 @@ $ export DATABASE_URL="mysql+mysqlconnector://username:password@localhost/mydata
 $ python manage.py create_db
 ```
 
-Note: you do not need to run "python manage.py db upgrade" or "python manage.py db migrate" if its your first go at it
+Note: you do not need to run "python manage.py db upgrade" or "python manage.py db migrate" if its your first go at it.
 
-4. Run Back-End
+4. Run Back-End.
 
 ```
 $ python manage.py runserver
@@ -100,7 +86,7 @@ $ python manage.py runserver
 
 If all goes well, you should see ```* Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)``` followed by a few more lines in the terminal.
 
-5. open a new tab to the same directory and run the front end
+5. Open a new tab to the same directory and run the front end.
 
 ```
 $ cd static
@@ -108,9 +94,19 @@ $ npm install
 $ npm start
 ```
 
-6. open your browser to http://localhost:3000/register and setup your first account
-7. enjoy! By this point, you should be able to create an account and login without errors. 
+6. Open your browser to http://localhost:3000/register and setup your first account.
+7. Enjoy! By this point, you should be able to create an account and login without errors. 
 
+Languages and Tools required for the project:
 
-
-
+* Python 2.7+ or 3.x
+* Pytest
+* Heroku
+* Flask
+* React
+* Redux
+* React-Router 2.0
+* React-Router-Redux
+* Babel 6
+* SCSS processing
+* Webpack

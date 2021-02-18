@@ -1,7 +1,35 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import FlatButton from 'material-ui/FlatButton';
 import * as actionCreators from '../actions/data';
+
+const style = {
+    color: "#ff2a6d",
+    fontFamily: "AvenirNext-Regular",
+}
+
+const titleStyle = {
+    fontWeight: 550,
+    fontSize: "44px",
+    fontFamily: "AvenirNext-Medium",
+}
+
+const pStyle = {
+    color: "white",
+    fontSize: "20px",
+    fontFamily: "AvenirNext-UltraLight",
+    marginBottom: "40px"
+}
+
+const buttonStyle = {
+    color: "#05d9e8",
+    marginRight: "40px"
+}
+
+const buttonStyle2 = {
+    color: "red",
+}
 
 function mapStateToProps(state) {
     return {
@@ -11,7 +39,6 @@ function mapStateToProps(state) {
         isFetching: state.data.isFetching,
     };
 }
-
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
@@ -31,14 +58,16 @@ export default class ProtectedView extends React.Component {
 
     render() {
         return (
-            <div>
+            <div style={style}>
                 {!this.props.loaded
                     ? <h1>Loading data...</h1>
                     :
-                    <div>
-                        <h1>Welcome back,
-                            {this.props.userName}!</h1>
-                        <h1>{this.props.data.data.email}</h1>
+                    <div className="container">
+                        <p style={titleStyle}>Welcome back to Grickly,
+                            {this.props.userName}!</p>
+                        <p style={pStyle}>Are you ready to find your buddies?</p>
+                        <FlatButton style={buttonStyle} label="Yes! Start matching now!" />
+                        <FlatButton style={buttonStyle2} label="Nah, let me create a group!" />
                     </div>
                 }
             </div>
