@@ -98,6 +98,9 @@ export class Header extends Component {
                                 </svg>
                                 My Profile
                             </MenuItem>
+                            <MenuItem onClick={() => this.dispatchNewRoute("/chatrooms")}>
+                                Chatrooms
+                            </MenuItem>
                             <Divider />
                             <MenuItem onClick={(e) => this.logout(e)}>
                                 <svg style={svgStyle2} width="15px" height="15px" class="svg-icon" viewBox="0 0 20 20">
