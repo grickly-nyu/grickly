@@ -1,5 +1,4 @@
 import React from 'react';
-
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -9,6 +8,14 @@ import { Footer } from '../../components/Footer';
 
 /* global styles for app */
 import './styles/app.scss';
+
+const style = {
+    backgroundColor: "#01012b",
+    paddingTop: 190,
+    paddingBottom: 250,
+    height: "100%",
+    width: '100%',
+};
 
 class App extends React.Component { // eslint-disable-line react/prefer-stateless-function
     static propTypes = {
@@ -22,7 +29,7 @@ class App extends React.Component { // eslint-disable-line react/prefer-stateles
                     <Header />
                     <div
                       className="container"
-                      style={{ marginTop: 10, paddingBottom: 250 }}
+                      style={style}
                     >
                         {this.props.children}
                     </div>

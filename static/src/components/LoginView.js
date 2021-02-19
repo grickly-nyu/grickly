@@ -1,5 +1,4 @@
 /* eslint camelcase: 0, no-underscore-dangle: 0 */
-
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -20,14 +19,16 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
-
 const style = {
     marginTop: 50,
-    paddingBottom: 50,
+    paddingBottom: 40,
     paddingTop: 25,
     width: '100%',
     textAlign: 'center',
     display: 'inline-block',
+    color: "white",
+    backgroundColor: "rgba(255, 255, 255, 0.25)",
+    fontFamily: "AvenirNext-Medium"
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -118,7 +119,7 @@ export default class LoginView extends React.Component {
                 <Paper style={style}>
                     <form role="form">
                         <div className="text-center">
-                            <h2>Login to view protected content!</h2>
+                            <h2>Sign in to Grickly now!</h2>
                             {
                                 this.props.statusText &&
                                     <div className="alert alert-info">

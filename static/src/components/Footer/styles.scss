@@ -1,10 +1,23 @@
 :local(.styles) {
-  padding-top: 35px;
-  padding-bottom: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   text-align: center;
-  background-color: #E0F2F1;
-  color: black;
+  background-color: #005678;
+  color: white;
   position: absolute;
-  bottom: -70;
   width: 100%;
+  bottom: "0";
+  font-family: "AvenirNext-UltraLight";
+}
+
+a:link, a:visited {
+  color: white;
+  text-align: center;
+  text-decoration: none;
+}
+
+a:hover, a:active {
+  color: #ff577d;
+  text-align: center;
+  text-decoration: none;
 }
