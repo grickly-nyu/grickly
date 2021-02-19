@@ -1,0 +1,23 @@
+sudo: false
+language: python, node_js
+
+branches:
+  only:
+    - main
+#only test main branches
+
+matrix:
+  include:
+    - os: linux
+    #add coverall in the future
+
+notifications:
+   email: false
+   slack: seniordesigns2021:3lL1Zy8I8gElC5dG6OQlw8Yt
+
+
+before_script:
+  - date -u
+  #script to be written
+  
+#script:

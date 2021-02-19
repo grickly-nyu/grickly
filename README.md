@@ -1,5 +1,7 @@
 # Grickly #
 
+[![Build Status](https://travis-ci.org/grickly-nyu/grickly.svg?branch=main)](https://travis-ci.org/grickly-nyu/grickly)
+
 Grickly application is the senior design project for Ge, Hengning, Kejian, Lujie, and Sicong at New York University. More details about the project can be found in project management document under this repository. The application is built with a Flask JWT Backend, a React/Redux Front-End, and Material UI framework.
 
 ## Procedures to Run the Project Locally
