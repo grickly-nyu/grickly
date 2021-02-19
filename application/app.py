@@ -1,9 +1,12 @@
-from flask import request, render_template, jsonify, url_for, redirect, g
-from .models import User
+from flask import request, render_template, jsonify, url_for, redirect, g, session
+from .models import *
 from index import app, db
 from sqlalchemy.exc import IntegrityError
 from .utils.auth import generate_token, requires_auth, verify_token
+from sqlalchemy import text
 
+def dispatch(result):
+    return [row for row in result]
 
 @app.route('/', methods=['GET'])
 def index():
@@ -43,12 +46,12 @@ def create_user():
         token=generate_token(new_user)
     )
 
-
 @app.route("/api/get_token", methods=["POST"])
 def get_token():
     incoming = request.get_json()
     user = User.get_user_with_email_and_password(incoming["email"], incoming["password"])
     if user:
+        session['user_id'] = user.id
         return jsonify(token=generate_token(user))
 
     return jsonify(error=True), 403
@@ -63,3 +66,15 @@ def is_token_valid():
         return jsonify(token_is_valid=True)
     else:
         return jsonify(token_is_valid=False), 403
+
+@app.route("/api/get_chatrooms", methods=["GET"])
+def get_chartooms():
+
+    result = dispatch(db.engine.execute("SELECT room_id, name FROM chatroom natural join participant where user_id =" + str(session['user_id'])))
+    rooms = [{'room_id': row[0], 'name': row[1]} for row in result]
+    for room in rooms:
+        res = dispatch(db.engine.execute("SELECT distinct username FROM user join participant on user.id = participant.user_id where room_id ="+str(room['room_id'])))
+        res = [row[0] for row in res]
+        room['members'] = str(res)
+    return jsonify(results = rooms)
+

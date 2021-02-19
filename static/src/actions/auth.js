@@ -11,7 +11,7 @@ import {
 } from '../constants/index';
 
 import { parseJSON } from '../utils/misc';
-import { get_token, create_user } from '../utils/http_functions';
+import { get_token, create_user} from '../utils/http_functions';
 
 
 export function loginUserSuccess(token) {
