@@ -47,3 +47,14 @@ export function data_about_user(token) {
 export function get_chatrooms(){
     return axios.get('/api/get_chatrooms');
 }
+
+export function send_message(room_id, content){
+    return axios.post('/api/send_message',{
+        room_id,
+        content,
+    });
+}
+
+// export function get_messages(room_id){
+//     return axios.get('/api/get_messages',{room_id,});
+// }
