@@ -37,11 +37,12 @@ class Message(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     user_id = db.Column(db.Integer())
     room_id = db.Column(db.Integer())
-    sent = db.Column(db.Boolean())
     sendTime = db.Column(db.DateTime())
+    content = db.Column(db.String(255))
 
-    def __init__(self, user_id, room_id, sent, sendTime):
+    def __init__(self, user_id, room_id, sendTime, content):
         self.user_id = user_id
         self.room_id = room_id
-        self.sent = sent
+        self.content = content
         self.sendTime= sendTime
+

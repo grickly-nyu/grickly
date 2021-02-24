@@ -4,6 +4,7 @@ from index import app, db
 from sqlalchemy.exc import IntegrityError
 from .utils.auth import generate_token, requires_auth, verify_token
 from sqlalchemy import text
+from datetime import datetime
 
 def dispatch(result):
     return [row for row in result]
@@ -69,7 +70,6 @@ def is_token_valid():
 
 @app.route("/api/get_chatrooms", methods=["GET"])
 def get_chartooms():
-
     result = dispatch(db.engine.execute("SELECT room_id, name FROM chatroom natural join participant where user_id =" + str(session['user_id'])))
     rooms = [{'room_id': row[0], 'name': row[1]} for row in result]
     for room in rooms:
@@ -78,3 +78,28 @@ def get_chartooms():
         room['members'] = str(res)
     return jsonify(results = rooms)
 
+@app.route("/api/send_message", methods=["POST"])
+def send_message():
+    incoming = request.get_json()
+    message = Message(
+        user_id = session['user_id'],
+        room_id = incoming["room_id"],
+        sendTime = datetime.now(),
+        content = incoming["content"]
+    )
+    db.session.add(message)
+    db.session.commit()
+    return jsonify(
+        content = incoming["content"]
+    )
+
+@app.route("/api/get_messages", methods=["POST"])
+def get_messages():
+    incoming = request.get_json()
+    result = dispatch(db.engine.execute("SELECT * FROM message where room_id = "+str(incoming['room_id']) ))
+    messages = [{'user_id': row[1], 'sendTime': row[3], 'content': row[4]} for row in result]
+    for message in messages:
+        res = dispatch(db.engine.execute("SELECT username FROM user where id ="+str(message['user_id'])))
+        res = [row[0] for row in res]
+        message['username'] = str(res[0])
+    return jsonify(results = messages)

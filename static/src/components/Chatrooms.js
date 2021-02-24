@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import * as actionCreators from '../actions/auth';
 import 'regenerator-runtime/runtime'
 import RaisedButton from 'material-ui/RaisedButton';
+import axios from 'axios';
+import {get_chatrooms} from '../utils/http_functions';
 
 function mapStateToProps(state) {
     return {
@@ -27,15 +29,13 @@ function mapDispatchToProps(dispatch) {
 export default class Chatrooms extends React.Component { // eslint-disable-line react/prefer-stateless-function
     state = {
         loading: true,
-        people: []
+        rooms: []
       };
     
     async componentDidMount() {
-        const url = "api/get_chatrooms";
-        const response = await fetch(url);
-        const data = await response.json();
-        console.log(data)
-        this.setState({ people: data.results , loading: false});
+        get_chatrooms().then(response =>{
+            this.setState({ rooms: response.data.results , loading: false});
+        })
     }
 
     dispatchNewRoute(route) {
@@ -46,10 +46,14 @@ export default class Chatrooms extends React.Component { // eslint-disable-line 
 
     }
 
-    chatroom(room_id){
-        console.log(this.props)
-        this.dispatchNewRoute('/chatroom/room_id')
-        //this.props.room_id = room_id
+    chatroom(room_id, room_name){
+        console.log(this.state)
+        var data = {room_id: room_id, room_name: room_name}
+        var path = {
+            pathname:'/chatroom',
+            state:data,
+        }
+        this.dispatchNewRoute(path)
     }
     
     render() {
@@ -57,25 +61,29 @@ export default class Chatrooms extends React.Component { // eslint-disable-line 
             return <div>loading...</div>;
         }
 
-        if (!this.state.people.length) {
+        if (!this.state.rooms.length) {
             return <div>didn't get a room</div>;
         }
 
 
         return (
             <div>
-            {this.state.people.map(room => (
+            {this.state.rooms.map(room => (
                 <div key={room.room_id}>
                     <RaisedButton
                           style={{ marginTop: 50 }}
                           label={room.name}
-                          onClick={() => this.chatroom(room.room_id)}
+                          onClick={() => this.chatroom(room.room_id, room.name)}
                         />
-                    <div>Room members: {room.members}</div>
+                    <div style={{color: "white"}}>Room members: {room.members}</div>
    
                 </div>
             ))}
+
             </div>
+     
+                
+            
         );
     }
 }
