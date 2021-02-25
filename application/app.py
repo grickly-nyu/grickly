@@ -78,6 +78,17 @@ def get_chartooms():
         room['members'] = str(res)
     return jsonify(results = rooms)
 
+@app.route("/api/get_suggestions", methods=["GET"])
+def get_suggestions():
+    # matching 
+    # return list of room ids and room names
+    pass
+
+
+
+
+
+
 @app.route("/api/send_message", methods=["POST"])
 def send_message():
     incoming = request.get_json()
