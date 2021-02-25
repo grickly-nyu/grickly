@@ -48,6 +48,10 @@ export function get_chatrooms(){
     return axios.get('/api/get_chatrooms');
 }
 
+export function get_room_members(room_id){
+    return axios.post('/api/get_room_members',{room_id,});
+}
+
 export function send_message(room_id, content){
     return axios.post('/api/send_message',{
         room_id,

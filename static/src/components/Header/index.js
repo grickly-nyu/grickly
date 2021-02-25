@@ -98,7 +98,7 @@ export class Header extends Component {
                                 </svg>
                                 My Profile
                             </MenuItem>
-                            <MenuItem onClick={() => this.dispatchNewRoute("/chatrooms")}>
+                            <MenuItem onClick={() => this.dispatchNewRoute("/chatroom")}>
                                 Chatrooms
                             </MenuItem>
                             <Divider />

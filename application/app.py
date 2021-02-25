@@ -81,10 +81,18 @@ def get_chartooms():
     result = dispatch(db.engine.execute("SELECT room_id, name FROM chatroom natural join participant where user_id =" + str(session['user_id'])))
     rooms = [{'room_id': row[0], 'name': row[1]} for row in result]
     for room in rooms:
-        res = dispatch(db.engine.execute("SELECT distinct username FROM user join participant on user.id = participant.user_id where room_id ="+str(room['room_id'])))
-        res = [row[0] for row in res]
-        room['members'] = str(res)
+        res = dispatch(db.engine.execute("SELECT distinct user.id, username FROM user join participant on user.id = participant.user_id where room_id ="+str(room['room_id'])))
+        res = [ row[1] for row in res]
+        room['members'] = res
     return jsonify(results = rooms)
+
+@app.route("/api/get_room_members", methods=["POST"])
+def get_room_members():
+    incoming = request.get_json()
+    res = dispatch(db.engine.execute("SELECT distinct user.id, username FROM user join participant on user.id = participant.user_id where room_id ="+str(incoming['room_id'])))
+    members = [{'user_id': row[0], 'username': row[1]} for row in res]
+    print(members)
+    return jsonify(results = members)
 
 @app.route("/api/send_message", methods=["POST"])
 def send_message():
@@ -104,8 +112,8 @@ def send_message():
 @app.route("/api/get_messages", methods=["POST"])
 def get_messages():
     incoming = request.get_json()
-    result = dispatch(db.engine.execute("SELECT * FROM message where room_id = "+str(incoming['room_id']) ))
-    messages = [{'user_id': row[1], 'sendTime': row[3], 'content': row[4]} for row in result]
+    res = dispatch(db.engine.execute("SELECT * FROM message where room_id = "+str(incoming['room_id']) ))
+    messages = [{'user_id': row[1], 'sendTime': row[3], 'content': row[4]} for row in res]
     for message in messages:
         res = dispatch(db.engine.execute("SELECT username FROM user where id ="+str(message['user_id'])))
         res = [row[0] for row in res]
