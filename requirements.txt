@@ -29,3 +29,5 @@ six
 SQLAlchemy
 Werkzeug
 mysqlclient
+flask-socketio==4.3.2
+python-socketio==3.1.2

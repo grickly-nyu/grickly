@@ -1,13 +1,14 @@
 import React from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
+import io from 'socket.io-client'
 /* application components */
 import { Header } from '../../components/Header';
 import { Footer } from '../../components/Footer';
 
 /* global styles for app */
 import './styles/app.scss';
+
 
 const style = {
     backgroundColor: "#01012b",
@@ -21,6 +22,7 @@ class App extends React.Component { // eslint-disable-line react/prefer-stateles
     static propTypes = {
         children: React.PropTypes.node,
     };
+    
 
     render() {
         return (

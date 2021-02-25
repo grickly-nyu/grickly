@@ -7,9 +7,10 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import {send_message, get_messages} from '../utils/http_functions';
 import axios from 'axios';
-// import io from 'socket.io-client'
+import io from 'socket.io-client'
 
-// const socket = io.connect('http://localhost:5000')
+
+
 function mapStateToProps(state) {
     return {
         isRegistering: state.auth.isRegistering,
@@ -20,7 +21,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
-
+const socket = io("http://localhost:5000");
 const style = {
     marginTop: 50,
     paddingBottom: 40,
@@ -45,25 +46,47 @@ export default class Chatroom extends React.Component { // eslint-disable-line r
             content: null,
             messages: []
         };
+        socket.on('server message', (msg) => {
+            this.updateMessages(msg);
+        });
     }
-
-    componentDidMount() {
-        // socket.on('message', (data) => {
-        //     console.log(data.message)
-        // })
-        // get_messages(this.state.room_id).then(response =>{
-        //     console.log(response.data.results)
-        //     this.setState({ messages: response.data.results , loading: false});
-        // })
-        axios.post('api/get_messages', {room_id: this.state.room_id}).then(res =>{
-            this.setState({ messages: res.data.results});
+    
+    async componentDidMount() {
+        get_messages(this.state.room_id).then(response =>{
+            this.setState({ messages: response.data.results , loading: false});
         })
     }
+
+    updateMessages(message){
+    
+        let currentMessages = this.state.messages;
+    
+        currentMessages.push({content: message.content, username: message.username});
+        this.setState({messages:currentMessages});
+    }
+
+    handleMessageSubmit(e){
+        e.preventDefault()
+        let message = this.state.content;
+        if (!message){
+          alert('Message must not be empty');
+          return;
+        }
+        socket.emit('send message', {
+            content: message,
+            room_id: this.state.room_id
+        });
+        console.log(message)
+        this.setState({ content: "" }); //clear message for user after sending
+      }
     
     _handleKeyPress(e) {
         if (e.key == 'Enter') {
             if (this.state.content) {
-                this.sendMessage();
+                this.handleMessageSubmit(e);
+            }
+            else{
+                alert('Message must not be empty');
             }
         }
     }
@@ -71,16 +94,15 @@ export default class Chatroom extends React.Component { // eslint-disable-line r
         const value = e.target.value;
         const next_state = {};
         next_state[type] = value;
+        
     }
-    sendMessage() {
-        //axios.post('api/send_message', {room_id: this.state.room_id, content: this.state.content}).then(res =>{})
-        send_message(this.state.room_id, this.state.content)
-        this.componentDidMount()
-    }
+    // sendMessage() {
+    //     //axios.post('api/send_message', {room_id: this.state.room_id, content: this.state.content}).then(res =>{})
+    //     send_message(this.state.room_id, this.state.content)
+    //     this.componentDidMount()
+    // }
     render() {
-        axios.post('api/get_messages', {room_id: this.state.room_id}).then(res =>{
-            this.setState({ messages: res.data.results});
-        })
+
         //var {room_id, room_name} = this.props.location.state
         return (
             <div className="col-md-6 col-md-offset-3" onKeyPress={(e) => this._handleKeyPress(e)}>
@@ -94,8 +116,9 @@ export default class Chatroom extends React.Component { // eslint-disable-line r
         
                         </div>
                     ))}
-
                     </div>
+
+
                     <div className="text-center">
                         <div className="col-md-12">
                             <TextField
@@ -108,6 +131,8 @@ export default class Chatroom extends React.Component { // eslint-disable-line r
                         </div>
 
                     </div>
+
+                    
 
                 </Paper>
 

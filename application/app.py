@@ -1,10 +1,17 @@
 from flask import request, render_template, jsonify, url_for, redirect, g, session
+from flask_socketio import SocketIO, emit, join_room, leave_room, \
+    close_room, rooms, disconnect
+from flask_cors import CORS
 from .models import *
-from index import app, db
+from index import app, db, socketio
 from sqlalchemy.exc import IntegrityError
 from .utils.auth import generate_token, requires_auth, verify_token
 from sqlalchemy import text
 from datetime import datetime
+from threading import Lock
+
+thread = None
+thread_lock = Lock()
 
 def dispatch(result):
     return [row for row in result]
@@ -53,6 +60,7 @@ def get_token():
     user = User.get_user_with_email_and_password(incoming["email"], incoming["password"])
     if user:
         session['user_id'] = user.id
+        session['username'] = user.username
         return jsonify(token=generate_token(user))
 
     return jsonify(error=True), 403
@@ -103,3 +111,19 @@ def get_messages():
         res = [row[0] for row in res]
         message['username'] = str(res[0])
     return jsonify(results = messages)
+
+
+
+@socketio.on('send message')
+def recieved_message(json, methods=['GET', 'POST']):
+    json['username'] = session['username']
+    socketio.emit('server message', json) 
+    message = Message(
+        user_id = session['user_id'],
+        room_id = json["room_id"],
+        sendTime = datetime.now(),
+        content = json["content"]
+    )
+    db.session.add(message)
+    db.session.commit()
+    

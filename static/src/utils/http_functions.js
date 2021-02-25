@@ -55,6 +55,6 @@ export function send_message(room_id, content){
     });
 }
 
-// export function get_messages(room_id){
-//     return axios.get('/api/get_messages',{room_id,});
-// }
+export function get_messages(room_id){
+    return axios.post('/api/get_messages',{room_id,});
+}

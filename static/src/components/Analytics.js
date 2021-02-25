@@ -2,6 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from '../actions/auth';
+import io from 'socket.io-client'
 
 function mapStateToProps(state) {
     return {
@@ -16,6 +17,8 @@ function mapDispatchToProps(dispatch) {
 
 @connect(mapStateToProps, mapDispatchToProps)
 class Analytics extends React.Component { // eslint-disable-line react/prefer-stateless-function
+
+    
     render() {
         return (
             <div className="col-md-8">
