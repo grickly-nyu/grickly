@@ -30,4 +30,4 @@ SQLAlchemy
 Werkzeug
 mysqlclient
 flask-socketio==4.3.2
-python-socketio==3.1.2
+python-engineio==3.14.2

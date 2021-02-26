@@ -1,7 +1,6 @@
 from flask import request, render_template, jsonify, url_for, redirect, g, session
 from flask_socketio import SocketIO, emit, join_room, leave_room, \
     close_room, rooms, disconnect
-from flask_cors import CORS
 from .models import *
 from index import app, db, socketio
 from sqlalchemy.exc import IntegrityError
@@ -91,7 +90,6 @@ def get_room_members():
     incoming = request.get_json()
     res = dispatch(db.engine.execute("SELECT distinct user.id, username FROM user join participant on user.id = participant.user_id where room_id ="+str(incoming['room_id'])))
     members = [{'user_id': row[0], 'username': row[1]} for row in res]
-    print(members)
     return jsonify(results = members)
 
 @app.route("/api/send_message", methods=["POST"])
