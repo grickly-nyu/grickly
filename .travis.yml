@@ -17,6 +17,7 @@ notifications:
 
 
 before_script:
+  - chmod +x ci/setup.sh
   - date -u
   
   #script to be written
