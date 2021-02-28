@@ -18,6 +18,8 @@ notifications:
 
 before_script:
   - date -u
+  
   #script to be written
   
-#script:
+script:
+- ci/setup.sh
