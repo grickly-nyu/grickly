@@ -30,7 +30,7 @@
   "license": "MIT",
   "devDependencies": {
     "autoprefixer": "6.5.3",
-    "axios": "^0.15.3",
+    "axios": "^0.21.1",
     "babel-core": "^6.4.5",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^6.2.1",
@@ -75,7 +75,7 @@
     "less": "^2.5.3",
     "less-loader": "^2.2.2",
     "lodash": "^4.5.1",
-    "material-ui": "^0.16.4",
+    "material-ui": "^0.20.0",
     "mocha": "^3.0.2",
     "morgan": "^1.6.1",
     "node-sass": "^5.0.0",
