@@ -21,7 +21,7 @@ class Analytics extends React.Component { // eslint-disable-line react/prefer-st
     
     render() {
         return (
-            <div className="col-md-8">
+            <div className="col-md-8" style={{marginTop: 200}}>
                 <h1>Analytics</h1>
                 <hr />
             </div>

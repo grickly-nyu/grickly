@@ -20,15 +20,15 @@ function mapDispatchToProps(dispatch) {
 }
 
 const style = {
-    marginTop: 50,
-    paddingBottom: 40,
+    marginTop: 230,
     paddingTop: 25,
+    paddingBottom: 40,
     width: '100%',
     textAlign: 'center',
     display: 'inline-block',
     color: "white",
     backgroundColor: "rgba(255, 255, 255, 0.25)",
-    fontFamily: "AvenirNext-Medium"
+    fontFamily: "Avenir",
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -119,7 +119,7 @@ export default class LoginView extends React.Component {
                 <Paper style={style}>
                     <form role="form">
                         <div className="text-center">
-                            <h2>Sign in to Grickly now!</h2>
+                            <h2 style={{fontWeight: 500}}>Sign in to Grickly now!</h2>
                             {
                                 this.props.statusText &&
                                     <div className="alert alert-info">

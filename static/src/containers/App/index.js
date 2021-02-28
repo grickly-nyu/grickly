@@ -12,8 +12,6 @@ import './styles/app.scss';
 
 const style = {
     backgroundColor: "#01012b",
-    paddingTop: 190,
-    paddingBottom: 250,
     height: "100%",
     width: '100%',
 };
@@ -35,9 +33,9 @@ class App extends React.Component { // eslint-disable-line react/prefer-stateles
                     >
                         {this.props.children}
                     </div>
-                    <div>
+                    {/* <div>
                         <Footer />
-                    </div>
+                    </div> */}
                 </section>
             </MuiThemeProvider>
         );

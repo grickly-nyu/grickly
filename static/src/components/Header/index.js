@@ -6,6 +6,7 @@ import AppBar from 'material-ui/AppBar';
 import LeftNav from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
+import IconButton from 'material-ui/IconButton';
 import Divider from 'material-ui/Divider';
 
 import * as actionCreators from '../../actions/auth';
@@ -25,11 +26,11 @@ function mapDispatchToProps(dispatch) {
 const style = {
     position: "fixed",
     backgroundColor: "#065197",
-    fontFamily: "AvenirNext-Regular",
+    fontFamily: "Avenir",
 };
 
 const svgStyle = {
-    marginTop: "10px",
+    marginTop: "13px",
 }
 
 const svgStyle2 = {
@@ -83,10 +84,10 @@ export class Header extends Component {
 
     render() {
         return (
-            <header style={style}>
+            <header>
                 <LeftNav open={this.state.open}>
                     <MenuItem onClick={() => this.closeNav()}>
-                        <svg style={svgStyle} width="32px" height="32px" class="svg-icon" viewBox="0 0 20 20">
+                        <svg style={svgStyle} width="24px" height="24px" class="svg-icon" viewBox="0 0 20 20">
 							<path d="M11.739,13.962c-0.087,0.086-0.199,0.131-0.312,0.131c-0.112,0-0.226-0.045-0.312-0.131l-3.738-3.736c-0.173-0.173-0.173-0.454,0-0.626l3.559-3.562c0.173-0.175,0.454-0.173,0.626,0c0.173,0.172,0.173,0.451,0,0.624l-3.248,3.25l3.425,3.426C11.911,13.511,11.911,13.789,11.739,13.962 M18.406,10c0,4.644-3.763,8.406-8.406,8.406S1.594,14.644,1.594,10S5.356,1.594,10,1.594S18.406,5.356,18.406,10 M17.521,10c0-4.148-3.373-7.521-7.521-7.521c-4.148,0-7.521,3.374-7.521,7.521c0,4.148,3.374,7.521,7.521,7.521C14.147,17.521,17.521,14.148,17.521,10"></path>
 						</svg>
                     </MenuItem>
@@ -99,6 +100,9 @@ export class Header extends Component {
                                 My Profile
                             </MenuItem>
                             <MenuItem onClick={() => this.dispatchNewRoute("/chatroom")}>
+                                <svg style={svgStyle2} width="15px" height="15px" class="svg-icon" viewBox="0 0 20 20">
+                                    <path d="M17.659,3.681H8.468c-0.211,0-0.383,0.172-0.383,0.383v2.681H2.341c-0.21,0-0.383,0.172-0.383,0.383v6.126c0,0.211,0.172,0.383,0.383,0.383h1.532v2.298c0,0.566,0.554,0.368,0.653,0.27l2.569-2.567h4.437c0.21,0,0.383-0.172,0.383-0.383v-2.681h1.013l2.546,2.567c0.242,0.249,0.652,0.065,0.652-0.27v-2.298h1.533c0.211,0,0.383-0.172,0.383-0.382V4.063C18.042,3.853,17.87,3.681,17.659,3.681 M11.148,12.87H6.937c-0.102,0-0.199,0.04-0.27,0.113l-2.028,2.025v-1.756c0-0.211-0.172-0.383-0.383-0.383H2.724V7.51h5.361v2.68c0,0.21,0.172,0.382,0.383,0.382h2.68V12.87z M17.276,9.807h-1.533c-0.211,0-0.383,0.172-0.383,0.383v1.755L13.356,9.92c-0.07-0.073-0.169-0.113-0.27-0.113H8.851v-5.36h8.425V9.807z"></path>
+                                </svg>
                                 Chatrooms
                             </MenuItem>
                             <Divider />
@@ -135,7 +139,13 @@ export class Header extends Component {
                 </LeftNav>
                 <AppBar
                     title="Grickly"
-                    onLeftIconButtonTouchTap={() => this.openNav()}
+                    iconElementLeft={
+                        <IconButton label='Show menu' onClick={() => this.openNav()}>
+                            <svg class="svg-icon" viewBox="0 0 20 20">
+							    <path d="M10,1.445c-4.726,0-8.555,3.829-8.555,8.555c0,4.725,3.829,8.555,8.555,8.555c4.725,0,8.555-3.83,8.555-8.555C18.555,5.274,14.725,1.445,10,1.445 M10,17.654c-4.221,0-7.654-3.434-7.654-7.654c0-4.221,3.433-7.654,7.654-7.654c4.222,0,7.654,3.433,7.654,7.654C17.654,14.221,14.222,17.654,10,17.654 M14.39,10c0,0.248-0.203,0.45-0.45,0.45H6.06c-0.248,0-0.45-0.203-0.45-0.45s0.203-0.45,0.45-0.45h7.879C14.187,9.55,14.39,9.752,14.39,10 M14.39,12.702c0,0.247-0.203,0.449-0.45,0.449H6.06c-0.248,0-0.45-0.202-0.45-0.449c0-0.248,0.203-0.451,0.45-0.451h7.879C14.187,12.251,14.39,12.454,14.39,12.702 M14.39,7.298c0,0.248-0.203,0.45-0.45,0.45H6.06c-0.248,0-0.45-0.203-0.45-0.45s0.203-0.45,0.45-0.45h7.879C14.187,6.848,14.39,7.051,14.39,7.298"></path>
+						    </svg>
+                        </IconButton>
+                    }
                     iconElementRight={
                         <FlatButton label="Home" style={{color: "#ff577d"}} onClick={() => this.dispatchNewRoute('/')} />
                     }
