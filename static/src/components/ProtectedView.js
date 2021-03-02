@@ -5,7 +5,7 @@ import FlatButton from 'material-ui/FlatButton';
 import * as actionCreators from '../actions/data';
 
 const style = {
-    marginTop: 200,
+    paddingTop: 200,
     color: "#ff2a6d",
     fontFamily: "Avenir",
 }

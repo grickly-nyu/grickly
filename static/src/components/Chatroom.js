@@ -2,14 +2,10 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from '../actions/auth';
-import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import {send_message, get_messages, get_chatrooms, get_room_members} from '../utils/http_functions';
-import axios from 'axios';
-import io from 'socket.io-client'
-
-
+import { get_messages, get_chatrooms, get_room_members } from '../utils/http_functions';
+import io from 'socket.io-client';
 
 function mapStateToProps(state) {
     return {
@@ -21,17 +17,68 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
+
 const socket = io("http://localhost:5000");
-const style = {
-    marginTop: 50,
-    paddingBottom: 40,
-    paddingTop: 25,
-    width: '100%',
-    textAlign: 'center',
-    display: 'inline-block',
-    color: "white",
+const sideStyle = {
+    fontFamily: "Avenir",
+    marginTop: 64,
+    width: '20%',
+    height: '100vh',
+    position: 'fixed',
+    justifyContent: 'center',
+    display: 'flex',
+    borderStyle: 'none solid none none',
+    borderWidth: '1px',
+    borderColor: '#01012b',
+    fontSize: '20px',
+    fontWeight: 500,
     backgroundColor: "rgba(255, 255, 255, 0.25)",
-    fontFamily: "AvenirNext-Medium"
+};
+const groupStyle = {
+    color: '#ff577d',
+    borderStyle: 'none none solid none',
+    borderWidth: '1px',
+    borderColor: '#01012b',
+    paddingTop: 30,
+    paddingBottom: 35,
+    backgroundColor: "rgba(255, 255, 255, 0.10)",
+};
+const roomStyle = {
+    fontFamily: "Avenir",
+    marginTop: 64,
+    marginLeft: '20%',
+    paddingLeft: '5%',
+    paddingTop: 20,
+    width: '65%',
+    height: '100vh',
+    position: 'fixed',
+    display: 'flex',
+    overflow: 'auto',
+    color: 'white',
+    backgroundColor: "rgba(255, 255, 255, 0.25)",
+};
+const nameStyle = {
+    fontFamily: "Avenir",
+    paddingLeft: '5%',
+    color: '#ff2a6d',
+    fontWeight: 550,
+};
+const textStyle = {
+    fontFamily: "Avenir",
+    position: 'fixed',
+    width: '60%',
+    bottom: 0,
+    backgroundColor: "#414260"
+};
+const listStyle = {
+    marginTop: 64,
+    marginLeft: '85%',
+    width: '15%',
+    height: '100vh',
+    position: 'fixed',
+    justifyContent: 'center',
+    display: 'flex',
+    color: "white",
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -55,21 +102,39 @@ export default class Chatroom extends React.Component { // eslint-disable-line r
     
     async componentDidMount() {
         get_messages(this.state.room_id).then(response =>{
-            this.setState({ messages: response.data.results , loading: false});
+            this.setState({
+                messages: response.data.results,
+                loading: false
+            });
         });
         get_chatrooms().then(response =>{
-            this.setState({ rooms: response.data.results , loading: false});
+            this.setState({
+                rooms: response.data.results,
+                room_id: response.data.results[0].room_id,
+                room_name: response.data.results[0].name,
+                loading: false,
+            });
+            get_messages(response.data.results[0].room_id).then(response =>{
+                this.setState({
+                    messages: response.data.results,
+                    loading: false,
+                });
+            });
+            get_room_members(response.data.results[0].room_id).then(response =>{
+                this.setState({
+                    users: response.data.results,
+                });
+            });
         })
-        // this.setState({room_id: rooms[0].room_id, room_name: rooms[0].name});
-
+        console.log(this.state.room_id, this.state.room_name);
     }
     
     updateMessages(message){
-    
         let currentMessages = this.state.messages;
-    
         currentMessages.push({content: message.content, username: message.username});
-        this.setState({messages:currentMessages});
+        this.setState({
+            messages: currentMessages,
+        });
     }
 
     handleMessageSubmit(e){
@@ -96,97 +161,88 @@ export default class Chatroom extends React.Component { // eslint-disable-line r
             }
         }
     }
+
     changeValue(e, type) {
         const value = e.target.value;
         const next_state = {};
-        next_state[type] = value;
-        
+        next_state[type] = value;    
     }
 
     switchRoom(room){
-        this.setState({room_id: room.room_id, room_name: room.name, users: {username: room.members}})
+        this.setState({
+            room_id: room.room_id,
+            room_name: room.name,
+            users: {
+                username: room.members,
+            },
+        });
         get_messages(room.room_id).then(response =>{
-            this.setState({ messages: response.data.results , loading: false});
+            this.setState({
+                messages: response.data.results,
+                loading: false,
+            });
         });
         get_room_members(room.room_id).then(response =>{
-            this.setState({ users: response.data.results});
-        })
+            this.setState({
+                users: response.data.results,
+            });
+        });
     }
-    // sendMessage() {
-    //     //axios.post('api/send_message', {room_id: this.state.room_id, content: this.state.content}).then(res =>{})
-    //     send_message(this.state.room_id, this.state.content)
-    //     this.componentDidMount()
-    // }
+
     render() {
         console.log(this.state.users)
         return (
-            <div className = "row">
-                <div className="col-md-3  col-md-offset-1">
-                    <Paper style={style}>
-                        <div className="text-center">
-                        <h2>{this.state.room_name} Chatrooms </h2>
+            <div style={{ fontFamily: "Avenir" }}>
+                <div style={sideStyle}>
+                    <div style={{ width:'100%' }}>
                         {this.state.rooms.map(room => (
-                            <div key={room.room_id}>
-                                <RaisedButton
-                                    style={{ marginTop: 50 }}
-                                    label={room.name}
-                                    onClick={() => this.switchRoom(room)}
-                                    />
-
+                            <div 
+                            key={room.room_id}
+                            onClick={() => this.switchRoom(room)}
+                            style={groupStyle}>
+                                <p className='text-center'>{room.name}</p>
                             </div>
                         ))}
-                        </div>
-
-                    </Paper>
+                    </div>
                 </div>
-                <div className="col-md-3" onKeyPress={(e) => this._handleKeyPress(e)}>
-                    
-                    <Paper style={style}>
-                        <div>
-                        <h2>Chatroom {this.state.room_name}</h2>
-                        {this.state.messages.map(message => (
-                            <div key={message.sendTime}>
-                                <div style={{color: "white"}}>{message.username} : {message.content}</div>
-            
-                            </div>
-                        ))}
+                <div style={roomStyle}>
+                    <div onKeyPress={(e) => this._handleKeyPress(e)}>
+                        <div style={{paddingBottom: '130px'}}>
+                            <h2 style={nameStyle}>Chatroom {this.state.room_name}</h2>
+                            {this.state.messages.map(message => (
+                                <div
+                                key={message.sendTime+'-'+message.content}
+                                >
+                                    <p>
+                                        <b style={{ width: '300px', color: "#05d9e8"}}>{message.username}: </b>
+                                        {message.content}
+                                    </p>
+                                </div>
+                            ))}
                         </div>
-
-                        <div className="text-center">
-                            <div className="col-md-12">
-                                <TextField
-                                hintText="text"
-                                floatingLabelText="text"
-                                type="content"
-                                errorText={null}
-                                onChange={(e) => this.setState({content: e.target.value})}
-                                />
-                            </div>
-
-                        </div>
-
-                    </Paper>
-
+                        <TextField
+                        hintText="text"
+                        floatingLabelText="text"
+                        type="content"
+                        errorText={null}
+                        style={textStyle}
+                        onChange={(e) => this.setState({content: e.target.value})}
+                        />
+                    </div>
                 </div>
-                <div className="col-md-3">
-                    <Paper style={style}>
-                        <div className="text-center">
-                        <h2>{this.state.room_name} Group members </h2>
+                <div style={listStyle} className='text-center'>
+                    <div>
                         {this.state.users.map(user => (
                             <div key={user.user_id}>
                                 <RaisedButton
-                                    style={{ marginTop: 50 }}
-                                    label={user.username}
-                                    onClick={() => this.switchRoom(room)}
+                                style={{ marginTop: 30 }}
+                                label={user.username}
+                                onClick={() => this.switchRoom(room)}
                                 />
-
                             </div>
                         ))}
-                        </div>
-
-                    </Paper>
-                </div>
-                
+                    </div>
+                </div>              
             </div>
         );
     }

@@ -11,7 +11,7 @@ const dispatchNewRoute = (route) => {
 
 const style = {
     color: "#ff2a6d",
-    marginTop: 300,
+    paddingTop: 300,
     width: '100%',
     textAlign: 'center',
 };

@@ -24,6 +24,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 const style = {
+    top: 0,
     position: "fixed",
     backgroundColor: "#065197",
     fontFamily: "Avenir",
