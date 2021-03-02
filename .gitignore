@@ -10,3 +10,4 @@ node_modules
 tmp
 static/dist
 .vscode/*
+.python-version

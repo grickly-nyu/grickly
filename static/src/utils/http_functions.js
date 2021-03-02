@@ -43,3 +43,22 @@ export function has_github_token(token) {
 export function data_about_user(token) {
     return axios.get('/api/user', tokenConfig(token));
 }
+
+export function get_chatrooms(){
+    return axios.get('/api/get_chatrooms');
+}
+
+export function get_room_members(room_id){
+    return axios.post('/api/get_room_members',{room_id,});
+}
+
+export function send_message(room_id, content){
+    return axios.post('/api/send_message',{
+        room_id,
+        content,
+    });
+}
+
+export function get_messages(room_id){
+    return axios.post('/api/get_messages',{room_id,});
+}

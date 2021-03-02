@@ -24,3 +24,25 @@ class User(db.Model):
             return user
         else:
             return None
+    
+    
+            
+class Chatroom(db.Model):
+    room_id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(255))
+    def __init__(self, name):
+        self.name = name
+
+class Message(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    user_id = db.Column(db.Integer())
+    room_id = db.Column(db.Integer())
+    sendTime = db.Column(db.DateTime())
+    content = db.Column(db.String(255))
+
+    def __init__(self, user_id, room_id, sendTime, content):
+        self.user_id = user_id
+        self.room_id = room_id
+        self.content = content
+        self.sendTime= sendTime
+

@@ -1,9 +1,13 @@
-from flask import request, render_template, jsonify, url_for, redirect, g
-from .models import User
-from index import app, db
+from flask import request, render_template, jsonify, url_for, redirect, g, session
+from flask_socketio import SocketIO, emit, join_room, leave_room, \
+    close_room, rooms, disconnect
+from .models import *
+from .chatroom import *
+from index import app, db, socketio
 from sqlalchemy.exc import IntegrityError
 from .utils.auth import generate_token, requires_auth, verify_token
-
+from sqlalchemy import text
+from datetime import datetime
 
 @app.route('/', methods=['GET'])
 def index():
@@ -43,12 +47,13 @@ def create_user():
         token=generate_token(new_user)
     )
 
-
 @app.route("/api/get_token", methods=["POST"])
 def get_token():
     incoming = request.get_json()
     user = User.get_user_with_email_and_password(incoming["email"], incoming["password"])
     if user:
+        session['user_id'] = user.id
+        session['username'] = user.username
         return jsonify(token=generate_token(user))
 
     return jsonify(error=True), 403
@@ -63,3 +68,4 @@ def is_token_valid():
         return jsonify(token_is_valid=True)
     else:
         return jsonify(token_is_valid=False), 403
+

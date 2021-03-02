@@ -5,20 +5,21 @@ import FlatButton from 'material-ui/FlatButton';
 import * as actionCreators from '../actions/data';
 
 const style = {
+    paddingTop: 200,
     color: "#ff2a6d",
-    fontFamily: "AvenirNext-Regular",
+    fontFamily: "Avenir",
 }
 
 const titleStyle = {
     fontWeight: 550,
-    fontSize: "44px",
-    fontFamily: "AvenirNext-Medium",
+    fontSize: "50px",
+    fontFamily: "Avenir",
 }
 
 const pStyle = {
     color: "white",
     fontSize: "20px",
-    fontFamily: "AvenirNext-UltraLight",
+    fontFamily: "Avenir",
     marginBottom: "40px"
 }
 
