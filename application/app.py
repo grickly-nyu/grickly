@@ -3,6 +3,7 @@ from flask_socketio import SocketIO, emit, join_room, leave_room, \
     close_room, rooms, disconnect
 from .models import *
 from .chatroom import *
+from .profile import *
 from index import app, db, socketio
 from sqlalchemy.exc import IntegrityError
 from .utils.auth import generate_token, requires_auth, verify_token
