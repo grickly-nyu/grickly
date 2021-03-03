@@ -25,13 +25,46 @@ class User(db.Model):
         else:
             return None
     
+    def get_username_with_user_id(user_id):
+        return db.engine.execute("SELECT username FROM user where id ="+str(user_id))
+    
     
             
 class Chatroom(db.Model):
     room_id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(255))
-    def __init__(self, name):
+    tag = db.Column(db.String(255))
+    def __init__(self, name, tag):
         self.name = name
+        self.tag = tag
+
+    def get_chatroom_with_user_id(user_id):
+        return db.engine.execute("SELECT room_id, name FROM chatroom natural join participant where user_id =" + str(user_id))
+
+    def get_room_members_with_room_id(room_id):
+        return db.engine.execute("SELECT distinct user.id, username FROM user join participant on user.id = participant.user_id where room_id =" + str(room_id))
+
+    def delete_chatroom_with_room_id(room_id):
+        print("DELETE FROM chatroom WHERE room_id = "+str(room_id))
+        return db.engine.execute("DELETE FROM chatroom WHERE room_id = "+str(room_id) )
+
+class Participant(db.Model):
+    user_id = db.Column(db.Integer(), primary_key=True)
+    room_id = db.Column(db.Integer(), primary_key=True)
+    def __init__(self, user_id, room_id):
+        self.user_id = user_id
+        self.room_id = room_id
+    
+    def get_participant(self, user_id, room_id):
+        return Participant.query.filter_by(user_id = user_id, room_id = room_id).first()
+    
+    def delete(self):
+        participant = self.get_participant(self.user_id, self.room_id)
+        db.session.delete(participant)
+        db.session.commit()
+
+    def delete_with_user_id_and_room_id(user_id, room_id):
+        return db.engine.execute("DELETE FROM participant WHERE room_id = "+str(room_id)+ " and user_id = "+str(user_id))
 
 class Message(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
@@ -46,3 +79,8 @@ class Message(db.Model):
         self.content = content
         self.sendTime= sendTime
 
+    def get_messages_from_room_id(room_id):
+        return db.engine.execute("SELECT id, user_id, sendTime, content FROM message where room_id = "+str(room_id) )
+
+    def delete_messages_from_room_id(room_id):
+        return db.engine.execute("DELETE FROM message WHERE room_id = "+str(room_id) )

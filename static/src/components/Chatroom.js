@@ -1,10 +1,11 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import * as actionCreators from '../actions/auth';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import { get_messages, get_chatrooms, get_room_members } from '../utils/http_functions';
+import { get_messages, get_chatrooms, get_room_members, leave_group, delete_messages, delete_group } from '../utils/http_functions';
 import io from 'socket.io-client';
 
 function mapStateToProps(state) {
@@ -18,7 +19,7 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
-const socket = io("http://localhost:5000");
+const socket = io(`http://${window.location.hostname}:5000`);
 const sideStyle = {
     fontFamily: "Avenir",
     marginTop: 64,
@@ -66,7 +67,7 @@ const nameStyle = {
 const textStyle = {
     fontFamily: "Avenir",
     position: 'fixed',
-    width: '60%',
+    width: '50%',
     bottom: 0,
     backgroundColor: "#414260"
 };
@@ -85,11 +86,20 @@ const listStyle = {
 
 export default class Chatroom extends React.Component { // eslint-disable-line react/prefer-stateless-function
     constructor(props) {
-        super(props);
+        super(props)
+        var room_id = null
+        var room_name = null
+        try {
+            room_id = this.props.location.state.room_id;
+            room_name = this.props.location.state.name;
+        }
+        catch(err){
+            console.log();
+        }
         this.state = {
-            room_id: null,
-            room_name: null,
-            content: null,
+            room_id: room_id,
+            room_name: room_name,
+            content: "",
             messages: [],
             rooms: [],
             loading: true,
@@ -101,40 +111,62 @@ export default class Chatroom extends React.Component { // eslint-disable-line r
     }
     
     async componentDidMount() {
-        get_messages(this.state.room_id).then(response =>{
-            this.setState({
-                messages: response.data.results,
-                loading: false
-            });
-        });
         get_chatrooms().then(response =>{
-            this.setState({
-                rooms: response.data.results,
-                room_id: response.data.results[0].room_id,
-                room_name: response.data.results[0].name,
-                loading: false,
-            });
-            get_messages(response.data.results[0].room_id).then(response =>{
+            if (this.state.room_id){
                 this.setState({
-                    messages: response.data.results,
+                    rooms: response.data.results,
                     loading: false,
                 });
-            });
-            get_room_members(response.data.results[0].room_id).then(response =>{
-                this.setState({
-                    users: response.data.results,
+                get_messages(this.state.room_id).then(response =>{
+                    this.setState({
+                        messages: response.data.results,
+                        loading: false
+                    });
                 });
-            });
+                get_room_members(this.state.room_id).then(response =>{
+                    this.setState({
+                        users: response.data.results,
+                    });
+                });
+            }
+            else{
+                this.setState({
+                    rooms: response.data.results,
+                    room_id: response.data.results[0].room_id,
+                    room_name: response.data.results[0].name,
+                    loading: false,
+                });
+                get_messages(response.data.results[0].room_id).then(response =>{
+                    this.setState({
+                        messages: response.data.results,
+                        loading: false,
+                    });
+                });
+                get_room_members(response.data.results[0].room_id).then(response =>{
+                    this.setState({
+                        users: response.data.results,
+                    });
+                });
+            }
         })
-        console.log(this.state.room_id, this.state.room_name);
     }
+
+    dispatchNewRoute(route) {
+        browserHistory.push(route);
+        this.setState({
+            open: false,
+        });
+    }
+
     
     updateMessages(message){
         let currentMessages = this.state.messages;
-        currentMessages.push({content: message.content, username: message.username});
-        this.setState({
-            messages: currentMessages,
-        });
+        if (message.room_id == this.state.room_id){
+            currentMessages.push({content: message.content, username: message.username});
+            this.setState({
+                messages: currentMessages,
+            });
+        }
     }
 
     handleMessageSubmit(e){
@@ -172,9 +204,6 @@ export default class Chatroom extends React.Component { // eslint-disable-line r
         this.setState({
             room_id: room.room_id,
             room_name: room.name,
-            users: {
-                username: room.members,
-            },
         });
         get_messages(room.room_id).then(response =>{
             this.setState({
@@ -189,8 +218,37 @@ export default class Chatroom extends React.Component { // eslint-disable-line r
         });
     }
 
+    leaveRoom(room_id){
+        leave_group(room_id);
+        get_room_members(room_id).then(response =>{
+            console.log(response.data.results.length)
+            if(response.data.results.length == 0){
+                delete_messages(room_id).then(response =>{delete_group(response.data.results);});
+            }
+        });
+        get_chatrooms().then(response =>{
+            this.setState({
+                rooms: response.data.results,
+                room_id: response.data.results[0].room_id,
+                room_name: response.data.results[0].name,
+                loading: false,
+            });
+            get_messages(response.data.results[0].room_id).then(response =>{
+                this.setState({
+                    messages: response.data.results,
+                    loading: false,
+                });
+            });
+            get_room_members(response.data.results[0].room_id).then(response =>{
+                this.setState({
+                    users: response.data.results,
+                });
+            });
+        });
+        this.dispatchNewRoute('/chatroom')
+    }
+
     render() {
-        console.log(this.state.users)
         return (
             <div style={{ fontFamily: "Avenir" }}>
                 <div style={sideStyle}>
@@ -208,7 +266,13 @@ export default class Chatroom extends React.Component { // eslint-disable-line r
                 <div style={roomStyle}>
                     <div onKeyPress={(e) => this._handleKeyPress(e)}>
                         <div style={{paddingBottom: '130px'}}>
-                            <h2 style={nameStyle}>Chatroom {this.state.room_name}</h2>
+                            <h2 style={nameStyle}>{this.state.room_name}
+                            <RaisedButton
+                                style={{ marginTop: 30 }}
+                                label={"leave"}
+                                onClick={() => this.leaveRoom(this.state.room_id)}
+                            />
+                            </h2>
                             {this.state.messages.map(message => (
                                 <div
                                 key={message.sendTime+'-'+message.content}
@@ -222,6 +286,7 @@ export default class Chatroom extends React.Component { // eslint-disable-line r
                         </div>
                         <TextField
                         hintText="text"
+                        value={this.state.content}
                         floatingLabelText="text"
                         type="content"
                         errorText={null}
@@ -237,7 +302,7 @@ export default class Chatroom extends React.Component { // eslint-disable-line r
                                 <RaisedButton
                                 style={{ marginTop: 30 }}
                                 label={user.username}
-                                onClick={() => this.switchRoom(room)}
+                                // onClick={() => this.switchRoom(room)}
                                 />
                             </div>
                         ))}

@@ -14,6 +14,7 @@ import Chatrooms from './components/Chatrooms';
 import Chatroom from './components/Chatroom';
 import Profile from './components/Profile';
 import ChangePassword from './components/ChangePassword';
+import CreateGroup from './components/CreateGroup';
 import NotFound from './components/NotFound';
 
 import { DetermineAuth } from './components/DetermineAuth';
@@ -31,6 +32,7 @@ export default (
         <Route path="chatroom" component={requireAuthentication(Chatroom)} />
         <Route path="profile" component={requireAuthentication(Profile)} />
         <Route path="change_password" component={requireAuthentication(ChangePassword)} />
+        <Route path="creategroup" component={requireAuthentication(CreateGroup)} />
         <Route path="*" component={DetermineAuth(NotFound)} />
     </Route>
 );

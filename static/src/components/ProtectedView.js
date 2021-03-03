@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import FlatButton from 'material-ui/FlatButton';
 import * as actionCreators from '../actions/data';
+import { browserHistory } from 'react-router';
 
 const style = {
     paddingTop: 200,
@@ -51,6 +52,13 @@ export default class ProtectedView extends React.Component {
         this.fetchData();
     }
 
+    dispatchNewRoute(route) {
+        browserHistory.push(route);
+        this.setState({
+            open: false,
+        });
+    }
+
 
     fetchData() {
         const token = this.props.token;
@@ -68,7 +76,9 @@ export default class ProtectedView extends React.Component {
                             {this.props.userName}!</p>
                         <p style={pStyle}>Are you ready to find your buddies?</p>
                         <FlatButton style={buttonStyle} label="Yes! Start matching now!" />
-                        <FlatButton style={buttonStyle2} label="Nah, let me create a group!" />
+                        <FlatButton style={buttonStyle2}
+                            label="Nah, let me create a group!"
+                            onClick={(e) => this.dispatchNewRoute("/creategroup")}/>
                     </div>
                 }
             </div>
