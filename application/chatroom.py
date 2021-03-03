@@ -11,20 +11,49 @@ from datetime import datetime
 def dispatch(result):
     return [row for row in result]
 
+@app.route("/api/create_group", methods=["POST"])
+def create_group():
+    incoming = request.get_json()
+    chatroom = Chatroom(
+        name = incoming['name'],
+        tag = incoming['tag'],
+    )
+    db.session.add(chatroom)
+    db.session.commit()
+    participant = Participant(
+        user_id = session['user_id'],
+        room_id = chatroom.room_id,
+    )
+    db.session.add(participant)
+    db.session.commit()
+    return jsonify(results = chatroom.room_id)
+
+@app.route("/api/leave_group", methods=["POST"])
+def leave_group():
+    incoming = request.get_json()
+    Participant.delete_participant_with_user_id_and_room_id(session['user_id'], incoming['room_id'])
+    return jsonify(results = incoming['room_id'])
+
 @app.route("/api/get_chatrooms", methods=["GET"])
 def get_chartooms():
-    result = dispatch(db.engine.execute("SELECT room_id, name FROM chatroom natural join participant where user_id =" + str(session['user_id'])))
+    result = dispatch(Chatroom.get_chatroom_with_user_id(session['user_id']))
     rooms = [{'room_id': row[0], 'name': row[1]} for row in result]
     for room in rooms:
-        res = dispatch(db.engine.execute("SELECT distinct user.id, username FROM user join participant on user.id = participant.user_id where room_id ="+str(room['room_id'])))
+        res = dispatch(Chatroom.get_room_members_with_room_id(room['room_id']))
         res = [ row[1] for row in res]
         room['members'] = res
     return jsonify(results = rooms)
 
+@app.route("/api/delete_group", methods=["POST"])
+def delete_group():
+    incoming = request.get_json()
+    Chatroom.delete_chatroom_with_room_id(incoming['room_id'])
+    return jsonify(results = incoming['room_id'])
+
 @app.route("/api/get_room_members", methods=["POST"])
 def get_room_members():
     incoming = request.get_json()
-    res = dispatch(db.engine.execute("SELECT distinct user.id, username FROM user join participant on user.id = participant.user_id where room_id ="+str(incoming['room_id'])))
+    res = dispatch(Chatroom.get_room_members_with_room_id(incoming['room_id']))
     members = [{'user_id': row[0], 'username': row[1]} for row in res]
     return jsonify(results = members)
 
@@ -46,15 +75,19 @@ def send_message():
 @app.route("/api/get_messages", methods=["POST"])
 def get_messages():
     incoming = request.get_json()
-    res = dispatch(db.engine.execute("SELECT * FROM message where room_id = "+str(incoming['room_id']) ))
-    messages = [{'user_id': row[1], 'sendTime': row[3], 'content': row[4]} for row in res]
+    messages = Message.get_messages_from_room_id(incoming['room_id'])
+    messages = [{'user_id': message.user_id, 'sendTime': message.sendTime, 'content': message.content} for message in messages]
+    print(messages)
     for message in messages:
-        res = dispatch(db.engine.execute("SELECT username FROM user where id ="+str(message['user_id'])))
-        res = [row[0] for row in res]
-        message['username'] = str(res[0])
+        user = User.get_user_with_user_id(message['user_id'])
+        message['username'] = str(user.username)
     return jsonify(results = messages)
 
-
+@app.route("/api/delete_messages", methods=["POST"])
+def delete_messages():
+    incoming = request.get_json()
+    Message.delete_messages_from_room_id(incoming['room_id'])
+    return jsonify(results = incoming['room_id'])
 
 @socketio.on('send message')
 def recieved_message(json, methods=['GET', 'POST']):
