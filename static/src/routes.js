@@ -12,6 +12,7 @@ import ProtectedView from './components/ProtectedView';
 import Analytics from './components/Analytics';
 import Chatrooms from './components/Chatrooms';
 import Chatroom from './components/Chatroom';
+import CreateGroup from './components/CreateGroup';
 import NotFound from './components/NotFound';
 
 import { DetermineAuth } from './components/DetermineAuth';
@@ -27,6 +28,7 @@ export default (
         <Route path="analytics" component={requireAuthentication(Analytics)} />
         <Route path="chatrooms" component={requireAuthentication(Chatrooms)} />
         <Route path="chatroom" component={requireAuthentication(Chatroom)} />
+        <Route path="creategroup" component={requireAuthentication(CreateGroup)} />
         <Route path="*" component={DetermineAuth(NotFound)} />
     </Route>
 );

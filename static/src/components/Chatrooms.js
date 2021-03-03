@@ -15,7 +15,6 @@ function mapStateToProps(state) {
         isAuthenticated: state.auth.isAuthenticated,
         isRegistering: state.auth.isRegistering,
         registerStatusText: state.auth.registerStatusText,
-
     };
 }
 
@@ -43,7 +42,6 @@ export default class Chatrooms extends React.Component { // eslint-disable-line 
         this.setState({
             open: false,
         });
-
     }
 
     chatroom(room_id, room_name){

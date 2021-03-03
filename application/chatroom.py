@@ -11,12 +11,40 @@ from datetime import datetime
 def dispatch(result):
     return [row for row in result]
 
+@app.route("/api/create_group", methods=["POST"])
+def create_group():
+    incoming = request.get_json()
+    chatroom = Chatroom(
+        name = incoming['name'],
+        tag = incoming['tag'],
+    )
+    db.session.add(chatroom)
+    db.session.commit()
+    participant = Participant(
+        user_id = session['user_id'],
+        room_id = chatroom.room_id,
+    )
+    db.session.add(participant)
+    db.session.commit()
+    print('outcoming:', chatroom.room_id)
+    return jsonify(results = chatroom.room_id)
+
+@app.route("/api/leave_group", methods=["POST"])
+def leave_group():
+    incoming = request.get_json()
+    print("\r\n\r\nincoming:",incoming)
+    participant = Participant(
+        user_id = session['user_id'],
+        room_id = incoming['room_id'],
+    )
+    participant.delete()
+
 @app.route("/api/get_chatrooms", methods=["GET"])
 def get_chartooms():
-    result = dispatch(db.engine.execute("SELECT room_id, name FROM chatroom natural join participant where user_id =" + str(session['user_id'])))
+    result = dispatch(Chatroom.get_chatroom_with_user_id(session['user_id']))
     rooms = [{'room_id': row[0], 'name': row[1]} for row in result]
     for room in rooms:
-        res = dispatch(db.engine.execute("SELECT distinct user.id, username FROM user join participant on user.id = participant.user_id where room_id ="+str(room['room_id'])))
+        res = dispatch(Chatroom.get_room_members_with_room_id(room['room_id']))
         res = [ row[1] for row in res]
         room['members'] = res
     return jsonify(results = rooms)
@@ -24,7 +52,7 @@ def get_chartooms():
 @app.route("/api/get_room_members", methods=["POST"])
 def get_room_members():
     incoming = request.get_json()
-    res = dispatch(db.engine.execute("SELECT distinct user.id, username FROM user join participant on user.id = participant.user_id where room_id ="+str(incoming['room_id'])))
+    res = dispatch(Chatroom.get_room_members_with_room_id(incoming['room_id']))
     members = [{'user_id': row[0], 'username': row[1]} for row in res]
     return jsonify(results = members)
 
