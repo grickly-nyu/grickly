@@ -50,8 +50,17 @@ export default class ChangePassword extends React.Component { // eslint-disable-
                 alert("Conflicts between new password and re_enter, please enter the same password.");
             }
             else{
-                change_password(this.state.old_password,this.state.new_password);
-                browserHistory.push('/profile');
+                // change_password(this.state.old_password,this.state.new_password);
+
+                change_password(this.state.old_password,this.state.new_password).then(response =>{
+                    if (!response.data.result){
+                        alert(response.data.message);
+                    }
+                    else{
+                        browserHistory.push('/profile');
+                    }
+                })
+                
             }
         }
         else{

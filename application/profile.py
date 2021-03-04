@@ -53,6 +53,6 @@ def change_password():
     current_profile=get_profile_dict()
     old_password=incoming["old_password"]
     if not User.get_user_with_email_and_password(current_profile["email"],old_password):
-        abort(403,"Invalid old password")
+        return jsonify(result=False, message="Invalid old password. Please try again.")
     db.engine.execute("update user set password = '"+User.hashed_password(incoming["new_password"])+"' where id = "+str(session["user_id"]))
-    return jsonify(results = True)
+    return jsonify(result = True)

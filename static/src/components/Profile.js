@@ -79,11 +79,11 @@ export default class Profile extends React.Component { // eslint-disable-line re
             this.setState({id:response.data.results["user_id"],username: response.data.results["username"],email:response.data.results["email"],created_at:response.data.results["created_at"]});
         })
     }
-    _handleKeyPress(e) {
-        if (e.key == 'Enter') {
-            this.handleMessageSubmit();
-        }
-    }
+    // _handleKeyPress(e) {
+    //     if (e.key == 'Enter') {
+    //         this.handleMessageSubmit();
+    //     }
+    // }
     changeValue(e, type) {
         const value = e.target.value;
         const next_state = {};
