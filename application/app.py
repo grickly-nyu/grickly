@@ -1,6 +1,7 @@
 from flask import request, render_template, jsonify, url_for, redirect, g, session
 from .models import *
 from index import app, db
+from .matching import *
 from sqlalchemy.exc import IntegrityError
 from .utils.auth import generate_token, requires_auth, verify_token
 from sqlalchemy import text
@@ -77,14 +78,6 @@ def get_chartooms():
         res = [row[0] for row in res]
         room['members'] = str(res)
     return jsonify(results = rooms)
-
-@app.route("/api/get_suggestions", methods=["GET"])
-def get_suggestions():
-    # matching 
-    # return list of room ids and room names
-    pass
-
-
 
 
 
