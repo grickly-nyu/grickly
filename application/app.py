@@ -81,7 +81,6 @@ def get_chartooms():
 
 
 
-
 @app.route("/api/send_message", methods=["POST"])
 def send_message():
     incoming = request.get_json()

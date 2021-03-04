@@ -58,3 +58,11 @@ export function send_message(room_id, content){
 // export function get_messages(room_id){
 //     return axios.get('/api/get_messages',{room_id,});
 // }
+
+//  incoming["tag"] 应该是这边的
+
+export function get_suggestions(query_tag){
+    return axios.post('/api/get_suggestions',{
+        query_tag
+    });
+}
