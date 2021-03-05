@@ -27,6 +27,7 @@ export default (
         <Route path="analytics" component={requireAuthentication(Analytics)} />
         <Route path="chatrooms" component={requireAuthentication(Chatrooms)} />
         <Route path="chatroom" component={requireAuthentication(Chatroom)} />
+        <Route path="matching" component={requireAuthentication(Chatroom)} />
         <Route path="*" component={DetermineAuth(NotFound)} />
     </Route>
 );

@@ -13,8 +13,11 @@ import { get_suggestions } from '../utils/http_functions';
 
 function mapStateToProps(state) {
     return {
+        token: state.auth.token,
+        userName: state.auth.userName,
+        isAuthenticated: state.auth.isAuthenticated,
         isRegistering: state.auth.isRegistering,
-        registerStatusText: state.auth.registerStatusText,
+        registerStatusText: state.auth.registerStatusText
     };
 }
 
@@ -46,23 +49,34 @@ export default class Suggestion extends React.Component { // eslint-disable-line
             query_tag = null
             // output 
             loading: true,
-            rooms: []
+            suggested_rooms: []
         };
     }
 // 如果有符合的room, 就推给他. 把room 几个text 和 button 给到,  (最好加上,)
 // 没有的话, 给个button, redirect 到 create a group
+
+    chatroom(room_id, room_name){
+        console.log(this.state)
+        var data = {room_id: room_id, room_name: room_name}
+        var path = {
+            pathname:'/chatroom',
+            state:data,
+        }
+        this.dispatchNewRoute(path)
+    }
+
     _handleKeyPress(e) {
         if (e.key == 'Enter') {
             this.handleMessageSubmit();
         }
     }
+
     changeValue(e, type) {
         const value = e.target.value;
         const next_state = {};
         next_state[type] = value;
-
     }
-
+    
     render() {
         return (
             <div className = "row">
@@ -71,31 +85,34 @@ export default class Suggestion extends React.Component { // eslint-disable-line
                         <div className="text-center">
 
                             <div className="col-md-12">
-                                <TextField
-                                floatingLabelText="old password"
-                                type="content"
-                                errorText={null}
-                                onChange={(e) => this.setState({old_password: e.target.value})}
+                                <RaisedButton
+                                    style={{ marginTop: 50 }}
+                                    label="tag1"
+                                    onClick={() => this.handleMessageSubmit()}
                                 />
-                                <TextField
-                                floatingLabelText="New password"
-                                type="content"
-                                errorText={null}
-                                onChange={(e) => this.setState({new_password: e.target.value})}
+                                <RaisedButton
+                                    style={{ marginTop: 50 }}
+                                    label="tag2"
+                                    onClick={() => this.handleMessageSubmit()}
                                 />
-                                <TextField
-                                floatingLabelText="Re-enter your new password"
-                                type="content"
-                                errorText={null}
-                                onChange={(e) => this.setState({re_enter: e.target.value})}
+                                <RaisedButton
+                                    style={{ marginTop: 50 }}
+                                    label="tag3"
+                                    onClick={() => this.handleMessageSubmit()}
+                                />
+                                <RaisedButton
+                                    style={{ marginTop: 50 }}
+                                    label="tag4"
+                                    onClick={() => this.handleMessageSubmit()}
                                 />
                             </div>
                             <div>
-                                <RaisedButton
-                                    style={{ marginTop: 50 }}
-                                    label="Confirm change of password"
-                                    onClick={() => this.handleMessageSubmit()}
-                                />
+                                <TextField
+                                    floatingLabelText="Or type your tag"
+                                    type="content"
+                                    errorText={null}
+                                    onChange={(e) => this.setState({query_tag: e.target.value})}
+                                />  
                             </div>
                         </div>
                     </Paper>
