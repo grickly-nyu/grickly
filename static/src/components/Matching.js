@@ -50,9 +50,7 @@ export default class Suggestion extends React.Component { // eslint-disable-line
             // output 
             loading: true,
             suggested_rooms: [],
-            tag1: false,
-            tag2: false,
-            tag3: false,
+            bool_tags: {"tag1":false,"tag2":false,"tag3":false},
             // how to match the field to the label
         };
     }
@@ -83,6 +81,7 @@ export default class Suggestion extends React.Component { // eslint-disable-line
             this.handleMessageSubmit();
         }
     }
+    // 
 
     changeValue(e, type) {
         const value = e.target.value;
@@ -100,22 +99,17 @@ export default class Suggestion extends React.Component { // eslint-disable-line
                                 <RaisedButton
                                     style={{ marginTop: 50 }}
                                     label="tag1"
-                                    onClick={() => this.handleMessageSubmit()}
+                                    onClick={() => this.handleClickSubmit()}
                                 />
                                 <RaisedButton
                                     style={{ marginTop: 50 }}
                                     label="tag2"
-                                    onClick={() => this.handleMessageSubmit()}
+                                    onClick={() => this.handleClickSubmit()}
                                 />
                                 <RaisedButton
                                     style={{ marginTop: 50 }}
                                     label="tag3"
-                                    onClick={() => this.handleMessageSubmit()}
-                                />
-                                <RaisedButton
-                                    style={{ marginTop: 50 }}
-                                    label="tag4"
-                                    onClick={() => this.handleMessageSubmit()}
+                                    onClick={() => this.handleClickSubmit()}
                                 />
                             </div>
                             <div>
