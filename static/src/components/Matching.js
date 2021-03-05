@@ -40,26 +40,26 @@ const style = {
 
 @connect(mapStateToProps, mapDispatchToProps)
 
-export default class Suggestion extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export default class Matching extends React.Component { // eslint-disable-line react/prefer-stateless-function
     constructor(props) {
         super(props);
         this.state = {
-            // input 
             query_tag: null,
-            // output 
             loading: true,
             suggested_rooms: [],
             bool_tags: {"tag1":false,"tag2":false,"tag3":false},
-            // how to match the field to the label
         };
     }
 
+    handleSubmit(){
+        if (this.query_tag) {
 
-// 如果有符合的room, 就推给他. 把room 几个text 和 button 给到,  (最好加上,)
-// 没有的话, 给个button, redirect 到 create a group
-    handleMessageSubmit(){
-
-    }
+        }
+           
+        else{
+            alert('Input must not be empty');
+        }
+      }
 
 
     dispatchNewRoute(route) {
@@ -67,8 +67,8 @@ export default class Suggestion extends React.Component { // eslint-disable-line
         this.setState({
             open: false,
         });
-
     }
+
     chatroom(room_id, room_name){
         console.log(this.state)
         var data = {room_id: room_id, room_name: room_name}
@@ -92,7 +92,11 @@ export default class Suggestion extends React.Component { // eslint-disable-line
         const value = e.target.value;
         const next_state = {};
         next_state[type] = value;
+        this.setState(next_state, () => {
+            this.isDisabled();
+        });
     }
+
     
     render() {
         return (
@@ -104,17 +108,17 @@ export default class Suggestion extends React.Component { // eslint-disable-line
                                 <RaisedButton
                                     style={{ marginTop: 50 }}
                                     label="tag1"
-                                    onClick={() => this.handleClickSubmit()}
+                                    onClick={() => this.setState({query_tag: "tag1"}) }
                                 />
                                 <RaisedButton
                                     style={{ marginTop: 50 }}
                                     label="tag2"
-                                    onClick={() => this.handleClickSubmit()}
+                                    onClick={() => this.setState({query_tag: "tag2"}) }
                                 />
                                 <RaisedButton
                                     style={{ marginTop: 50 }}
                                     label="tag3"
-                                    onClick={() => this.handleClickSubmit()}
+                                    onClick={() => this.setState({query_tag: "tag3"}) }
                                 />
                             </div>
                             <div>
@@ -122,7 +126,7 @@ export default class Suggestion extends React.Component { // eslint-disable-line
                                     floatingLabelText="Or type your tag here"
                                     type="content"
                                     errorText={null}
-                                    onChange={(e) => this.setState({query_tag: e.target.value})}
+                                    onChange={(e) => this.changeValue(e,"content")}
                                 />  
                             </div>
                         </div>

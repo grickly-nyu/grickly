@@ -13,6 +13,7 @@ import Analytics from './components/Analytics';
 import Chatrooms from './components/Chatrooms';
 import Chatroom from './components/Chatroom';
 import NotFound from './components/NotFound';
+import Matching from './components/Matching';
 
 import { DetermineAuth } from './components/DetermineAuth';
 import { requireAuthentication } from './components/AuthenticatedComponent';
@@ -27,7 +28,7 @@ export default (
         <Route path="analytics" component={requireAuthentication(Analytics)} />
         <Route path="chatrooms" component={requireAuthentication(Chatrooms)} />
         <Route path="chatroom" component={requireAuthentication(Chatroom)} />
-        <Route path="matching" component={requireAuthentication(Chatroom)} />
+        <Route path="matching" component={requireAuthentication(Matching)} />
         <Route path="*" component={DetermineAuth(NotFound)} />
     </Route>
 );

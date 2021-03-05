@@ -13,7 +13,7 @@ def get_suggestions():
     # matching return a list of room ids and room names, up to 10
     incoming = request.get_json()
     query_tag = incoming["query_tag"]
-    result = dispatch(db.engine.execute("SELECT room_id, name FROM chatroom where tag = query_tag"))
+    result = dispatch(db.engine.execute("SELECT room_id, name FROM chatroom where tag ="+ str(query_tag)))
 
     suggested_rooms = [{'room_id': row[0], 'name': row[1]} for row in result]
     for room in suggested_rooms:
