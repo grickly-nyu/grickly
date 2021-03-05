@@ -38,7 +38,6 @@ const style = {
 
 //  block 1
 
-
 @connect(mapStateToProps, mapDispatchToProps)
 
 export default class Suggestion extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -54,8 +53,14 @@ export default class Suggestion extends React.Component { // eslint-disable-line
             // how to match the field to the label
         };
     }
+
+
 // 如果有符合的room, 就推给他. 把room 几个text 和 button 给到,  (最好加上,)
 // 没有的话, 给个button, redirect 到 create a group
+    handleMessageSubmit(){
+
+    }
+
 
     dispatchNewRoute(route) {
         browserHistory.push(route);

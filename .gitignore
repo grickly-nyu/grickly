@@ -1,6 +1,7 @@
 *.db
 .DS_Store
 venv
+.json
 .vscode
 env
 __pycache__
