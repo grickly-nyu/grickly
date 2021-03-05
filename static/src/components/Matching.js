@@ -36,7 +36,7 @@ const style = {
     fontFamily: "AvenirNext-Medium"
 };
 
-//  block 1
+// block 1
 
 @connect(mapStateToProps, mapDispatchToProps)
 
@@ -47,15 +47,15 @@ export default class Matching extends React.Component { // eslint-disable-line r
             query_tag: null,
             loading: true,
             suggested_rooms: [],
-            bool_tags: {"tag1":false,"tag2":false,"tag3":false},
         };
     }
 
     handleSubmit(){
         if (this.query_tag) {
-
+            get_suggestions().then(response =>{
+                this.setState({ query_tag: null, suggested_rooms: response.data.results , loading: false});
+            })
         }
-           
         else{
             alert('Input must not be empty');
         }
@@ -69,7 +69,7 @@ export default class Matching extends React.Component { // eslint-disable-line r
         });
     }
 
-    chatroom(room_id, room_name){
+    go_chatroom(room_id, room_name){
         console.log(this.state)
         var data = {room_id: room_id, room_name: room_name}
         var path = {
@@ -83,10 +83,9 @@ export default class Matching extends React.Component { // eslint-disable-line r
     // actually not really need this. after text box input then submit button
     _handleKeyPress(e) {
         if (e.key == 'Enter') {
-            this.handleMessageSubmit();
+            this.handleSubmit();
         }
     }
-    // 
 
     changeValue(e, type) {
         const value = e.target.value;
@@ -97,7 +96,6 @@ export default class Matching extends React.Component { // eslint-disable-line r
         });
     }
 
-    
     render() {
         return (
             <div className = "row">
@@ -108,25 +106,26 @@ export default class Matching extends React.Component { // eslint-disable-line r
                                 <RaisedButton
                                     style={{ marginTop: 50 }}
                                     label="tag1"
-                                    onClick={() => this.setState({query_tag: "tag1"}) }
+                                    onClick={() => this.setState({query_tag: "tag1"})}
                                 />
                                 <RaisedButton
                                     style={{ marginTop: 50 }}
                                     label="tag2"
-                                    onClick={() => this.setState({query_tag: "tag2"}) }
+                                    onClick={() => this.setState({query_tag: "tag2"})}
                                 />
                                 <RaisedButton
                                     style={{ marginTop: 50 }}
                                     label="tag3"
-                                    onClick={() => this.setState({query_tag: "tag3"}) }
+                                    onClick={() => this.setState({query_tag: "tag3"})}
                                 />
                             </div>
                             <div>
                                 <TextField
                                     floatingLabelText="Or type your tag here"
-                                    type="content"
+                                    type="cus_tag"
                                     errorText={null}
-                                    onChange={(e) => this.changeValue(e,"content")}
+                                    onChange={(e) => this.changeValue(e,"cus_tag")}
+                                    onKeyPress={(e) => this._handleKeyPress() }
                                 />  
                             </div>
                         </div>
