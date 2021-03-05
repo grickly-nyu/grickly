@@ -50,7 +50,10 @@ export default class Suggestion extends React.Component { // eslint-disable-line
             // output 
             loading: true,
             suggested_rooms: [],
-            // 
+            tag1: false,
+            tag2: false,
+            tag3: false,
+            // how to match the field to the label
         };
     }
 // 如果有符合的room, 就推给他. 把room 几个text 和 button 给到,  (最好加上,)
@@ -117,7 +120,7 @@ export default class Suggestion extends React.Component { // eslint-disable-line
                             </div>
                             <div>
                                 <TextField
-                                    floatingLabelText="Or type your tag"
+                                    floatingLabelText="Or type your tag here"
                                     type="content"
                                     errorText={null}
                                     onChange={(e) => this.setState({query_tag: e.target.value})}
