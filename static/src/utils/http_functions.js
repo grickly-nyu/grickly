@@ -63,6 +63,6 @@ export function send_message(room_id, content){
 
 export function get_suggestions(query_tag){
     return axios.get('/api/get_suggestions',{
-        query_tag
+        query_tag,
     });
 }

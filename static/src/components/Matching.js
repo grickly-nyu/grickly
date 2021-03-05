@@ -46,15 +46,23 @@ export default class Suggestion extends React.Component { // eslint-disable-line
         super(props);
         this.state = {
             // input 
-            query_tag = null
+            query_tag: null,
             // output 
             loading: true,
-            suggested_rooms: []
+            suggested_rooms: [],
+            // 
         };
     }
 // 如果有符合的room, 就推给他. 把room 几个text 和 button 给到,  (最好加上,)
 // 没有的话, 给个button, redirect 到 create a group
 
+    dispatchNewRoute(route) {
+        browserHistory.push(route);
+        this.setState({
+            open: false,
+        });
+
+    }
     chatroom(room_id, room_name){
         console.log(this.state)
         var data = {room_id: room_id, room_name: room_name}
@@ -65,6 +73,8 @@ export default class Suggestion extends React.Component { // eslint-disable-line
         this.dispatchNewRoute(path)
     }
 
+    // for text box input only
+    // actually not really need this. after text box input then submit button
     _handleKeyPress(e) {
         if (e.key == 'Enter') {
             this.handleMessageSubmit();
@@ -83,7 +93,6 @@ export default class Suggestion extends React.Component { // eslint-disable-line
                 <div className="col-md-3  col-md-offset-1">
                     <Paper style={style}>
                         <div className="text-center">
-
                             <div className="col-md-12">
                                 <RaisedButton
                                     style={{ marginTop: 50 }}
