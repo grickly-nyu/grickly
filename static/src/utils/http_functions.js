@@ -62,7 +62,7 @@ export function send_message(room_id, content){
 //  incoming["tag"] 应该是这边的
 
 export function get_suggestions(query_tag){
-    return axios.post('/api/get_suggestions',{
+    return axios.get('/api/get_suggestions',{
         query_tag
     });
 }
