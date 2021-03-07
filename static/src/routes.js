@@ -12,6 +12,8 @@ import ProtectedView from './components/ProtectedView';
 import Analytics from './components/Analytics';
 import Chatrooms from './components/Chatrooms';
 import Chatroom from './components/Chatroom';
+import Profile from './components/Profile';
+import ChangePassword from './components/ChangePassword';
 import NotFound from './components/NotFound';
 
 import { DetermineAuth } from './components/DetermineAuth';
@@ -27,6 +29,8 @@ export default (
         <Route path="analytics" component={requireAuthentication(Analytics)} />
         <Route path="chatrooms" component={requireAuthentication(Chatrooms)} />
         <Route path="chatroom" component={requireAuthentication(Chatroom)} />
+        <Route path="profile" component={requireAuthentication(Profile)} />
+        <Route path="change_password" component={requireAuthentication(ChangePassword)} />
         <Route path="*" component={DetermineAuth(NotFound)} />
     </Route>
 );

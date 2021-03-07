@@ -62,3 +62,15 @@ export function send_message(room_id, content){
 export function get_messages(room_id){
     return axios.post('/api/get_messages',{room_id,});
 }
+
+export function modify_profile(new_username,new_email){
+    return axios.post('/api/modify_profile',{new_username,new_email});
+}
+
+export function get_profile(){
+    return axios.post('/api/get_profile');
+}
+
+export function change_password(old_password,new_password){
+    return axios.post("/api/change_password",{old_password,new_password})
+}

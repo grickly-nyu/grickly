@@ -3,6 +3,7 @@ from flask_socketio import SocketIO, emit, join_room, leave_room, \
     close_room, rooms, disconnect
 from .models import *
 from .chatroom import *
+from .profile import *
 from index import app, db, socketio
 from sqlalchemy.exc import IntegrityError
 from .utils.auth import generate_token, requires_auth, verify_token
@@ -41,7 +42,9 @@ def create_user():
         return jsonify(message="User with that email already exists"), 409
 
     new_user = User.query.filter_by(email=incoming["email"]).first()
-
+    
+    db.engine.execute("insert into user_info values("+str(new_user.id)+",now(),null)")
+    
     return jsonify(
         id=user.id,
         token=generate_token(new_user)
