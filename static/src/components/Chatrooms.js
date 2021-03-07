@@ -23,8 +23,6 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
-
-
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Chatrooms extends React.Component { // eslint-disable-line react/prefer-stateless-function
     state = {
