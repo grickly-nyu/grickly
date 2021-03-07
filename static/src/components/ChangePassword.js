@@ -6,7 +6,6 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import {change_password} from '../utils/http_functions';
-import axios from 'axios';
 import { browserHistory } from 'react-router';
 
 function mapStateToProps(state) {

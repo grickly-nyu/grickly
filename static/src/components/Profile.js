@@ -6,7 +6,6 @@ import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import {get_profile, modify_profile} from '../utils/http_functions';
-import axios from 'axios';
 import { browserHistory } from 'react-router';
 
 function mapStateToProps(state) {
@@ -28,7 +27,7 @@ const style = {
     display: 'inline-block',
     color: "white",
     backgroundColor: "rgba(255, 255, 255, 0.25)",
-    fontFamily: "AvenirNext-Medium"
+    fontFamily: "Avenir"
 };
 
 @connect(mapStateToProps, mapDispatchToProps)

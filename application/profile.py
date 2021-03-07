@@ -7,7 +7,6 @@ from sqlalchemy.exc import IntegrityError
 from .utils.auth import generate_token, requires_auth, verify_token
 from sqlalchemy import text
 from datetime import datetime
-# import json
 
 def dispatch(result):
     return [row for row in result]
@@ -15,11 +14,6 @@ def dispatch(result):
 def get_profile_dict():
     res = dispatch(db.engine.execute("select id,username,email,created_at from user join user_info on user.id=user_info.user_id where id=" + str(session["user_id"]) ))
     info = {'user_id': res[0][0], 'username': res[0][1], 'email': res[0][2],"created_at":res[0][3]}
-    
-    # print(info)
-    # a=dispatch(db.engine.execute("select password from user where id=" + str(session["user_id"]) ))
-    # print(a[0][0])
-    # print(User.hashed_password("12345678"))
     return info
 
 @app.route("/api/modify_profile", methods=["POST"])
@@ -40,11 +34,6 @@ def modify_profile():
 @app.route("/api/get_profile", methods=["POST"])
 def get_profile():
     info = get_profile_dict()
-    # print(info)
-    # res = dispatch(db.engine.execute("select password from user where id=" + str(session["user_id"]) ))
-    # print(res[0][0])
-    # print(User.hashed_password("hnzhang"))
-    
     return jsonify(results = info)
     
 @app.route("/api/change_password", methods=["POST"])
@@ -56,3 +45,4 @@ def change_password():
         return jsonify(result=False, message="Invalid old password. Please try again.")
     db.engine.execute("update user set password = '"+User.hashed_password(incoming["new_password"])+"' where id = "+str(session["user_id"]))
     return jsonify(result = True)
+    
