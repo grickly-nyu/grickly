@@ -69,3 +69,11 @@ export function send_message(room_id, content){
 export function get_messages(room_id){
     return axios.post('/api/get_messages',{room_id,});
 }
+
+export function get_suggestions(query_tag){
+    return axios.post('/api/get_suggestions',{query_tag,});
+}
+
+export function join_chatroom(room_id){
+    return axios.post('/api/join_chatroom',{room_id,});
+}

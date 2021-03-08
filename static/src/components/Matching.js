@@ -4,10 +4,13 @@ import { connect } from 'react-redux';
 import * as actionCreators from '../actions/auth';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
+
+import CircularProgress  from 'material-ui/CircularProgress';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 
+import { join_chatroom } from '../utils/http_functions'; 
 import { get_suggestions } from '../utils/http_functions'; 
 
 
@@ -24,11 +27,38 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
+
+const sideStyle = {
+    fontFamily: "Avenir",
+    marginTop: 64,
+    width: '20%',
+    height: '100vh',
+    position: 'fixed',
+    justifyContent: 'center',
+    display: 'flex',
+    borderStyle: 'none solid none none',
+    borderWidth: '1px',
+    borderColor: '#01012b',
+    fontSize: '20px',
+    fontWeight: 500,
+    backgroundColor: "rgba(255, 255, 255, 0.25)",
+};
+
+const groupStyle = {
+    color: '#ff577d',
+    borderStyle: 'none none solid none',
+    borderWidth: '1px',
+    borderColor: '#01012b',
+    paddingTop: 50,
+    paddingBottom: 35,
+    backgroundColor: "rgba(255, 255, 255, 0.10)",
+};
+
 const style = {
-    marginTop: 400,
-    paddingTop: 25,
+    marginTop: 440,
+    paddingTop: 50,
     paddingBottom: 40,
-    width: '200%',
+    width: '100%',
     textAlign: 'center',
     display: 'inline-block',
     color: "white",
@@ -36,7 +66,7 @@ const style = {
     fontFamily: "Avenir",
 };
 
-const styles = {
+const other_styles = {
     errorStyle: {
       color: "white",
     },
@@ -58,21 +88,38 @@ export default class Matching extends React.Component { // eslint-disable-line r
     constructor(props) {
         super(props);
         this.state = {
-            query_tag: null,
+            query_tag: '',
             loading: true,
-            suggested_rooms: [],
+            suggested_rooms: [{room_id:"24",name:"room 10"},
+                            {room_id:"26",name:"study"},
+                            {room_id:"27",name:"Poker"}],
         };
     }
 
-    handleSubmit(){
-        if (this.query_tag) {
-            get_suggestions().then(response =>{
-                this.setState({ query_tag: null, suggested_rooms: response.data.results , loading: false});
-            })
-        }
-        else{
-            alert('Input must not be empty');
-        }
+    progress(props) {
+        return (
+            <React.Fragment>
+            <CircularProgress variant="determinate" value={props.value} />
+            <LinearProgress variant="determinate" value={props.value} />
+            </React.Fragment>
+        )
+    }
+
+
+    handleSubmit(tag){
+        this.setState({query_tag: tag})
+        console.log("query_tag:",this.query_tag)
+        get_suggestions(tag).then(response =>{
+            console.log("response.data.results:",response.data.results)
+            var rooms = response.data.results
+            this.setState({ query_tag: null, loading: false, suggested_rooms: rooms });
+            console.log(rooms)
+        })
+
+        // else{
+        //     alert('Input must not be empty');
+        //     return 
+        // }
       }
 
     dispatchNewRoute(route) {
@@ -82,12 +129,14 @@ export default class Matching extends React.Component { // eslint-disable-line r
         });
     }
 
-    chatroom(room_id, room_name){
+    go_chatroom(room_id, room_name){
+        join_chatroom(room_id)
+
         console.log(this.state)
-        var data = {room_id: room_id, room_name: room_name}
+        var state_data = {room_id: room_id, name: room_name}
         var path = {
             pathname:'/chatroom',
-            state:data,
+            state: state_data,
         }
         this.dispatchNewRoute(path)
     }
@@ -100,6 +149,12 @@ export default class Matching extends React.Component { // eslint-disable-line r
         }
     }
 
+    handleChange = (event, index, value) => {
+        this.setState({tag:value}, ()=>{
+            this.isDisabled();
+        });
+    }
+
     changeValue(e, type) {
         const value = e.target.value;
         const next_state = {};
@@ -109,39 +164,50 @@ export default class Matching extends React.Component { // eslint-disable-line r
         });
     }
 
+
     render() {
         return (
-            <div className = "row">
-                <div className="col-md-3  col-md-offset-1">
+            <div style={{ fontFamily: "Avenir" }}>
+                <div style={sideStyle}>
+                    <div style={{ width:'100%' }}>
+                        {this.state.suggested_rooms.map(room => (
+                            <div 
+                            key={room.room_id}
+                            onClick={() => this.go_chatroom(room.room_id,room.name)}
+                            style={groupStyle}>
+                                <p className='text-center'>{room.name}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+         
+            <div className="col-md-4  col-md-offset-5">
                     <Paper style={style}>
                         <div className="text-center">
                             <div className="col-md-12">
                                 <RaisedButton
                                     style={{ marginTop: 50 }}
-                                    label="tag1"
-                                    onClick={() => this.setState({query_tag: "tag1"})}
+                                label="life"
+                                onClick={() => this.handleSubmit("life")}
                                 />
                                 <RaisedButton
                                     style={{ marginTop: 50 }}
-                                    label="tag2"
-                                    onClick={() => this.setState({query_tag: "tag2"})}
+                                label="poker"
+                                onClick={() => this.handleSubmit("poker")}
                                 />
                                 <RaisedButton
                                     style={{ marginTop: 50 }}
-                                    label="tag3"
-                                    onClick={() => this.setState({query_tag: "tag3"})}
+                                label="study"
+                                onClick={() => this.handleSubmit("study")}
                                 />
                             </div>
                             <div>
                                 <TextField
                                     floatingLabelText="Or type your tag here"
-                                    type="cus_tag"
+                                type="text"
                                     errorText={null}
-                                    onChange={(e) => this.changeValue(e,"cus_tag")}
-                                    onKeyPress={(e) => this._handleKeyPress() }
+                                onChange={(e) => this.changeValue(e,"custom_tag")}
                                 />
-
-
                                  <RaisedButton
                                     disabled={this.state.disabled}
                                     style={{ marginTop: 60 }}
@@ -150,6 +216,12 @@ export default class Matching extends React.Component { // eslint-disable-line r
                                 />  
                             </div>
                         </div>
+
+                        <CircularProgress />
+                           {"Loading..."}
+                        <CircularProgress color="secondary" />
+                        <div>
+                    </div>
                     </Paper>
                 </div>
             </div>
