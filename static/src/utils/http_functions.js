@@ -48,21 +48,24 @@ export function get_chatrooms(){
     return axios.get('/api/get_chatrooms');
 }
 
+export function create_group(name, tag){
+    return axios.post('/api/create_group',{name, tag,});
+}
+
+export function leave_group(room_id){
+    return axios.post('/api/leave_group',{room_id,});
+}
+
+export function get_room_members(room_id){
+    return axios.post('/api/get_room_members',{room_id,});
+}
+
 export function send_message(room_id, content){
     return axios.post('/api/send_message',{
         room_id,
         content,
     });
 }
-
-// export function get_messages(room_id){
-//     return axios.get('/api/get_messages',{room_id,});
-// }
-
-//  incoming["tag"] 应该是这边的
-
-export function get_suggestions(query_tag){
-    return axios.get('/api/get_suggestions',{
-        query_tag,
-    });
+export function get_messages(room_id){
+    return axios.post('/api/get_messages',{room_id,});
 }

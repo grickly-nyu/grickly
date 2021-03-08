@@ -11,23 +11,22 @@ const dispatchNewRoute = (route) => {
 
 const style = {
     color: "#ff2a6d",
-    marginTop: 100,
-    paddingBottom: 50,
-    paddingTop: 50,
+    paddingTop: 300,
     width: '100%',
     textAlign: 'center',
 };
 
 const titleStyle = {
     fontWeight: 550,
-    fontSize: "67px",
-    fontFamily: "AvenirNext-Medium",
+    fontSize: "88px",
+    fontFamily: "Avenir",
 }
 
 const pStyle = {
     color: "#ff577d",
-    fontFamily: "AvenirNext-UltraLight",
-    paddingBottom: "50px"
+    fontFamily: "Avenir",
+    fontSize: "20px",
+    paddingBottom: "50px",
 }
 
 const buttonStyle = {

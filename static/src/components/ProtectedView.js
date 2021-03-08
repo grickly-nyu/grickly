@@ -6,20 +6,21 @@ import * as actionCreators from '../actions/data';
 import { browserHistory } from 'react-router';
 
 const style = {
+    paddingTop: 200,
     color: "#ff2a6d",
-    fontFamily: "AvenirNext-Regular",
+    fontFamily: "Avenir",
 }
 
 const titleStyle = {
     fontWeight: 550,
-    fontSize: "44px",
-    fontFamily: "AvenirNext-Medium",
+    fontSize: "50px",
+    fontFamily: "Avenir",
 }
 
 const pStyle = {
     color: "white",
     fontSize: "20px",
-    fontFamily: "AvenirNext-UltraLight",
+    fontFamily: "Avenir",
     marginBottom: "40px"
 }
 
@@ -73,10 +74,10 @@ export default class ProtectedView extends React.Component {
                         <p style={titleStyle}>Welcome back to Grickly,
                             {this.props.userName}!</p>
                         <p style={pStyle}>Are you ready to find your buddies?</p>
-                        <FlatButton style={buttonStyle} label="Yes! Start matching now!"
-                        onClick={() => this.go_matching()}
-                        />
-                        <FlatButton style={buttonStyle2} label="Nah, let me create a group!" />
+                        <FlatButton style={buttonStyle} label="Yes! Start matching now!" />
+                        <FlatButton style={buttonStyle2}
+                            label="Nah, let me create a group!"
+                            onClick={(e) => this.dispatchNewRoute("/creategroup")}/>
                     </div>
                 }
             </div>

@@ -24,15 +24,15 @@ function mapDispatchToProps(dispatch) {
 }
 
 const style = {
-    marginTop: 50,
-    paddingBottom: 40,
+    marginTop: 230,
     paddingTop: 25,
+    paddingBottom: 40,
     width: '100%',
     textAlign: 'center',
     display: 'inline-block',
     color: "white",
     backgroundColor: "rgba(255, 255, 255, 0.25)",
-    fontFamily: "AvenirNext-Medium"
+    fontFamily: "Avenir"
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -129,7 +129,7 @@ export default class RegisterView extends React.Component {
             <div className="col-md-6 col-md-offset-3" onKeyPress={(e) => this._handleKeyPress(e)}>
                 <Paper style={style}>
                     <div className="text-center">
-                        <h2>Register to Grickly now!</h2>
+                        <h2 style={{fontWeight: 500}}>Register to Grickly now!</h2>
                         {
                             this.props.registerStatusText &&
                                 <div className="alert alert-info">

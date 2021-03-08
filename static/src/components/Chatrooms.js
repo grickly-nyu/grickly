@@ -15,13 +15,14 @@ function mapStateToProps(state) {
         isAuthenticated: state.auth.isAuthenticated,
         isRegistering: state.auth.isRegistering,
         registerStatusText: state.auth.registerStatusText,
-
     };
 }
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
+
+
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Chatrooms extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -41,7 +42,6 @@ export default class Chatrooms extends React.Component { // eslint-disable-line 
         this.setState({
             open: false,
         });
-
     }
 
     chatroom(room_id, room_name){
@@ -77,9 +77,9 @@ export default class Chatrooms extends React.Component { // eslint-disable-line 
    
                 </div>
             ))}
-
             </div>
-     
+
+            
                 
             
         );
