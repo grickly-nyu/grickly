@@ -68,4 +68,3 @@ class Message(db.Model):
         self.room_id = room_id
         self.content = content
         self.sendTime= sendTime
-

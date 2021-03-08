@@ -25,17 +25,31 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 const style = {
-    marginTop: 50,
-    paddingBottom: 40,
+    marginTop: 400,
     paddingTop: 25,
-    width: '100%',
+    paddingBottom: 40,
+    width: '200%',
     textAlign: 'center',
     display: 'inline-block',
     color: "white",
     backgroundColor: "rgba(255, 255, 255, 0.25)",
-    fontFamily: "AvenirNext-Medium"
+    fontFamily: "Avenir",
 };
 
+const styles = {
+    errorStyle: {
+      color: "white",
+    },
+    underlineStyle: {
+      borderColor: "white",
+    },
+    floatingLabelStyle: {
+      color: "white",
+    },
+    floatingLabelFocusStyle: {
+      color: "white",
+    },
+  };
 // block 1
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -61,7 +75,6 @@ export default class Matching extends React.Component { // eslint-disable-line r
         }
       }
 
-
     dispatchNewRoute(route) {
         browserHistory.push(route);
         this.setState({
@@ -69,7 +82,7 @@ export default class Matching extends React.Component { // eslint-disable-line r
         });
     }
 
-    go_chatroom(room_id, room_name){
+    chatroom(room_id, room_name){
         console.log(this.state)
         var data = {room_id: room_id, room_name: room_name}
         var path = {
@@ -126,6 +139,14 @@ export default class Matching extends React.Component { // eslint-disable-line r
                                     errorText={null}
                                     onChange={(e) => this.changeValue(e,"cus_tag")}
                                     onKeyPress={(e) => this._handleKeyPress() }
+                                />
+
+
+                                 <RaisedButton
+                                    disabled={this.state.disabled}
+                                    style={{ marginTop: 60 }}
+                                    label="Submit"
+                                    onClick={(e) => this.createGroup(e)}
                                 />  
                             </div>
                         </div>

@@ -52,16 +52,16 @@ export default class ProtectedView extends React.Component {
         this.fetchData();
     }
 
-    go_matching(){
-        var path = {
-            pathname:'/matching',
-        }
-        browserHistory.push(path);
-    }
-
     fetchData() {
         const token = this.props.token;
         this.props.fetchProtectedData(token);
+    }
+
+    dispatchNewRoute(route) {
+        browserHistory.push(route);
+        this.setState({
+            open: false,
+        });
     }
 
     render() {
@@ -74,7 +74,8 @@ export default class ProtectedView extends React.Component {
                         <p style={titleStyle}>Welcome back to Grickly,
                             {this.props.userName}!</p>
                         <p style={pStyle}>Are you ready to find your buddies?</p>
-                        <FlatButton style={buttonStyle} label="Yes! Start matching now!" />
+                        <FlatButton style={buttonStyle} label="Yes! Start matching now!" 
+                            onClick={(e) => this.dispatchNewRoute("/matching")}/>
                         <FlatButton style={buttonStyle2}
                             label="Nah, let me create a group!"
                             onClick={(e) => this.dispatchNewRoute("/creategroup")}/>
