@@ -80,7 +80,7 @@ const other_styles = {
       color: "white",
     },
   };
-// block 1
+
 
 @connect(mapStateToProps, mapDispatchToProps)
 
@@ -96,23 +96,26 @@ export default class Matching extends React.Component { // eslint-disable-line r
         };
     }
 
-    progress(props) {
-        return (
-            <React.Fragment>
-            <CircularProgress variant="determinate" value={props.value} />
-            <LinearProgress variant="determinate" value={props.value} />
-            </React.Fragment>
-        )
-    }
-
+    // progress(props) {
+    //     return (
+    //         <React.Fragment>
+    //         <CircularProgress variant="determinate" value={props.value} />
+    //         <LinearProgress variant="determinate" value={props.value} />
+    //         </React.Fragment>
+    //     )
+    // }
 
     handleSubmit(tag){
         this.setState({query_tag: tag})
         console.log("query_tag:",this.query_tag)
-        get_suggestions(tag).then(response =>{
+        get_suggestions(this.query_tag).then(response =>{
             console.log("response.data.results:",response.data.results)
             var rooms = response.data.results
-            this.setState({ query_tag: null, loading: false, suggested_rooms: rooms });
+            this.setState({ 
+                query_tag: '' , 
+                loading: false, 
+                suggested_rooms: rooms, });
+
             console.log(rooms)
         })
 
@@ -156,14 +159,17 @@ export default class Matching extends React.Component { // eslint-disable-line r
     }
 
     changeValue(e, type) {
-        const value = e.target.value;
+     
+        // if (e.target.value.length > 10){
+        //     return 
+        //     // long tags are not
+        // }
         const next_state = {};
-        next_state[type] = value;
+        next_state[type] = e.target.value;
         this.setState(next_state, () => {
             this.isDisabled();
         });
     }
-
 
     render() {
         return (
@@ -204,15 +210,15 @@ export default class Matching extends React.Component { // eslint-disable-line r
                             <div>
                                 <TextField
                                     floatingLabelText="Or type your tag here"
-                                type="text"
+                                    type="text"
                                     errorText={null}
-                                onChange={(e) => this.changeValue(e,"custom_tag")}
+                                onChange={(e) => this.changeValue(e,"text")}
                                 />
                                  <RaisedButton
                                     disabled={this.state.disabled}
                                     style={{ marginTop: 60 }}
                                     label="Submit"
-                                    onClick={(e) => this.createGroup(e)}
+                                    onClick={(e) => this.handleSubmit(this.query_tag)}
                                 />  
                             </div>
                         </div>
