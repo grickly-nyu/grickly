@@ -90,9 +90,7 @@ export default class Matching extends React.Component { // eslint-disable-line r
         this.state = {
             query_tag: '',
             loading: true,
-            suggested_rooms: [{room_id:"24",name:"room 10"},
-                            {room_id:"26",name:"study"},
-                            {room_id:"27",name:"Poker"}],
+            suggested_rooms: [],
         };
     }
 
@@ -106,21 +104,19 @@ export default class Matching extends React.Component { // eslint-disable-line r
     // }
 
     handleSubmit(tag){
+        if (tag == ''){
+            alert('Input must not be empty');
+            return 
+        }
+        console.log('hello')
         this.setState({query_tag: tag})
-        console.log("query_tag:",this.query_tag)
         get_suggestions(tag).then(response =>{
             var rooms = response.data.results
             this.setState({ 
                 query_tag: '' , 
                 loading: false, 
                 suggested_rooms: rooms, });
-            console.log(rooms)
         })
-
-        // else{
-        //     alert('Input must not be empty');
-        //     return 
-        // }
       }
 
     dispatchNewRoute(route) {
@@ -132,7 +128,6 @@ export default class Matching extends React.Component { // eslint-disable-line r
 
     go_chatroom(room_id, room_name){
         join_chatroom(room_id)
-
         console.log(this.state)
         var state_data = {room_id: room_id, name: room_name}
         var path = {
@@ -149,7 +144,6 @@ export default class Matching extends React.Component { // eslint-disable-line r
             this.handleSubmit();
         }
     }
-
 
     changeValue(e, type) {
         // if (e.target.value.length > 10){
