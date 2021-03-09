@@ -80,8 +80,6 @@ export default class Chatrooms extends React.Component { // eslint-disable-line 
             </div>
 
             
-                
-            
         );
     }
 }

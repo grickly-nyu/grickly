@@ -108,14 +108,12 @@ export default class Matching extends React.Component { // eslint-disable-line r
     handleSubmit(tag){
         this.setState({query_tag: tag})
         console.log("query_tag:",this.query_tag)
-        get_suggestions(this.query_tag).then(response =>{
-            console.log("response.data.results:",response.data.results)
+        get_suggestions(tag).then(response =>{
             var rooms = response.data.results
             this.setState({ 
                 query_tag: '' , 
                 loading: false, 
                 suggested_rooms: rooms, });
-
             console.log(rooms)
         })
 
@@ -152,14 +150,8 @@ export default class Matching extends React.Component { // eslint-disable-line r
         }
     }
 
-    handleChange = (event, index, value) => {
-        this.setState({tag:value}, ()=>{
-            this.isDisabled();
-        });
-    }
 
     changeValue(e, type) {
-     
         // if (e.target.value.length > 10){
         //     return 
         //     // long tags are not
@@ -199,7 +191,7 @@ export default class Matching extends React.Component { // eslint-disable-line r
                                 <RaisedButton
                                     style={{ marginTop: 50 }}
                                 label="poker"
-                                onClick={() => this.handleSubmit("poker")}
+                                onClick={() => this.handleSubmit("Poker")}
                                 />
                                 <RaisedButton
                                     style={{ marginTop: 50 }}
