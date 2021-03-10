@@ -74,3 +74,15 @@ export function get_profile(){
 export function change_password(old_password,new_password){
     return axios.post("/api/change_password",{old_password,new_password})
 }
+
+export function get_others_profile(user_id){
+    return axios.post('/api/get_others_profile',{user_id});
+}
+
+export function get_event_info(room_id){
+    return axios.post('/api/get_event_info',{room_id});
+}
+
+export function validate_email(hash){
+    return axios.post('/api/validate_email',{hash});
+}
