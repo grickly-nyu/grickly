@@ -131,6 +131,3 @@ export default class ResetForgotPassword extends React.Component { // eslint-dis
 
     }
 }
-
-
-

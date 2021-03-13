@@ -105,6 +105,3 @@ export default class ForgotPassword extends React.Component { // eslint-disable-
 
     }
 }
-
-
-

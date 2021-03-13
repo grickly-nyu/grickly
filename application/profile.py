@@ -55,9 +55,6 @@ def get_event_info():
     res=dispatch(db.engine.execute("select location,start_time from event_info where room_id = "+ str(incoming["room_id"])))
     return jsonify(location=res[0][0],start_time=res[0][1])
 
-# @app.route("/set_new_password")
-# def set_new_password():
-
 def get_user_by_hash(password_hash):
     user = dispatch(db.engine.execute("select id from user where password='" + password_hash +"'" ))
     if user:
