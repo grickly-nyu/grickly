@@ -86,3 +86,11 @@ export function get_event_info(room_id){
 export function validate_email(hash){
     return axios.post('/api/validate_email',{hash});
 }
+
+export function send_verification_email(email){
+    return axios.post('/api/send_verification_email',{email});
+}
+
+export function reset_password(hash,new_password){
+    return axios.post('/api/reset_password',{hash,new_password});
+}

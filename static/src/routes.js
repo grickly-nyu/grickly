@@ -16,6 +16,7 @@ import Profile from './components/Profile';
 import ChangePassword from './components/ChangePassword';
 import NotFound from './components/NotFound';
 import ForgotPassword from "./components/ForgotPassword";
+import ResetForgotPassword from "./components/ResetForgotPassword";
 import { DetermineAuth } from './components/DetermineAuth';
 import { requireAuthentication } from './components/AuthenticatedComponent';
 import { requireNoAuthentication } from './components/notAuthenticatedComponent';
@@ -31,6 +32,7 @@ export default (
         <Route path="chatroom" component={requireAuthentication(Chatroom)} />
         <Route path="profile" component={requireAuthentication(Profile)} />
         <Route path="forgot_password" component={requireNoAuthentication(ForgotPassword)}/>
+        <Route path="reset_forgot_password" component={requireNoAuthentication(ResetForgotPassword)}/>
         <Route path="change_password" component={requireAuthentication(ChangePassword)} />
         <Route path="*" component={DetermineAuth(NotFound)} />
     </Route>

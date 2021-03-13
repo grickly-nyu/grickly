@@ -1,4 +1,4 @@
-from flask import request, render_template, jsonify, url_for, redirect, g, session
+from flask import request, render_template, jsonify, url_for, redirect, g, session, Flask
 from flask_restful import abort
 from .models import *
 from .app import *
@@ -58,14 +58,27 @@ def get_event_info():
 # @app.route("/set_new_password")
 # def set_new_password():
 
+def get_user_by_hash(password_hash):
+    user = dispatch(db.engine.execute("select id from user where password='" + password_hash +"'" ))
+    if user:
+        return user[0][0]
+    else:
+        return None
+
 @app.route("/api/validate_email", methods=["POST"])
 def validate_email():
-    incoming=request.get_json()
-    hash_code=incoming["hash"]
-    print(hash_code)
-    user = dispatch(db.engine.execute("select id from user where password='" + hash_code +"'" ))
-    print(user)
-    if user:
-        return jsonify(result=True,user_id=user[0][0])
+    incoming = request.get_json()
+    password_hash = incoming["hash"]
+    user=get_user_by_hash(password_hash)
+    if user!=None:
+        return jsonify(result=True,user_id=user)
     else:
         return jsonify(result=False)
+
+@app.route("/api/reset_password", methods=["POST"])
+def reset_password():
+    incoming = request.get_json()
+    password_hash = incoming["hash"]
+    user = get_user_by_hash(password_hash)
+    db.engine.execute("update user set password = '"+ User.hashed_password(incoming["new_password"]) + "' where id = " + str(user))
+    return jsonify(result = True)

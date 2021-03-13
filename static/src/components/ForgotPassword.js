@@ -5,7 +5,7 @@ import * as actionCreators from '../actions/auth';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import {validate_email} from '../utils/http_functions';
+import {send_verification_email} from '../utils/http_functions';
 import { browserHistory } from 'react-router';
 
 function mapStateToProps(state) {
@@ -36,31 +36,25 @@ export default class ForgotPassword extends React.Component { // eslint-disable-
     constructor(props) {
         super(props);
         this.state = {
-            new_password:null,
-            re_enter:null,
-            verified:false,
+            email:null,
         };
     }
     
     
     handleMessageSubmit(){
-        if (this.state.new_password && this.state.re_enter) {
-            if(this.state.new_password!=this.state.re_enter){
-                alert("Conflicts between new password and re_enter, please enter the same password.");
+        console.log(this.state.email)
+        if (this.state.email) {
+            send_verification_email(this.state.email).then(response=>{
+                if (response.data.result){
+                    alert("Check your email for the link to reset password.");
+                }
+                else{
+                    alert("The email you entered is not linked to an account, you can register now!");
+                }
+                browserHistory.push('/main');
             }
-            else{
-                // change_password(this.state.old_password,this.state.new_password);
 
-                change_password(this.state.old_password,this.state.new_password).then(response =>{
-                    if (!response.data.result){
-                        alert(response.data.message);
-                    }
-                    else{
-                        browserHistory.push('/profile');
-                    }
-                })
-                
-            }
+            )
         }
         else{
             alert('Input must not be empty');
@@ -82,43 +76,25 @@ export default class ForgotPassword extends React.Component { // eslint-disable-
     }
 
     render() {
-        validate_email(hash).then(response=>{
-            if(response.data.result){
-                this.setState({verified:true});
-            }
-            console.log(response.data.result)
-        })
-        console.log(this.state.verified)
+        
         return (
             <div className = "row">
                 <div className="col-md-3  col-md-offset-1">
                     <Paper style={style}>
                         <div className="text-center">
-                        {this.state.verified?
                         <div>
                             <TextField
-                            floatingLabelText="New password"
+                            floatingLabelText="Please enter your email"
                             type="content"
                             errorText={null}
-                            onChange={(e) => this.setState({new_password: e.target.value})}
-                            />
-                            <TextField
-                            floatingLabelText="Re-enter your new password"
-                            type="content"
-                            errorText={null}
-                            onChange={(e) => this.setState({re_enter: e.target.value})}
+                            onChange={(e) => this.setState({email: e.target.value})}
                             />
                             <RaisedButton
                                 style={{ marginTop: 50 }}
-                                label="Confirm change of password"
+                                label="Send password reset link"
                                 onClick={() => this.handleMessageSubmit()}
                             />
                         </div>
-                        :
-                        <div>
-                            就这？就这就这就这就这就这？
-                        </div>
-                    }
                         </div>
                     </Paper>
                 </div>

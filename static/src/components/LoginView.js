@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 import * as actionCreators from '../actions/auth';
 import { validateEmail } from '../utils/misc';
-
+import { browserHistory } from 'react-router';
 function mapStateToProps(state) {
     return {
         isAuthenticating: state.auth.isAuthenticating,
@@ -113,6 +113,9 @@ export default class LoginView extends React.Component {
         this.props.loginUser(this.state.email, this.state.password, this.state.redirectTo);
     }
 
+    go_to_forgot_password(){
+        browserHistory.push('/forgot_password');
+    }
     render() {
         return (
             <div className="col-md-6 col-md-offset-3" onKeyPress={(e) => this._handleKeyPress(e)}>
@@ -152,7 +155,6 @@ export default class LoginView extends React.Component {
                               label="Submit"
                               onClick={(e) => this.login(e)}
                             />
-
                         </div>
                     </form>
                 </Paper>
