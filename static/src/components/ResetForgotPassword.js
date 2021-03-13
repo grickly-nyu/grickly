@@ -43,9 +43,6 @@ export default class ResetForgotPassword extends React.Component { // eslint-dis
             verified:false,
             hash:urlParams.get('hash'),
         };
-        // const queryString = window.location.search;
-        // const urlParams = new URLSearchParams(queryString);
-        // const hash = urlParams.get('hash')
         validate_email(this.state.hash).then(response=>{
             if(response.data.result){
                 this.setState({verified:true});
@@ -60,10 +57,7 @@ export default class ResetForgotPassword extends React.Component { // eslint-dis
                 alert("Conflicts between new password and re_enter, please enter the same password.");
             }
             else{
-                // change_password(this.state.old_password,this.state.new_password);
-                console.log(this.state.hash,this.state.new_password)
                 reset_password(this.state.hash,this.state.new_password).then(response =>{
-                    console.log("ran reset")
                     if (!response.data.result){
                         alert(response.data.message);
                     }
@@ -123,7 +117,7 @@ export default class ResetForgotPassword extends React.Component { // eslint-dis
                         </div>
                         :
                         <div>
-                            就这？就这就这就这就这就这？
+                            INVALID LINK, TRY AGAIN OR CONTACT CUSTOMER SERVICE:)
                         </div>
                     }
                         </div>

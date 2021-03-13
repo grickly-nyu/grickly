@@ -42,7 +42,6 @@ export default class ForgotPassword extends React.Component { // eslint-disable-
     
     
     handleMessageSubmit(){
-        console.log(this.state.email)
         if (this.state.email) {
             send_verification_email(this.state.email).then(response=>{
                 if (response.data.result){
