@@ -41,15 +41,14 @@ export default class Profile extends React.Component { // eslint-disable-line re
             email:null,
             created_at:null,
             new_username:null,
-            new_email:null,
         };
         this.display_profile()
     }
     
     
     handleMessageSubmit(){
-        if (this.state.new_username || this.state.new_email) {
-            if(this.state.new_username==this.state.username || this.state.new_email==this.state.email){
+        if (this.state.new_username) {
+            if(this.state.new_username==this.state.username){
                 alert("Why you changing to the original ones? Input something new!")
             }
             else{
@@ -66,7 +65,7 @@ export default class Profile extends React.Component { // eslint-disable-line re
       }
     
     async change_profile(){
-        modify_profile(this.state.new_username,this.state.new_email);
+        modify_profile(this.state.new_username);
         get_profile().then(response =>{
             this.setState({id:response.data.results["user_id"],username: response.data.results["username"],email:response.data.results["email"],created_at:response.data.results["created_at"]});
         })
@@ -108,13 +107,6 @@ export default class Profile extends React.Component { // eslint-disable-line re
                                 type="content"
                                 errorText={null}
                                 onChange={(e) => this.setState({new_username: e.target.value})}
-                                />
-                                <TextField
-                                hintText="Enter new user email"
-                                floatingLabelText="New email"
-                                type="content"
-                                errorText={null}
-                                onChange={(e) => this.setState({new_email: e.target.value})}
                                 />
                             </div>
                             <div>
