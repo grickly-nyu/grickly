@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 import * as actionCreators from '../actions/auth';
 import { validateEmail } from '../utils/misc';
-
+import { browserHistory } from 'react-router';
 function mapStateToProps(state) {
     return {
         isAuthenticating: state.auth.isAuthenticating,
@@ -20,15 +20,15 @@ function mapDispatchToProps(dispatch) {
 }
 
 const style = {
-    marginTop: 50,
-    paddingBottom: 40,
+    marginTop: 230,
     paddingTop: 25,
+    paddingBottom: 40,
     width: '100%',
     textAlign: 'center',
     display: 'inline-block',
     color: "white",
     backgroundColor: "rgba(255, 255, 255, 0.25)",
-    fontFamily: "AvenirNext-Medium"
+    fontFamily: "Avenir",
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -113,13 +113,16 @@ export default class LoginView extends React.Component {
         this.props.loginUser(this.state.email, this.state.password, this.state.redirectTo);
     }
 
+    go_to_forgot_password(){
+        browserHistory.push('/forgot_password');
+    }
     render() {
         return (
             <div className="col-md-6 col-md-offset-3" onKeyPress={(e) => this._handleKeyPress(e)}>
                 <Paper style={style}>
                     <form role="form">
                         <div className="text-center">
-                            <h2>Sign in to Grickly now!</h2>
+                            <h2 style={{fontWeight: 500}}>Sign in to Grickly now!</h2>
                             {
                                 this.props.statusText &&
                                     <div className="alert alert-info">
@@ -152,7 +155,6 @@ export default class LoginView extends React.Component {
                               label="Submit"
                               onClick={(e) => this.login(e)}
                             />
-
                         </div>
                     </form>
                 </Paper>

@@ -1,7 +1,7 @@
 *.db
 .DS_Store
 venv
-env
+.env
 __pycache__
 blog_old.md
 node_modules
@@ -10,3 +10,6 @@ node_modules
 tmp
 static/dist
 .vscode/*
+.python-version
+run.sh
+.editorconfig
