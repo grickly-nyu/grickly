@@ -29,8 +29,8 @@ const style = {
     width: '100%',
     textAlign: 'center',
     display: 'inline-block',
-    color: "white",
-    backgroundColor: "rgba(255, 255, 255, 0.25)",
+    color: "#77428D",
+    backgroundColor: "white",
     fontFamily: "Avenir"
 };
 
@@ -137,6 +137,8 @@ export default class RegisterView extends React.Component {
                         }
                         <div className="col-md-12">
                             <TextField
+                              underlineFocusStyle={{borderColor: "#FFB11B"}}
+                              floatingLabelFocusStyle={{color: "#FFB11B"}}
                               hintText="Username"
                               floatingLabelText="Username"
                               type="username"
@@ -146,6 +148,8 @@ export default class RegisterView extends React.Component {
                         </div>
                         <div className="col-md-12">
                             <TextField
+                              underlineFocusStyle={{borderColor: "#FFB11B"}}
+                              floatingLabelFocusStyle={{color: "#FFB11B"}}
                               hintText="Email"
                               floatingLabelText="Email"
                               type="email"
@@ -155,6 +159,8 @@ export default class RegisterView extends React.Component {
                         </div>
                         <div className="col-md-12">
                             <TextField
+                              underlineFocusStyle={{borderColor: "#FFB11B"}}
+                              floatingLabelFocusStyle={{color: "#FFB11B"}}
                               hintText="Password"
                               floatingLabelText="Password"
                               type="password"

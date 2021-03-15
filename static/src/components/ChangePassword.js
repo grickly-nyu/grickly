@@ -5,7 +5,7 @@ import * as actionCreators from '../actions/auth';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import {change_password} from '../utils/http_functions';
+import { change_password } from '../utils/http_functions';
 import { browserHistory } from 'react-router';
 
 function mapStateToProps(state) {
@@ -18,17 +18,24 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
+
 const style = {
-    marginTop: 50,
-    paddingBottom: 40,
-    paddingTop: 25,
-    width: '100%',
-    textAlign: 'center',
-    display: 'inline-block',
-    color: "white",
-    backgroundColor: "rgba(255, 255, 255, 0.25)",
-    fontFamily: "AvenirNext-Medium"
+    marginTop: 150,
+    paddingTop: 40,
+    paddingLeft: 50,
+    paddingBottom: 70,
+    width: "100%",
+    color: "#91989F",
+    backgroundColor: "white",
+    fontFamily: "Avenir",
 };
+
+const titleStyle = {
+    color: "#77428D",
+    fontWeight: 550,
+    fontSize: "45px",
+    fontFamily: "Avenir",
+}
 
 @connect(mapStateToProps, mapDispatchToProps)
 
@@ -41,7 +48,6 @@ export default class ChangePassword extends React.Component { // eslint-disable-
             re_enter:null,
         };
     }
-    
     
     handleMessageSubmit(){
         if (this.state.new_password && this.state.old_password && this.state.re_enter) {
@@ -59,14 +65,11 @@ export default class ChangePassword extends React.Component { // eslint-disable-
                         browserHistory.push('/profile');
                     }
                 })
-                
             }
         }
         else{
             alert('Input must not be empty');
         }
-
-        
       }
     
     _handleKeyPress(e) {
@@ -83,41 +86,48 @@ export default class ChangePassword extends React.Component { // eslint-disable-
 
     render() {
         return (
-            <div className = "row">
-                <div className="col-md-3  col-md-offset-1">
-                    <Paper style={style}>
-                        <div className="text-center">
-                        
-                            <div className="col-md-12">
-                                <TextField
-                                floatingLabelText="old password"
-                                type="content"
-                                errorText={null}
-                                onChange={(e) => this.setState({old_password: e.target.value})}
-                                />
-                                <TextField
-                                floatingLabelText="New password"
-                                type="content"
-                                errorText={null}
-                                onChange={(e) => this.setState({new_password: e.target.value})}
-                                />
-                                <TextField
-                                floatingLabelText="Re-enter your new password"
-                                type="content"
-                                errorText={null}
-                                onChange={(e) => this.setState({re_enter: e.target.value})}
-                                />
-                            </div>
-                            <div>
-                                <RaisedButton
-                                    style={{ marginTop: 50 }}
-                                    label="Confirm change of password"
-                                    onClick={() => this.handleMessageSubmit()}
-                                />
-                            </div>
-                        </div>
-                    </Paper>
-                </div>
+            <div className="container">
+                <Paper style={style}>
+                    <h2 style={titleStyle}>Change Password</h2>
+                    <p>
+                        Please provide a valid new password. It shouldn't be empty nor the same with the previous password.
+                    </p>
+                    <div className="text-center">
+                        <TextField
+                            underlineFocusStyle={{borderColor: "#FFB11B"}}
+                            floatingLabelFocusStyle={{color: "#FFB11B"}}
+                            floatingLabelText="old password"
+                            type="content"
+                            errorText={null}
+                            onChange={(e) => this.setState({old_password: e.target.value})}
+                        />
+                        <br />
+                        <TextField
+                            underlineFocusStyle={{borderColor: "#FFB11B"}}
+                            floatingLabelFocusStyle={{color: "#FFB11B"}}
+                            floatingLabelText="New password"
+                            type="content"
+                            errorText={null}
+                            onChange={(e) => this.setState({new_password: e.target.value})}
+                        />
+                        <br />
+                        <TextField
+                            underlineFocusStyle={{borderColor: "#FFB11B"}}
+                            floatingLabelFocusStyle={{color: "#FFB11B"}}
+                            floatingLabelText="Re-enter your new password"
+                            type="content"
+                            errorText={null}
+                            onChange={(e) => this.setState({re_enter: e.target.value})}
+                        />
+                        <br />
+                        <RaisedButton
+                            style={{ marginTop: 50 }}
+                            label="Change my password"
+                            labelColor="#FFB11B"
+                            onClick={() => this.handleMessageSubmit()}
+                        />
+                    </div>
+                </Paper>
             </div>
         );
     }

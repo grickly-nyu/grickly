@@ -26,8 +26,8 @@ const style = {
     width: '100%',
     textAlign: 'center',
     display: 'inline-block',
-    color: "white",
-    backgroundColor: "rgba(255, 255, 255, 0.25)",
+    color: "#77428D",
+    backgroundColor: "white",
     fontFamily: "Avenir",
 };
 
@@ -121,7 +121,7 @@ export default class LoginView extends React.Component {
             <div className="col-md-6 col-md-offset-3" onKeyPress={(e) => this._handleKeyPress(e)}>
                 <Paper style={style}>
                     <form role="form">
-                        <div className="text-center">
+                        <div className="text-center center">
                             <h2 style={{fontWeight: 500}}>Sign in to Grickly now!</h2>
                             {
                                 this.props.statusText &&
@@ -132,6 +132,8 @@ export default class LoginView extends React.Component {
 
                             <div className="col-md-12">
                                 <TextField
+                                  underlineFocusStyle={{borderColor: "#FFB11B"}}
+                                  floatingLabelFocusStyle={{color: "#FFB11B"}}
                                   hintText="Email"
                                   floatingLabelText="Email"
                                   type="email"
@@ -141,6 +143,8 @@ export default class LoginView extends React.Component {
                             </div>
                             <div className="col-md-12">
                                 <TextField
+                                  underlineFocusStyle={{borderColor: "#FFB11B"}}
+                                  floatingLabelFocusStyle={{color: "#FFB11B"}}
                                   hintText="Password"
                                   floatingLabelText="Password"
                                   type="password"

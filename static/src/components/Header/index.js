@@ -26,7 +26,7 @@ function mapDispatchToProps(dispatch) {
 const style = {
     top: 0,
     position: "fixed",
-    backgroundColor: "#065197",
+    backgroundColor: "#8B81C3",
     fontFamily: "Avenir",
 };
 
@@ -152,7 +152,10 @@ export class Header extends Component {
                         </IconButton>
                     }
                     iconElementRight={
-                        <FlatButton label="Home" style={{color: "#ff577d"}} onClick={() => this.dispatchNewRoute('/')} />
+                        <FlatButton
+                            label="home"
+                            onClick={() => this.dispatchNewRoute('/')}
+                        />
                     }
                     style={style}
                 />
