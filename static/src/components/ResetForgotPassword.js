@@ -31,17 +31,24 @@ const style = {
     fontFamily: "Avenir",
 };
 
+const titleStyle = {
+    color: "#77428D",
+    fontWeight: 550,
+    fontSize: "45px",
+    fontFamily: "Avenir",
+};
+
 @connect(mapStateToProps, mapDispatchToProps)
 
-export default class ResetForgotPassword extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export default class ResetForgotPassword extends React.Component {
     constructor(props) {
         super(props);
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         this.state = {
-            new_password:null,
-            re_enter:null,
-            verified:false,
+            new_password: null,
+            re_enter: null,
+            verified: false,
             hash:urlParams.get('hash'),
         };
         validate_email(this.state.hash).then(response=>{
@@ -50,11 +57,10 @@ export default class ResetForgotPassword extends React.Component { // eslint-dis
             }
         })
     }
-    
-    
+
     handleMessageSubmit(){
         if (this.state.new_password && this.state.re_enter) {
-            if(this.state.new_password!=this.state.re_enter){
+            if(this.state.new_password != this.state.re_enter){
                 alert("Conflicts between new password and re_enter, please enter the same password.");
             }
             else{
@@ -72,9 +78,7 @@ export default class ResetForgotPassword extends React.Component { // eslint-dis
         }
         else{
             alert('Input must not be empty');
-        }
-
-        
+        } 
       }
     
     _handleKeyPress(e) {
@@ -82,59 +86,54 @@ export default class ResetForgotPassword extends React.Component { // eslint-dis
             this.handleMessageSubmit();
         }
     }
+
     changeValue(e, type) {
         const value = e.target.value;
         const next_state = {};
         next_state[type] = value;
-        
     }
 
     render() {
-        
         return (
             <div className="container">
                 <Paper style={style}>
-                    <div>
                     {this.state.verified?
-                    <div>
-                        <h2 style={titleStyle}>Reset my password</h2>
-                        <TextField
-                            underlineFocusStyle={{borderColor: "#FFB11B"}}
-                            floatingLabelFocusStyle={{color: "#FFB11B"}}
-                            floatingLabelText="New password"
-                            type="content"
-                            errorText={null}
-                            onChange={(e) => this.setState({new_password: e.target.value})}
-                        />
-                        <br />
-                        <TextField
-                            underlineFocusStyle={{borderColor: "#FFB11B"}}
-                            floatingLabelFocusStyle={{color: "#FFB11B"}}
-                            floatingLabelText="Re-enter your new password"
-                            type="content"
-                            errorText={null}
-                            onChange={(e) => this.setState({re_enter: e.target.value})}
-                        />
-                        <br />
-                        <RaisedButton
-                            style={{ marginTop: 50 }}
-                            label="Confirm change of password"
-                            labelStyle="#FFB11B"
-                            onClick={() => this.handleMessageSubmit()}
-                        />
-                    </div>
+                        <div>
+                            <h2 style={titleStyle}>Reset my password</h2>
+                            <TextField
+                                underlineFocusStyle={{borderColor: "#FFB11B"}}
+                                floatingLabelFocusStyle={{color: "#FFB11B"}}
+                                floatingLabelText="New password"
+                                type="content"
+                                errorText={null}
+                                onChange={(e) => this.setState({new_password: e.target.value})}
+                            />
+                            <br />
+                            <TextField
+                                underlineFocusStyle={{borderColor: "#FFB11B"}}
+                                floatingLabelFocusStyle={{color: "#FFB11B"}}
+                                floatingLabelText="Re-enter your new password"
+                                type="content"
+                                errorText={null}
+                                onChange={(e) => this.setState({re_enter: e.target.value})}
+                            />
+                            <br />
+                            <RaisedButton
+                                style={{ marginTop: 50 }}
+                                label="Confirm change of password"
+                                labelStyle="#FFB11B"
+                                onClick={() => this.handleMessageSubmit()}
+                            />
+                        </div>
                     :
-                    <div style={titleStyle}>
-                        INVALID LINK, TRY AGAIN OR CONTACT CUSTOMER SERVICE:)
-                    </div>
-                }
-                    </div>
+                        <div>
+                            <p style={titleStyle}>
+                                INVALID LINK, TRY AGAIN OR CONTACT CUSTOMER SERVICE :)
+                            </p>
+                        </div>
+                    }
                 </Paper>
             </div>
         );
-        
-        
-        
-
     }
 }
