@@ -26,9 +26,9 @@ const style = {
     marginTop: 230,
     paddingTop: 25,
     paddingBottom: 40,
-    width: '100%',
-    textAlign: 'center',
-    display: 'inline-block',
+    width: "100%",
+    textAlign: "center",
+    display: "inline-block",
     color: "#77428D",
     backgroundColor: "white",
     fontFamily: "Avenir"

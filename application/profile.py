@@ -33,7 +33,7 @@ def get_profile():
     info = get_profile_dict()
     return jsonify(results = info)
     
-@app.route("/api/change_password", methods=["POST"])
+@app.route("/api/change-password", methods=["POST"])
 def change_password():
     incoming = request.get_json()
     current_profile=get_profile_dict()

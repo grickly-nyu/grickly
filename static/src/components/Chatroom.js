@@ -24,38 +24,35 @@ function mapDispatchToProps(dispatch) {
 const socket = io("http://localhost:5000");
 const sideStyle = {
     fontFamily: "Avenir",
-    marginTop: 64,
-    width: '20%',
-    height: '100vh',
-    position: 'fixed',
-    justifyContent: 'center',
-    display: 'flex',
-    // borderStyle: 'none solid none none',
-    // borderWidth: '1px',
-    // borderColor: "#91989F",
-    fontSize: '20px',
-    fontWeight: 500,
+    marginTop: 55,
+    width: "20%",
+    height: "100vh",
+    position: "fixed",
+    display: "flex",
+    justifyContent: "center",
 };
 
 const roomStyle = {
     fontFamily: "Avenir",
     marginTop: 64,
-    marginLeft: '20%',
-    paddingLeft: '5%',
+    marginLeft: "20%",
+    paddingLeft: "5%",
     paddingTop: 20,
-    width: '65%',
-    height: '100vh',
-    position: 'fixed',
-    display: 'flex',
-    overflow: 'auto',
-    color: 'white',
+    width: "65%",
+    height: "100vh",
+    position: "fixed",
+    display: "flex",
+    overflow: "auto",
+    color: "black",
 };
+
 const nameStyle = {
     fontFamily: "Avenir",
-    paddingLeft: "5%",
     color: "#77428D",
     fontWeight: 550,
+    marginBottom: 20,
 };
+
 const textStyle = {
     fontFamily: "Avenir",
     position: "fixed",
@@ -63,6 +60,7 @@ const textStyle = {
     bottom: 20,
     backgroundColor: "#FFFFFB"
 };
+
 const listStyle = {
     marginTop: 64,
     marginLeft: '85%',
@@ -206,14 +204,14 @@ export default class Chatroom extends React.Component { // eslint-disable-line r
                 </Paper>
                 <Paper style={roomStyle}>
                     <div onKeyPress={(e) => this._handleKeyPress(e)}>
-                        <div style={{paddingBottom: '130px'}}>
+                        <div style={{width: "100%", addingBottom: '130px'}}>
                             <h2 style={nameStyle}>Chatroom {this.state.room_name}</h2>
                             {this.state.messages.map(message => (
                                 <div
                                 key={message.sendTime+'-'+message.content}
                                 >
-                                    <p style={{color: "black"}}>
-                                        <b style={{ width: '300px', color: "#FFB11B"}}>{message.username}: </b>
+                                    <p style={{ width: '300px' }}>
+                                        <b style={{ color: "#FFB11B" }}>{message.username}: </b>
                                         {message.content}
                                     </p>
                                 </div>

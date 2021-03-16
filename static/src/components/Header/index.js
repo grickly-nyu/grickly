@@ -128,10 +128,6 @@ export class Header extends Component {
                                 </svg>
                                 Register
                             </MenuItem>
-                            <MenuItem onClick={() => this.dispatchNewRoute('/forgot_password')}>
-                                <svg style={svgStyle2} width="15px" height="15px" class="svg-icon" viewBox="0 0 20 20"></svg>
-                                Forgot Password
-                            </MenuItem>
                             <Divider />
                             <MenuItem onClick={() => this.dispatchNewRoute('/')}>
                                 <svg style={svgStyle2} width="15px" height="15px" class="svg-icon" viewBox="0 0 20 20">

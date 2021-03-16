@@ -96,7 +96,7 @@ export default class ChangePassword extends React.Component { // eslint-disable-
                         <TextField
                             underlineFocusStyle={{borderColor: "#FFB11B"}}
                             floatingLabelFocusStyle={{color: "#FFB11B"}}
-                            floatingLabelText="old password"
+                            floatingLabelText="Old password"
                             type="content"
                             errorText={null}
                             onChange={(e) => this.setState({old_password: e.target.value})}

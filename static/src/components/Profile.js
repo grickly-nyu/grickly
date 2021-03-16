@@ -145,7 +145,7 @@ export default class Profile extends React.Component { // eslint-disable-line re
                             style={{ marginTop: 35 }}
                             label="Change Password"
                             labelColor="#8B81C3"
-                            onClick={() => browserHistory.push("/change_password")}
+                            onClick={() => browserHistory.push("/change-password")}
                         />
                     </div>
                 </Paper>           

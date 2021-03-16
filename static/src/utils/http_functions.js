@@ -72,7 +72,7 @@ export function get_profile(){
 }
 
 export function change_password(old_password,new_password){
-    return axios.post("/api/change_password",{old_password,new_password})
+    return axios.post("/api/change-password",{old_password,new_password})
 }
 
 export function get_others_profile(user_id){

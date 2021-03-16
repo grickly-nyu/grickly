@@ -18,16 +18,17 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
+
 const style = {
-    marginTop: 50,
-    paddingBottom: 40,
-    paddingTop: 25,
-    width: '100%',
-    textAlign: 'center',
-    display: 'inline-block',
-    color: "white",
-    backgroundColor: "rgba(255, 255, 255, 0.25)",
-    fontFamily: "AvenirNext-Medium"
+    marginTop: 150,
+    paddingTop: 40,
+    paddingLeft: 50,
+    paddingRight: 50,
+    paddingBottom: 70,
+    width: "100%",
+    color: "black",
+    backgroundColor: "white",
+    fontFamily: "Avenir",
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -91,38 +92,44 @@ export default class ResetForgotPassword extends React.Component { // eslint-dis
     render() {
         
         return (
-            <div className = "row">
-                <div className="col-md-3  col-md-offset-1">
-                    <Paper style={style}>
-                        <div className="text-center">
-                        {this.state.verified?
-                        <div>
-                            <TextField
+            <div className="container">
+                <Paper style={style}>
+                    <div>
+                    {this.state.verified?
+                    <div>
+                        <h2 style={titleStyle}>Reset my password</h2>
+                        <TextField
+                            underlineFocusStyle={{borderColor: "#FFB11B"}}
+                            floatingLabelFocusStyle={{color: "#FFB11B"}}
                             floatingLabelText="New password"
                             type="content"
                             errorText={null}
                             onChange={(e) => this.setState({new_password: e.target.value})}
-                            />
-                            <TextField
+                        />
+                        <br />
+                        <TextField
+                            underlineFocusStyle={{borderColor: "#FFB11B"}}
+                            floatingLabelFocusStyle={{color: "#FFB11B"}}
                             floatingLabelText="Re-enter your new password"
                             type="content"
                             errorText={null}
                             onChange={(e) => this.setState({re_enter: e.target.value})}
-                            />
-                            <RaisedButton
-                                style={{ marginTop: 50 }}
-                                label="Confirm change of password"
-                                onClick={() => this.handleMessageSubmit()}
-                            />
-                        </div>
-                        :
-                        <div>
-                            INVALID LINK, TRY AGAIN OR CONTACT CUSTOMER SERVICE:)
-                        </div>
-                    }
-                        </div>
-                    </Paper>
-                </div>
+                        />
+                        <br />
+                        <RaisedButton
+                            style={{ marginTop: 50 }}
+                            label="Confirm change of password"
+                            labelStyle="#FFB11B"
+                            onClick={() => this.handleMessageSubmit()}
+                        />
+                    </div>
+                    :
+                    <div style={titleStyle}>
+                        INVALID LINK, TRY AGAIN OR CONTACT CUSTOMER SERVICE:)
+                    </div>
+                }
+                    </div>
+                </Paper>
             </div>
         );
         
