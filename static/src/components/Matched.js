@@ -11,7 +11,6 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 
 import { join_chatroom } from '../utils/http_functions'; 
-import { get_suggestions } from '../utils/http_functions'; 
 
 
 function mapStateToProps(state) {
@@ -84,13 +83,15 @@ const other_styles = {
 
 @connect(mapStateToProps, mapDispatchToProps)
 
-export default class Matching extends React.Component { // eslint-disable-line react/prefer-stateless-function
+export default class Matched extends React.Component { // eslint-disable-line react/prefer-stateless-function
     constructor(props) {
         super(props);
         this.state = {
-            query_tag: '',
-            loading: true,
+            query_tag: null,
+            loading: false,
+            cur_index: 0,
             suggested_rooms: [],
+            suggested_len: len(suggested_rooms)
         };
     }
     // progress(props) {
@@ -160,6 +161,19 @@ export default class Matching extends React.Component { // eslint-disable-line r
     }
 
     render() {
+        if (this.state.loading) {
+            return (
+                <div>
+                <CircularProgress />
+                   {"Loading..."}
+                <CircularProgress color="secondary" />
+                </div>
+            );
+        }
+        if (!this.state.suggested_rooms.length) {
+            return <div>Didn't get a room</div>;
+        }
+
         return (
             <div style={{ fontFamily: "Avenir" }}>
                 <div style={sideStyle}>
@@ -210,9 +224,9 @@ export default class Matching extends React.Component { // eslint-disable-line r
                                 />  
                             </div>
                         </div>
-                        <CircularProgress />
+                        {/* <CircularProgress />
                            {"Loading..."}
-                        <CircularProgress color="secondary" />
+                        <CircularProgress color="secondary" /> */}
                         <div>
                     </div>
                     </Paper>
@@ -221,3 +235,22 @@ export default class Matching extends React.Component { // eslint-disable-line r
         );
     }
 }
+
+
+//        <div style={style}>
+//        {!this.props.loaded
+//            ? <h1>Loading data...</h1>
+//            :
+//            <div className="container">
+//                <p style={titleStyle}>Welcome back to Grickly,
+//                    {this.props.userName}!</p>
+//                <p style={pStyle}>Are you ready to find your buddies?</p>
+//                <FlatButton style={buttonStyle} label="Yes! Start matching now!" 
+//                    onClick={(e) => this.dispatchNewRoute("/matching")}/>
+//                <FlatButton style={buttonStyle2}
+//                    label="Nah, let me create a group!"
+//                    onClick={(e) => this.dispatchNewRoute("/creategroup")}/>
+//            </div>
+//        }
+//    </div>
+// );
