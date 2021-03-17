@@ -3,7 +3,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from '../actions/auth';
 import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
+
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
 
 import CircularProgress  from 'material-ui/CircularProgress';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -22,26 +24,10 @@ function mapStateToProps(state) {
         registerStatusText: state.auth.registerStatusText
     };
 }
-
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
-const sideStyle = {
-    fontFamily: "Avenir",
-    marginTop: 64,
-    width: '20%',
-    height: '100vh',
-    position: 'fixed',
-    justifyContent: 'center',
-    display: 'flex',
-    borderStyle: 'none solid none none',
-    borderWidth: '1px',
-    borderColor: '#01012b',
-    fontSize: '20px',
-    fontWeight: 500,
-    backgroundColor: "rgba(255, 255, 255, 0.25)",
-};
 
 const groupStyle = {
     color: '#ff577d',
@@ -53,11 +39,19 @@ const groupStyle = {
     backgroundColor: "rgba(255, 255, 255, 0.10)",
 };
 
+const nameStyle = {
+    fontFamily: "Avenir",
+    paddingLeft: '5%',
+    color: '#F5FFFA',
+    fontWeight: 550,
+};
+
 const style = {
-    marginTop: 440,
-    paddingTop: 50,
-    paddingBottom: 40,
-    width: '100%',
+    marginTop: 400,
+    paddingTop: 40,
+    paddingBottom: 50,
+    outerHeight:300,
+    width: '70%',
     textAlign: 'center',
     display: 'inline-block',
     color: "white",
@@ -65,20 +59,18 @@ const style = {
     fontFamily: "Avenir",
 };
 
-const other_styles = {
-    errorStyle: {
-      color: "white",
-    },
-    underlineStyle: {
-      borderColor: "white",
-    },
-    floatingLabelStyle: {
-      color: "white",
-    },
-    floatingLabelFocusStyle: {
-      color: "white",
-    },
-  };
+const style2 = {
+    marginTop: 300,
+    paddingTop: 25,
+    paddingBottom: 50,
+    innerHeight:100,
+    width: '80%',
+    textAlign: 'center',
+    display: 'inline-block',
+    color: "white",
+    backgroundColor: "rgba(255, 255, 255, 0.25)",
+    fontFamily: "Avenir",
+};
 
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -87,21 +79,14 @@ export default class Matched extends React.Component { // eslint-disable-line re
     constructor(props) {
         super(props);
         this.state = {
-            query_tag: null,
+            query_tag: 'Poker',
             loading: false,
             cur_index: 0,
             suggested_rooms: [],
-            suggested_len: len(suggested_rooms)
+            cur_room_name: "room1",
+            cur_members: null,
         };
     }
-    // progress(props) {
-    //     return (
-    //         <React.Fragment>
-    //         <CircularProgress variant="determinate" value={props.value} />
-    //         <LinearProgress variant="determinate" value={props.value} />
-    //         </React.Fragment>
-    //     )
-    // }
 
     handleSubmit(){
         if (tag == ''){
@@ -112,6 +97,7 @@ export default class Matched extends React.Component { // eslint-disable-line re
       
         get_suggestions(this.query_tag).then(response =>{
             var rooms = response.data.results
+            console.log(rooms)
             this.setState({ 
                 query_tag: '' , 
                 loading: false, 
@@ -170,67 +156,58 @@ export default class Matched extends React.Component { // eslint-disable-line re
                 </div>
             );
         }
-        if (!this.state.suggested_rooms.length) {
-            return <div>Didn't get a room</div>;
-        }
-
+        // if (!this.state.suggested_rooms.length) {
+        //     return <div>Didn't get a room</div>;
+        // }
         return (
-            <div style={{ fontFamily: "Avenir" }}>
-                <div style={sideStyle}>
-                    <div style={{ width:'100%' }}>
-                        {this.state.suggested_rooms.map(room => (
-                            <div 
-                            key={room.room_id}
-                            onClick={() => this.go_chatroom(room.room_id,room.name)}
-                            style={groupStyle}>
-                                <p className='text-center'>{room.name}</p>
-                            </div>
-                        ))}
+
+        //     <div className="col-md-12">
+        //     <h2 style={nameStyle}>{this.state.query_tag} </h2>
+        //    </div>
+
+            <div className="col-md-9  col-md-offset-3">
+                <Paper style={style}>
+                <h2 style={{fontWeight: 500}}>{this.state.query_tag}</h2>
+
+                <div className="col-md-12">
+                <Card>
+                       
+                        <CardHeader
+                        title= {this.state.cur_room_name}
+                        actAsExpander={true}
+                        showExpandableButton={true}
+                        />
+
+                        <CardText expandable={true}>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
+                        Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
+                        Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+                        </CardText>
+                    
+
+                    </Card>
                     </div>
-                </div>
-         
-            <div className="col-md-4  col-md-offset-5">
-                    <Paper style={style}>
-                        <div className="text-center">
-                            <div className="col-md-12">
-                                <RaisedButton
-                                    style={{ marginTop: 50 }}
-                                label="life"
-                                onClick={() => this.handleSubmit("Life")}
-                                />
-                                <RaisedButton
-                                    style={{ marginTop: 50 }}
-                                label="poker"
-                                onClick={() => this.handleSubmit("Poker")}
-                                />
-                                <RaisedButton
-                                    style={{ marginTop: 50 }}
-                                label="study"
-                                onClick={() => this.handleSubmit("Study")}
-                                />
-                            </div>
-                            <div>
-                                <TextField
-                                    floatingLabelText="Or type your tag here"
-                                    type= "query_tag"
-                                    errorText={null}
-                                onChange={(e) => this.changeValue(e,"query_tag")}
-                                />
-                                 <RaisedButton
-                                    disabled={this.state.disabled}
-                                    style={{ marginTop: 60 }}
-                                    label="Submit"
-                                    onClick={(e) => this.handleSubmit()}
-                                />  
-                            </div>
+
+                    <div className="text-center">
+
+                        <div className="col-md-15">
+                            <RaisedButton
+                            style={{ marginTop: 250, 
+                                margin: 50, marginRight: 520, }}
+                            label="Accept"
+                            onClick={() => this.handleSubmit("Life")}
+                            />
+                    
+                            <RaisedButton
+                                style={{ marginTop: 250, 
+                                    marginInline: 50, }}
+                            label="Decline"
+                            onClick={() => this.handleSubmit("Study")}
+                            />
                         </div>
-                        {/* <CircularProgress />
-                           {"Loading..."}
-                        <CircularProgress color="secondary" /> */}
-                        <div>
                     </div>
-                    </Paper>
-                </div>
+                </Paper>
             </div>
         );
     }
@@ -254,3 +231,5 @@ export default class Matched extends React.Component { // eslint-disable-line re
 //        }
 //    </div>
 // );
+
+

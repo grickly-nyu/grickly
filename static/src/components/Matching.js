@@ -55,7 +55,7 @@ const groupStyle = {
 };
 
 const style = {
-    marginTop: 440,
+    marginTop: 500,
     paddingTop: 50,
     paddingBottom: 40,
     width: '100%',
@@ -102,17 +102,15 @@ export default class Matching extends React.Component { // eslint-disable-line r
     //     )
     // }
 
-    handleSubmit(){
+    handleSubmit(tag){
         if (tag == ''){
-            alert('Input must not be empty');
+            alert('Input must not be empty, please re-enter');
             return 
         }
         console.log('hello')
-      
-        get_suggestions(this.query_tag).then(response =>{
+        get_suggestions(tag).then(response =>{
             var rooms = response.data.results
             this.setState({ 
-                query_tag: '' , 
                 loading: false, 
                 suggested_rooms: rooms, });
         })
@@ -153,10 +151,11 @@ export default class Matching extends React.Component { // eslint-disable-line r
             return 
             // long tags are not allowed 
         }
-        console.log(value)
         const next_state = {};
         next_state[type] = value;
-        this.setState(next_state)
+        this.setState(next_state);
+        console.log("value:", value)
+        console.log("log:", this.state.query_tag)
     }
 
     render() {
@@ -175,10 +174,10 @@ export default class Matching extends React.Component { // eslint-disable-line r
                     </div>
                 </div>
          
-            <div className="col-md-4  col-md-offset-5">
+            <div className="col-md-5  col-md-offset-5">
                     <Paper style={style}>
                         <div className="text-center">
-                            <div className="col-md-12">
+                            <div className="col-md-15">
                                 <RaisedButton
                                     style={{ marginTop: 50 }}
                                 label="life"
@@ -198,21 +197,19 @@ export default class Matching extends React.Component { // eslint-disable-line r
                             <div>
                                 <TextField
                                     floatingLabelText="Or type your tag here"
-                                    type= "query_tag"
+                                    type= 'query_tag'
                                     errorText={null}
-                                onChange={(e) => this.changeValue(e,"query_tag")}
+                                onChange={(e) => this.changeValue(e,'query_tag')}
                                 />
                                  <RaisedButton
                                     disabled={this.state.disabled}
                                     style={{ marginTop: 60 }}
                                     label="Submit"
-                                    onClick={(e) => this.handleSubmit()}
+                        
+                                    onClick={(e) => this.handleSubmit(this.state.query_tag)}
                                 />  
                             </div>
                         </div>
-                        <CircularProgress />
-                           {"Loading..."}
-                        <CircularProgress color="secondary" />
                         <div>
                     </div>
                     </Paper>
