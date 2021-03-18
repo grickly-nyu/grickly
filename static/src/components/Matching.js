@@ -12,6 +12,7 @@ import { browserHistory } from 'react-router';
 
 import { join_chatroom } from '../utils/http_functions'; 
 import { get_suggestions } from '../utils/http_functions'; 
+import { requirePropFactory } from '@material-ui/core';
 
 
 function mapStateToProps(state) {
@@ -102,6 +103,13 @@ export default class Matching extends React.Component { // eslint-disable-line r
     //     )
     // }
 
+    dispatchNewRoute(route) {
+        browserHistory.push(route);
+        // this.setState({
+        //     open: false,
+        // });
+    }
+
     handleSubmit(tag){
         if (tag == ''){
             alert('Input must not be empty, please re-enter');
@@ -110,32 +118,52 @@ export default class Matching extends React.Component { // eslint-disable-line r
         console.log('hello')
         get_suggestions(tag).then(response =>{
             var rooms = response.data.results
+            for(var i = 0; i < response.data.results.length; i++) {
+                var obj =response.data.results[i];
+                console.log("current index is ", i, "and the room members are ", obj.members)
+                // console.log("object is: ", obj);
+            }
             this.setState({ 
                 loading: false, 
                 suggested_rooms: rooms, });
+
+            if( rooms.length == 0){
+                alert('No matching found');
+                return 
+            }
+            var state_data = {            
+                query_tag: tag,
+                loading: false,
+                cur_index: 0,
+                suggested_rooms: rooms,
+                // cur_room_name: rooms[0].name,
+                // cur_members: rooms[0].members,
+            }
+            var path = {
+                pathname:'/matched',
+                state: state_data,
+            }
+            this.dispatchNewRoute(path)
         })
+        
+
         // if (len(this.suggested_rooms) == 0) {
         //     alert (" ")
         // }
       }
 
-    dispatchNewRoute(route) {
-        browserHistory.push(route);
-        this.setState({
-            open: false,
-        });
-    }
 
-    go_chatroom(room_id, room_name){
-        join_chatroom(room_id)
-        console.log(this.state)
-        var state_data = {room_id: room_id, name: room_name}
-        var path = {
-            pathname:'/chatroom',
-            state: state_data,
-        }
-        this.dispatchNewRoute(path)
-    }
+
+    // go_chatroom(room_id, room_name){
+    //     join_chatroom(room_id)
+    //     console.log(this.state)
+    //     var state_data = {room_id: room_id, name: room_name}
+    //     var path = {
+    //         pathname:'/chatroom',
+    //         state: state_data,
+    //     }
+    //     this.dispatchNewRoute(path)
+    // }
 
     // for text box input only
     // actually not really need this. after text box input then submit button
@@ -161,7 +189,7 @@ export default class Matching extends React.Component { // eslint-disable-line r
     render() {
         return (
             <div style={{ fontFamily: "Avenir" }}>
-                <div style={sideStyle}>
+                {/* <div style={sideStyle}>
                     <div style={{ width:'100%' }}>
                         {this.state.suggested_rooms.map(room => (
                             <div 
@@ -173,7 +201,7 @@ export default class Matching extends React.Component { // eslint-disable-line r
                         ))}
                     </div>
                 </div>
-         
+          */}
             <div className="col-md-5  col-md-offset-5">
                     <Paper style={style}>
                         <div className="text-center">
@@ -205,7 +233,6 @@ export default class Matching extends React.Component { // eslint-disable-line r
                                     disabled={this.state.disabled}
                                     style={{ marginTop: 60 }}
                                     label="Submit"
-                        
                                     onClick={(e) => this.handleSubmit(this.state.query_tag)}
                                 />  
                             </div>
