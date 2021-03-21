@@ -28,31 +28,7 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
-const sideStyle = {
-    fontFamily: "Avenir",
-    marginTop: 64,
-    width: '20%',
-    height: '100vh',
-    position: 'fixed',
-    justifyContent: 'center',
-    display: 'flex',
-    borderStyle: 'none solid none none',
-    borderWidth: '1px',
-    borderColor: '#01012b',
-    fontSize: '20px',
-    fontWeight: 500,
-    backgroundColor: "rgba(255, 255, 255, 0.25)",
-};
 
-const groupStyle = {
-    color: '#ff577d',
-    borderStyle: 'none none solid none',
-    borderWidth: '1px',
-    borderColor: '#01012b',
-    paddingTop: 50,
-    paddingBottom: 35,
-    backgroundColor: "rgba(255, 255, 255, 0.10)",
-};
 
 const nameStyle = {
     fontFamily: "Avenir",
@@ -209,7 +185,7 @@ export default class Matched extends React.Component { // eslint-disable-line re
                         <CardHeader
                         title= {this.state.suggested_rooms[this.state.cur_index].name}
                         titleStyle= {style2}
-                        subtitle = {"Group members: " + this.state.cur_members }
+                        subtitle = {()=> ",".join.get_room_members(this.state.suggested_rooms[this.state.cur_index].room_id)}
                         actAsExpander={true}
                         showExpandableButton={true}
                         />
