@@ -49,7 +49,7 @@ const roomStyle = {
 const nameStyle = {
     fontFamily: "Avenir",
     color: "#77428D",
-    fontWeight: 550,
+    fontWeight: 900,
     marginBottom: 20,
 };
 

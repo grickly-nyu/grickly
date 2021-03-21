@@ -5,7 +5,7 @@ import * as actionCreators from '../actions/auth';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import {validate_email, reset_password} from '../utils/http_functions';
+import { validate_email, reset_password } from '../utils/http_functions';
 import { browserHistory } from 'react-router';
 
 function mapStateToProps(state) {
@@ -33,7 +33,7 @@ const style = {
 
 const titleStyle = {
     color: "#77428D",
-    fontWeight: 550,
+    fontWeight: 900,
     fontSize: "45px",
     fontFamily: "Avenir",
 };
@@ -43,17 +43,26 @@ const titleStyle = {
 export default class ResetForgotPassword extends React.Component {
     constructor(props) {
         super(props);
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
         this.state = {
             new_password: null,
             re_enter: null,
             verified: false,
-            hash:urlParams.get('hash'),
+            hash: null,
         };
-        validate_email(this.state.hash).then(response=>{
-            if(response.data.result){
-                this.setState({verified:true});
+    }
+
+    componentDidMount() {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const new_hash = urlParams.get("hash");
+        this.setState({
+            hash: new_hash,
+        })
+        validate_email(new_hash).then(res => {
+            if(res.data.result) {
+                this.setState({
+                    verified: true,
+                });
             }
         })
     }
@@ -97,6 +106,7 @@ export default class ResetForgotPassword extends React.Component {
         return (
             <div className="container">
                 <Paper style={style}>
+                    <div>
                     {this.state.verified?
                         <div>
                             <h2 style={titleStyle}>Reset my password</h2>
@@ -125,13 +135,14 @@ export default class ResetForgotPassword extends React.Component {
                                 onClick={() => this.handleMessageSubmit()}
                             />
                         </div>
-                    :
+                        :
                         <div>
                             <p style={titleStyle}>
                                 INVALID LINK, TRY AGAIN OR CONTACT CUSTOMER SERVICE :)
                             </p>
                         </div>
                     }
+                    </div>
                 </Paper>
             </div>
         );

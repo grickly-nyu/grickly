@@ -127,7 +127,7 @@ export default class LoginView extends React.Component {
                 <Paper style={style}>
                     <form role="form">
                         <div className="text-center center">
-                            <h2 style={{fontWeight: 500}}>Sign in to Grickly now!</h2>
+                            <h2 style={{fontWeight: 900}}>Sign in to Grickly now!</h2>
                             {
                                 this.props.statusText &&
                                     <div className="alert alert-info">
@@ -145,7 +145,7 @@ export default class LoginView extends React.Component {
                                   onChange={(e) => this.changeValue(e, 'email')}
                                 />
                             </div>
-                            <div className="col-md-12">
+                            <div className="col-md-12" style={{marginBottom: "20px"}}>
                                 <TextField
                                   underlineFocusStyle={{borderColor: "#FFB11B"}}
                                   floatingLabelFocusStyle={{color: "#FFB11B"}}

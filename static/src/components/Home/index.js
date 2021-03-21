@@ -18,7 +18,7 @@ const style = {
 
 const titleStyle = {
     color: "#77428D",
-    fontWeight: 550,
+    fontWeight: 900,
     fontSize: "88px",
     fontFamily: "Avenir",
 }
@@ -50,6 +50,10 @@ export const Home = () =>
                 <RaisedButton
                     fullWidth={true}
                     labelColor="#8B81C3"
+                    labelStyle={{
+                        fontSize: "23px",
+                        fontWeight: "550",
+                    }}
                     label="Sign Up Now"
                     style={buttonStyle}
                     onClick={() => dispatchNewRoute('/register')}

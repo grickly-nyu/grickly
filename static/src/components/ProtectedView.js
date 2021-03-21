@@ -11,7 +11,7 @@ const style = {
 }
 
 const titleStyle = {
-    fontWeight: 550,
+    fontWeight: 900,
     fontSize: "50px",
     fontFamily: "Avenir",
 }

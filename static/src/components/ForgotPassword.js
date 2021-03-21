@@ -33,7 +33,7 @@ const style = {
 
 const titleStyle = {
     color: "#77428D",
-    fontWeight: 550,
+    fontWeight: 900,
     fontSize: "45px",
     fontFamily: "Avenir",
 }
@@ -102,6 +102,9 @@ export default class ForgotPassword extends React.Component { // eslint-disable-
                             style={{ marginTop: 30 }}
                             label="Send password reset link"
                             labelColor="#FFB11B"
+                            labelStyle={{
+                                fontWeight: "550",
+                            }}
                             onClick={() => this.handleMessageSubmit()}
                         />
                     </div>

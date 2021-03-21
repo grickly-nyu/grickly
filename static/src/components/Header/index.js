@@ -150,6 +150,9 @@ export class Header extends Component {
                     iconElementRight={
                         <FlatButton
                             label="home"
+                            labelStyle={{
+                                fontWeight: "550",
+                            }}
                             onClick={() => this.dispatchNewRoute('/')}
                         />
                     }

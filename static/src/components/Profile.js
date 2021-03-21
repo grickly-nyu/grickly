@@ -33,7 +33,7 @@ const style = {
 
 const titleStyle = {
     color: "#77428D",
-    fontWeight: 550,
+    fontWeight: 900,
     fontSize: "45px",
     fontFamily: "Avenir",
 }
@@ -116,7 +116,7 @@ export default class Profile extends React.Component { // eslint-disable-line re
                         You can change your user name here.
                     </p>
                     <br />
-                    <p style={{fontSize: "20px", fontWeight: 450}}>
+                    <p style={{fontSize: "20px", fontWeight: 550}}>
                         <b style={{color: "#77428D"}}>ID: </b> {this.state.id}
                         <br />
                         <b style={{color: "#77428D"}}>User name: </b>
@@ -127,7 +127,7 @@ export default class Profile extends React.Component { // eslint-disable-line re
                             hintText="Enter new user name"
                             value={this.state.new_username}
                             onChange={this.handleChangeUsername}
-                            style={{fontSize: "18px", fontWeight: 450}}
+                            style={{fontSize: "18px", fontWeight: 550}}
                         />
                         <br />
                         <b style={{color: "#77428D"}}>Email address: </b>{this.state.email}

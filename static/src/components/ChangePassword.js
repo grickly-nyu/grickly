@@ -32,7 +32,7 @@ const style = {
 
 const titleStyle = {
     color: "#77428D",
-    fontWeight: 550,
+    fontWeight: 900,
     fontSize: "45px",
     fontFamily: "Avenir",
 }

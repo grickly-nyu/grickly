@@ -128,7 +128,7 @@ export default class RegisterView extends React.Component {
             <div className="col-md-6 col-md-offset-3" onKeyPress={(e) => this._handleKeyPress(e)}>
                 <Paper style={style}>
                     <div className="text-center">
-                        <h2 style={{fontWeight: 500}}>Register to Grickly now!</h2>
+                        <h2 style={{fontWeight: 900}}>Register to Grickly now!</h2>
                         {
                             this.props.registerStatusText &&
                                 <div className="alert alert-info">
@@ -168,7 +168,6 @@ export default class RegisterView extends React.Component {
                               onChange={(e) => this.changeValue(e, 'password')}
                             />
                         </div>
-
                         <RaisedButton
                           disabled={this.state.disabled}
                           style={{ marginTop: 50 }}
