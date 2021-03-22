@@ -86,29 +86,21 @@ export default class Matched extends React.Component { // eslint-disable-line re
             suggested_rooms: suggested_rooms,
             // cur_members: suggested_rooms[cur_index].members,
         };
-        //  need to checj
 
     }
-
-    handleSubmit(){
-        if (tag == ''){
-            alert('Input must not be empty');
-            return 
+    
+    handleDecline(){
+        var count = Object.keys(this.state.suggested_rooms).length
+        console.log("declining!")
+        console.log(count)
+        console.log(this.state.cur_index)
+        if (this.state.cur_index != (count - 1) ) {
+            this.setState({
+                cur_index: this.state.cur_index + 1,
+            }) 
         }
-        console.log('hello')
-      
-        get_suggestions(this.query_tag).then(response =>{
-            var rooms = response.data.results
-            console.log(rooms)
-            this.setState({ 
-                query_tag: '' , 
-                loading: false, 
-                suggested_rooms: rooms, });
-        })
-        // if (len(this.suggested_rooms) == 0) {
-        //     alert (" ")
-        // }
-      }
+        return 
+    }
 
     dispatchNewRoute(route) {
         browserHistory.push(route);
@@ -149,7 +141,6 @@ export default class Matched extends React.Component { // eslint-disable-line re
     }
 
     render() {
-
         if (this.state.loading) {
             return (
                 <div>
@@ -210,9 +201,7 @@ export default class Matched extends React.Component { // eslint-disable-line re
                                 style={{ marginTop: 250, 
                                     marginInline: 50, }}
                             label="Decline"
-                            onClick={() =>  this.setState({
-                                cur_index: this.state.cur_index + 1,
-                            })  }
+                            onClick={() => this.handleDecline()}
                             />
                         </div>
                     </div>
