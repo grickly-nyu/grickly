@@ -19,6 +19,9 @@ def create_db():
 def runserver():
     socketio.run(app)
     
-
+@manager.command
+def deploy():
+    socketio.run(app, host='0.0.0.0')
+    
 if __name__ == '__main__':
     manager.run()

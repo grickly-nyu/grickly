@@ -33,7 +33,7 @@ export default (
         <Route path="profile" component={requireAuthentication(Profile)} />
         <Route path="forgot_password" component={requireNoAuthentication(ForgotPassword)}/>
         <Route path="reset_forgot_password" component={requireNoAuthentication(ResetForgotPassword)}/>
-        <Route path="change_password" component={requireAuthentication(ChangePassword)} />
+        <Route path="change-password" component={requireAuthentication(ChangePassword)} />
         <Route path="*" component={DetermineAuth(NotFound)} />
     </Route>
 );
