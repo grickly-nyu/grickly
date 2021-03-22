@@ -18,17 +18,25 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
+
 const style = {
-    marginTop: 50,
-    paddingBottom: 40,
-    paddingTop: 25,
-    width: '100%',
-    textAlign: 'center',
-    display: 'inline-block',
-    color: "white",
-    backgroundColor: "rgba(255, 255, 255, 0.25)",
-    fontFamily: "AvenirNext-Medium"
+    marginTop: 150,
+    paddingTop: 40,
+    paddingLeft: 50,
+    paddingRight: 50,
+    paddingBottom: 70,
+    width: "100%",
+    color: "black",
+    backgroundColor: "white",
+    fontFamily: "Avenir",
 };
+
+const titleStyle = {
+    color: "#77428D",
+    fontWeight: 900,
+    fontSize: "45px",
+    fontFamily: "Avenir",
+}
 
 @connect(mapStateToProps, mapDispatchToProps)
 
@@ -77,26 +85,30 @@ export default class ForgotPassword extends React.Component { // eslint-disable-
     render() {
         
         return (
-            <div className = "row">
-                <div className="col-md-3  col-md-offset-1">
-                    <Paper style={style}>
-                        <div className="text-center">
-                        <div>
-                            <TextField
+            <div className="container">
+                <Paper style={style}>
+                    <h2 style={titleStyle}>Reset my password</h2>
+                    <div>
+                        <TextField
+                            underlineFocusStyle={{borderColor: "#FFB11B"}}
+                            floatingLabelFocusStyle={{color: "#FFB11B"}}
                             floatingLabelText="Please enter your email"
                             type="content"
                             errorText={null}
                             onChange={(e) => this.setState({email: e.target.value})}
-                            />
-                            <RaisedButton
-                                style={{ marginTop: 50 }}
-                                label="Send password reset link"
-                                onClick={() => this.handleMessageSubmit()}
-                            />
-                        </div>
-                        </div>
-                    </Paper>
-                </div>
+                        />
+                        <br />
+                        <RaisedButton
+                            style={{ marginTop: 30 }}
+                            label="Send password reset link"
+                            labelColor="#FFB11B"
+                            labelStyle={{
+                                fontWeight: "550",
+                            }}
+                            onClick={() => this.handleMessageSubmit()}
+                        />
+                    </div>
+                </Paper>
             </div>
         );
         

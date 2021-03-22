@@ -1,13 +1,13 @@
 /* global styles */
-@import 'fonts/roboto';
+@import 'fonts/avenir';
 @import 'typography';
 @import 'links';
 
 :global(body) {
   position: relative;
-  font-family: 'Roboto', sans-serif !important;
+  font-family: "Avenir" !important;
   h1, h2, h3, h4 {
-    font-weight: 300;
+    font-weight: 550;
   }
 
 }

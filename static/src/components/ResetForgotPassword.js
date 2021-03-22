@@ -19,15 +19,22 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 const style = {
-    marginTop: 50,
-    paddingBottom: 40,
-    paddingTop: 25,
-    width: '100%',
-    textAlign: 'center',
-    display: 'inline-block',
-    color: "white",
-    backgroundColor: "rgba(255, 255, 255, 0.25)",
-    fontFamily: "AvenirNext-Medium"
+    marginTop: 150,
+    paddingTop: 40,
+    paddingLeft: 50,
+    paddingRight: 50,
+    paddingBottom: 70,
+    width: "100%",
+    color: "black",
+    backgroundColor: "white",
+    fontFamily: "Avenir",
+};
+
+const titleStyle = {
+    color: "#77428D",
+    fontWeight: 900,
+    fontSize: "45px",
+    fontFamily: "Avenir",
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -98,12 +105,16 @@ export default class ResetForgotPassword extends React.Component { // eslint-dis
                         {this.state.verified?
                         <div>
                             <TextField
+                            underlineFocusStyle={{borderColor: "#FFB11B"}}
+                            floatingLabelFocusStyle={{color: "#FFB11B"}}
                             floatingLabelText="New password"
                             type="content"
                             errorText={null}
                             onChange={(e) => this.setState({new_password: e.target.value})}
                             />
                             <TextField
+                            underlineFocusStyle={{borderColor: "#FFB11B"}}
+                            floatingLabelFocusStyle={{color: "#FFB11B"}}
                             floatingLabelText="Re-enter your new password"
                             type="content"
                             errorText={null}

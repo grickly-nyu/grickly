@@ -18,17 +18,25 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
+
 const style = {
-    marginTop: 50,
-    paddingBottom: 40,
-    paddingTop: 25,
-    width: '100%',
-    textAlign: 'center',
-    display: 'inline-block',
-    color: "white",
-    backgroundColor: "rgba(255, 255, 255, 0.25)",
-    fontFamily: "Avenir"
+    marginTop: 150,
+    paddingTop: 40,
+    paddingLeft: 50,
+    paddingRight: 50,
+    paddingBottom: 70,
+    width: "100%",
+    color: "black",
+    backgroundColor: "white",
+    fontFamily: "Avenir",
 };
+
+const titleStyle = {
+    color: "#77428D",
+    fontWeight: 900,
+    fontSize: "45px",
+    fontFamily: "Avenir",
+}
 
 @connect(mapStateToProps, mapDispatchToProps)
 
@@ -43,45 +51,55 @@ export default class Profile extends React.Component { // eslint-disable-line re
             new_username:null,
         };
         this.display_profile()
-    }
-    
-    
+    }  
+  
     handleMessageSubmit(){
         if (this.state.new_username) {
-            if(this.state.new_username==this.state.username){
-                alert("Why you changing to the original ones? Input something new!")
+            if (this.state.new_username == this.state.username) {
+                alert("Why you changing to the original user name? Input something new!")
             }
             else{
                 this.change_profile()
                 console.log(this.state.username) 
-                // console.log(this.state.username)
             }
         }
         else{
             alert('Input must not be empty');
         }
-
-        
       }
-    
+
+    handleChangeUsername = (e) => {
+        const value = e.target.value;
+        this.setState({
+            new_username: value,
+        }); 
+    }
+
     async change_profile(){
         modify_profile(this.state.new_username);
         get_profile().then(response =>{
-            this.setState({id:response.data.results["user_id"],username: response.data.results["username"],email:response.data.results["email"],created_at:response.data.results["created_at"]});
+            this.setState({
+                id:response.data.results["user_id"],
+                username: response.data.results["username"],
+                email: response.data.results["email"],
+                created_at: response.data.results["created_at"],
+            });
         })
            
     }
     
     display_profile(){
         get_profile().then(response =>{
-            this.setState({id:response.data.results["user_id"],username: response.data.results["username"],email:response.data.results["email"],created_at:response.data.results["created_at"]});
+            this.setState({
+                id:response.data.results["user_id"],
+                username: response.data.results["username"],
+                email:response.data.results["email"],
+                created_at:response.data.results["created_at"],
+                new_username: response.data.results["username"],
+            });
         })
     }
-    // _handleKeyPress(e) {
-    //     if (e.key == 'Enter') {
-    //         this.handleMessageSubmit();
-    //     }
-    // }
+
     changeValue(e, type) {
         const value = e.target.value;
         const next_state = {};
@@ -91,49 +109,46 @@ export default class Profile extends React.Component { // eslint-disable-line re
 
     render() {
         return (
-            <div className = "row">
-                <div className="col-md-3  col-md-offset-1">
-                    <Paper style={style}>
-                        <div className="text-center">
-                        <h2>  ID: {this.state.id}</h2>
-                        <h2>  Username: {this.state.username}</h2>
-                        <h2>  Email address: {this.state.email}</h2>
-                        <h2>  Account created at: {this.state.created_at}</h2>
-                        <div className="text-center">
-                            <div className="col-md-12">
-                                <TextField
-                                hintText="Enter new user name"
-                                floatingLabelText="New user name"
-                                type="content"
-                                errorText={null}
-                                onChange={(e) => this.setState({new_username: e.target.value})}
-                                />
-                            </div>
-                            <div>
-                                <RaisedButton
-                                    style={{ marginTop: 50 }}
-                                    label="submit change of profile"
-                                    onClick={() => this.handleMessageSubmit()}
-                                />
-                            </div>
-                        </div>
-                        </div>
-                    </Paper>
-                </div>
-                <div className="col-md-3  col-md-offset-1">
-                    <Paper style={style}>
-                        <div className="text-center">
-                            <div>
-                                <RaisedButton
-                                    style={{ marginTop: 50 }}
-                                    label="Change Password"
-                                    onClick={() => browserHistory.push("/change_password")}
-                                />
-                            </div>
-                        </div>
-                    </Paper>
-                </div>
-                
+            <div className="container">
+                <Paper style={style}>
+                    <h2 style={titleStyle}>Profile</h2>
+                    <p style={{color: "#91989F"}}>
+                        You can change your user name here.
+                    </p>
+                    <br />
+                    <p style={{fontSize: "20px", fontWeight: 550}}>
+                        <b style={{color: "#77428D"}}>ID: </b> {this.state.id}
+                        <br />
+                        <b style={{color: "#77428D"}}>User name: </b>
+                        <TextField
+                            id="text-field-controlled"
+                            underlineFocusStyle={{ borderColor: "#FFB11B" }}
+                            floatingLabelFocusStyle={{ color: "#FFB11B" }}
+                            hintText="Enter new user name"
+                            value={this.state.new_username}
+                            onChange={this.handleChangeUsername}
+                            style={{fontSize: "18px", fontWeight: 550}}
+                        />
+                        <br />
+                        <b style={{color: "#77428D"}}>Email address: </b>{this.state.email}
+                        <br />
+                        <b style={{color: "#77428D"}}>Account created at: </b>{this.state.created_at} <br />
+                    </p>
+                    <div className="text-center">
+                        <RaisedButton
+                            style={{ marginTop: 50, marginRight: 50 }}
+                            labelColor="#FFB11B"
+                            label="submit change of profile"
+                            onClick={() => this.handleMessageSubmit()}
+                        />
+                        <RaisedButton
+                            style={{ marginTop: 35 }}
+                            label="Change Password"
+                            labelColor="#8B81C3"
+                            onClick={() => browserHistory.push("/change-password")}
+                        />
+                    </div>
+                </Paper>           
             </div>
         );
     }

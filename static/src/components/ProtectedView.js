@@ -1,35 +1,36 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/raisedbutton';
 import * as actionCreators from '../actions/data';
 
 const style = {
     paddingTop: 200,
-    color: "#ff2a6d",
+    color: "#77428D",
     fontFamily: "Avenir",
 }
 
 const titleStyle = {
-    fontWeight: 550,
+    fontWeight: 900,
     fontSize: "50px",
     fontFamily: "Avenir",
 }
 
 const pStyle = {
-    color: "white",
-    fontSize: "20px",
     fontFamily: "Avenir",
-    marginBottom: "40px"
+    color: "#91989F",
+    fontSize: "25px",
+    fontWeight: 400,
+    paddingBottom: "40px",
 }
 
 const buttonStyle = {
-    color: "#05d9e8",
+    color: "#FFB11B",
     marginRight: "40px"
 }
 
 const buttonStyle2 = {
-    color: "red",
+    color: "#91989F",
 }
 
 function mapStateToProps(state) {
@@ -59,16 +60,21 @@ export default class ProtectedView extends React.Component {
 
     render() {
         return (
-            <div style={style}>
+            <div style={style} className="text-center">
                 {!this.props.loaded
                     ? <h1>Loading data...</h1>
                     :
-                    <div className="container">
-                        <p style={titleStyle}>Welcome back to Grickly,
-                            {this.props.userName}!</p>
+                    <div className="center container">
+                        <p style={titleStyle}>Welcome back to Grickly, {this.props.userName}!</p>
                         <p style={pStyle}>Are you ready to find your buddies?</p>
-                        <FlatButton style={buttonStyle} label="Yes! Start matching now!" />
-                        <FlatButton style={buttonStyle2} label="Nah, let me create a group!" />
+                        <RaisedButton
+                            style={buttonStyle}
+                            labelColor="#FFB11B"
+                            label="Yes! Start matching now!" />
+                        <RaisedButton
+                            style={buttonStyle2}
+                            labelColor="#8B81C3"
+                            label="Nah, let me create a group!" />
                     </div>
                 }
             </div>

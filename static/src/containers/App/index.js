@@ -11,7 +11,7 @@ import './styles/app.scss';
 
 
 const style = {
-    backgroundColor: "#01012b",
+    backgroundColor: "#FFFFFB",
     height: "100%",
     width: '100%',
 };

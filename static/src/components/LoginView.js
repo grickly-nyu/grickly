@@ -8,6 +8,7 @@ import Paper from 'material-ui/Paper';
 import * as actionCreators from '../actions/auth';
 import { validateEmail } from '../utils/misc';
 import { browserHistory } from 'react-router';
+
 function mapStateToProps(state) {
     return {
         isAuthenticating: state.auth.isAuthenticating,
@@ -26,10 +27,17 @@ const style = {
     width: '100%',
     textAlign: 'center',
     display: 'inline-block',
-    color: "white",
-    backgroundColor: "rgba(255, 255, 255, 0.25)",
+    color: "#77428D",
+    backgroundColor: "white",
     fontFamily: "Avenir",
 };
+
+const dispatchNewRoute = (route) => {
+    browserHistory.push(route);
+    this.setState({
+        open: false,
+    });
+}
 
 @connect(mapStateToProps, mapDispatchToProps)
 export default class LoginView extends React.Component {
@@ -113,25 +121,23 @@ export default class LoginView extends React.Component {
         this.props.loginUser(this.state.email, this.state.password, this.state.redirectTo);
     }
 
-    go_to_forgot_password(){
-        browserHistory.push('/forgot_password');
-    }
     render() {
         return (
             <div className="col-md-6 col-md-offset-3" onKeyPress={(e) => this._handleKeyPress(e)}>
                 <Paper style={style}>
                     <form role="form">
-                        <div className="text-center">
-                            <h2 style={{fontWeight: 500}}>Sign in to Grickly now!</h2>
+                        <div className="text-center center">
+                            <h2 style={{fontWeight: 900}}>Sign in to Grickly now!</h2>
                             {
                                 this.props.statusText &&
                                     <div className="alert alert-info">
                                         {this.props.statusText}
                                     </div>
                             }
-
                             <div className="col-md-12">
                                 <TextField
+                                  underlineFocusStyle={{borderColor: "#FFB11B"}}
+                                  floatingLabelFocusStyle={{color: "#FFB11B"}}
                                   hintText="Email"
                                   floatingLabelText="Email"
                                   type="email"
@@ -139,8 +145,10 @@ export default class LoginView extends React.Component {
                                   onChange={(e) => this.changeValue(e, 'email')}
                                 />
                             </div>
-                            <div className="col-md-12">
+                            <div className="col-md-12" style={{marginBottom: "20px"}}>
                                 <TextField
+                                  underlineFocusStyle={{borderColor: "#FFB11B"}}
+                                  floatingLabelFocusStyle={{color: "#FFB11B"}}
                                   hintText="Password"
                                   floatingLabelText="Password"
                                   type="password"
@@ -148,7 +156,9 @@ export default class LoginView extends React.Component {
                                   onChange={(e) => this.changeValue(e, 'password')}
                                 />
                             </div>
-
+                            <p style={{color: "#91989F"}}>
+                                Forget your password? Reset your password <a onClick={() => dispatchNewRoute('/forgot_password')}>here</a>.
+                            </p>
                             <RaisedButton
                               disabled={this.state.disabled}
                               style={{ marginTop: 50 }}

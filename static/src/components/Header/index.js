@@ -26,7 +26,7 @@ function mapDispatchToProps(dispatch) {
 const style = {
     top: 0,
     position: "fixed",
-    backgroundColor: "#065197",
+    backgroundColor: "#8B81C3",
     fontFamily: "Avenir",
 };
 
@@ -128,10 +128,6 @@ export class Header extends Component {
                                 </svg>
                                 Register
                             </MenuItem>
-                            <MenuItem onClick={() => this.dispatchNewRoute('/forgot_password')}>
-                                <svg style={svgStyle2} width="15px" height="15px" class="svg-icon" viewBox="0 0 20 20"></svg>
-                                Forgot Password
-                            </MenuItem>
                             <Divider />
                             <MenuItem onClick={() => this.dispatchNewRoute('/')}>
                                 <svg style={svgStyle2} width="15px" height="15px" class="svg-icon" viewBox="0 0 20 20">
@@ -152,7 +148,13 @@ export class Header extends Component {
                         </IconButton>
                     }
                     iconElementRight={
-                        <FlatButton label="Home" style={{color: "#ff577d"}} onClick={() => this.dispatchNewRoute('/')} />
+                        <FlatButton
+                            label="home"
+                            labelStyle={{
+                                fontWeight: "550",
+                            }}
+                            onClick={() => this.dispatchNewRoute('/')}
+                        />
                     }
                     style={style}
                 />

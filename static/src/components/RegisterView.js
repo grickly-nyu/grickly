@@ -26,11 +26,11 @@ const style = {
     marginTop: 230,
     paddingTop: 25,
     paddingBottom: 40,
-    width: '100%',
-    textAlign: 'center',
-    display: 'inline-block',
-    color: "white",
-    backgroundColor: "rgba(255, 255, 255, 0.25)",
+    width: "100%",
+    textAlign: "center",
+    display: "inline-block",
+    color: "#77428D",
+    backgroundColor: "white",
     fontFamily: "Avenir"
 };
 
@@ -128,7 +128,7 @@ export default class RegisterView extends React.Component {
             <div className="col-md-6 col-md-offset-3" onKeyPress={(e) => this._handleKeyPress(e)}>
                 <Paper style={style}>
                     <div className="text-center">
-                        <h2 style={{fontWeight: 500}}>Register to Grickly now!</h2>
+                        <h2 style={{fontWeight: 900}}>Register to Grickly now!</h2>
                         {
                             this.props.registerStatusText &&
                                 <div className="alert alert-info">
@@ -137,6 +137,8 @@ export default class RegisterView extends React.Component {
                         }
                         <div className="col-md-12">
                             <TextField
+                              underlineFocusStyle={{borderColor: "#FFB11B"}}
+                              floatingLabelFocusStyle={{color: "#FFB11B"}}
                               hintText="Username"
                               floatingLabelText="Username"
                               type="username"
@@ -146,6 +148,8 @@ export default class RegisterView extends React.Component {
                         </div>
                         <div className="col-md-12">
                             <TextField
+                              underlineFocusStyle={{borderColor: "#FFB11B"}}
+                              floatingLabelFocusStyle={{color: "#FFB11B"}}
                               hintText="Email"
                               floatingLabelText="Email"
                               type="email"
@@ -155,6 +159,8 @@ export default class RegisterView extends React.Component {
                         </div>
                         <div className="col-md-12">
                             <TextField
+                              underlineFocusStyle={{borderColor: "#FFB11B"}}
+                              floatingLabelFocusStyle={{color: "#FFB11B"}}
                               hintText="Password"
                               floatingLabelText="Password"
                               type="password"
@@ -162,7 +168,6 @@ export default class RegisterView extends React.Component {
                               onChange={(e) => this.changeValue(e, 'password')}
                             />
                         </div>
-
                         <RaisedButton
                           disabled={this.state.disabled}
                           style={{ marginTop: 50 }}

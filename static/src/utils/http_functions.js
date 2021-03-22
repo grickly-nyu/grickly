@@ -63,8 +63,8 @@ export function get_messages(room_id){
     return axios.post('/api/get_messages',{room_id,});
 }
 
-export function modify_profile(new_username,new_email){
-    return axios.post('/api/modify_profile',{new_username,new_email});
+export function modify_profile(new_username){
+    return axios.post('/api/modify_profile',{new_username});
 }
 
 export function get_profile(){
@@ -72,7 +72,7 @@ export function get_profile(){
 }
 
 export function change_password(old_password,new_password){
-    return axios.post("/api/change_password",{old_password,new_password})
+    return axios.post("/api/change-password",{old_password,new_password})
 }
 
 export function get_others_profile(user_id){

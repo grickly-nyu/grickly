@@ -2,7 +2,10 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from '../actions/auth';
+import Paper from 'material-ui/Paper';
+import { List, ListItem } from 'material-ui/List';
 import TextField from 'material-ui/TextField';
+import {grey400, darkBlack, lightBlack} from 'material-ui/styles/colors';
 import RaisedButton from 'material-ui/RaisedButton';
 import { get_messages, get_chatrooms, get_room_members } from '../utils/http_functions';
 import io from 'socket.io-client';
@@ -21,55 +24,43 @@ function mapDispatchToProps(dispatch) {
 const socket = io("http://localhost:5000");
 const sideStyle = {
     fontFamily: "Avenir",
-    marginTop: 64,
-    width: '20%',
-    height: '100vh',
-    position: 'fixed',
-    justifyContent: 'center',
-    display: 'flex',
-    borderStyle: 'none solid none none',
-    borderWidth: '1px',
-    borderColor: '#01012b',
-    fontSize: '20px',
-    fontWeight: 500,
-    backgroundColor: "rgba(255, 255, 255, 0.25)",
+    marginTop: 55,
+    width: "20%",
+    height: "100vh",
+    position: "fixed",
+    display: "flex",
+    justifyContent: "center",
 };
-const groupStyle = {
-    color: '#ff577d',
-    borderStyle: 'none none solid none',
-    borderWidth: '1px',
-    borderColor: '#01012b',
-    paddingTop: 30,
-    paddingBottom: 35,
-    backgroundColor: "rgba(255, 255, 255, 0.10)",
-};
+
 const roomStyle = {
     fontFamily: "Avenir",
     marginTop: 64,
-    marginLeft: '20%',
-    paddingLeft: '5%',
+    marginLeft: "20%",
+    paddingLeft: "5%",
     paddingTop: 20,
-    width: '65%',
-    height: '100vh',
-    position: 'fixed',
-    display: 'flex',
-    overflow: 'auto',
-    color: 'white',
-    backgroundColor: "rgba(255, 255, 255, 0.25)",
+    width: "65%",
+    height: "100vh",
+    position: "fixed",
+    display: "flex",
+    overflow: "auto",
+    color: "black",
 };
+
 const nameStyle = {
     fontFamily: "Avenir",
-    paddingLeft: '5%',
-    color: '#ff2a6d',
-    fontWeight: 550,
+    color: "#77428D",
+    fontWeight: 900,
+    marginBottom: 20,
 };
+
 const textStyle = {
     fontFamily: "Avenir",
-    position: 'fixed',
-    width: '60%',
-    bottom: 0,
-    backgroundColor: "#414260"
+    position: "fixed",
+    width: "50%",
+    bottom: 20,
+    backgroundColor: "#FFFFFB"
 };
+
 const listStyle = {
     marginTop: 64,
     marginLeft: '85%',
@@ -119,6 +110,7 @@ export default class Chatroom extends React.Component { // eslint-disable-line r
                     messages: response.data.results,
                     loading: false,
                 });
+                console.log(response.data.results);
             });
             get_room_members(response.data.results[0].room_id).then(response =>{
                 this.setState({
@@ -193,43 +185,50 @@ export default class Chatroom extends React.Component { // eslint-disable-line r
         console.log(this.state.users)
         return (
             <div style={{ fontFamily: "Avenir" }}>
-                <div style={sideStyle}>
-                    <div style={{ width:'100%' }}>
+                <Paper style={sideStyle}>
+                    <List style={{ width:'100%' }}>
                         {this.state.rooms.map(room => (
-                            <div 
+                            <ListItem 
                             key={room.room_id}
                             onClick={() => this.switchRoom(room)}
-                            style={groupStyle}>
-                                <p className='text-center'>{room.name}</p>
-                            </div>
+                            primaryText={room.name}
+                            secondaryText={
+                                <p>
+                                    <span style={{color: darkBlack}}>{room.name}</span> <br />
+                                    {this.state.messages.content}
+                                </p>
+                            }
+                            />
                         ))}
-                    </div>
-                </div>
-                <div style={roomStyle}>
+                    </List>
+                </Paper>
+                <Paper style={roomStyle}>
                     <div onKeyPress={(e) => this._handleKeyPress(e)}>
-                        <div style={{paddingBottom: '130px'}}>
+                        <div style={{width: "100%", addingBottom: '130px'}}>
                             <h2 style={nameStyle}>Chatroom {this.state.room_name}</h2>
                             {this.state.messages.map(message => (
                                 <div
                                 key={message.sendTime+'-'+message.content}
                                 >
-                                    <p>
-                                        <b style={{ width: '300px', color: "#05d9e8"}}>{message.username}: </b>
+                                    <p style={{ width: '300px' }}>
+                                        <b style={{ color: "#FFB11B" }}>{message.username}: </b>
                                         {message.content}
                                     </p>
                                 </div>
                             ))}
                         </div>
                         <TextField
-                        hintText="text"
-                        floatingLabelText="text"
-                        type="content"
-                        errorText={null}
-                        style={textStyle}
-                        onChange={(e) => this.setState({content: e.target.value})}
-                        />
+                            underlineFocusStyle={{borderColor: "#FFB11B"}}
+                            floatingLabelFocusStyle={{color: "#FFB11B"}}
+                            hintText="Start chating!"
+                            floatingLabelText="text"
+                            type="content"
+                            errorText={null}
+                            style={textStyle}
+                            onChange={(e) => this.setState({content: e.target.value})}
+                            />
                     </div>
-                </div>
+                </Paper>
                 <div style={listStyle} className='text-center'>
                     <div>
                         {this.state.users.map(user => (
