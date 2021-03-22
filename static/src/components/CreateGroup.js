@@ -32,7 +32,7 @@ const style = {
     width: '100%',
     textAlign: 'center',
     display: 'inline-block',
-    color: "white",
+    color: "#77428D",
     backgroundColor: "rgba(255, 255, 255, 0.25)",
     fontFamily: "Avenir",
 };
@@ -41,16 +41,16 @@ const moment = require('moment');
 
 const styles = {
     errorStyle: {
-      color: "white",
+      color: "#77428D",
     },
     underlineStyle: {
-      borderColor: "white",
+      borderColor: "#77428D",
     },
     floatingLabelStyle: {
-      color: "white",
+      color: "#77428D",
     },
     floatingLabelFocusStyle: {
-      color: "white",
+      color: "#77428D",
     },
   };
 
