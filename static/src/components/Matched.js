@@ -3,15 +3,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from '../actions/auth';
 import Paper from 'material-ui/Paper';
-
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-
+import {Card, CardHeader, CardText} from 'material-ui/Card';
 import CircularProgress  from 'material-ui/CircularProgress';
 import RaisedButton from 'material-ui/RaisedButton';
-import axios from 'axios';
 import { browserHistory } from 'react-router';
-
 import { join_chatroom } from '../utils/http_functions'; 
 
 
