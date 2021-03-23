@@ -78,7 +78,8 @@ export default class ProtectedView extends React.Component {
                         <RaisedButton
                             style={buttonStyle}
                             labelColor="#FFB11B"
-                            label="Yes! Start matching now!" />
+                            label="Yes! Start matching now!"
+                            onClick={(e) => this.dispatchNewRoute("/matching")} />
                         <RaisedButton
                             style={buttonStyle2}
                             labelColor="#8B81C3"

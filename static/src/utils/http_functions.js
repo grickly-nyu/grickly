@@ -121,3 +121,11 @@ export function create_event(room_id, event_name, location, start_time, end_time
 export function delete_event(room_id){
     return axios.post('api/delete_event',{room_id,})
 }
+
+export function get_suggestions(query_tag){
+    return axios.post('/api/get_suggestions',{query_tag,});
+}
+
+export function join_chatroom(room_id){
+    return axios.post('/api/join_chatroom',{room_id,});
+}
