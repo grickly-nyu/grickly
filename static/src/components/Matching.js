@@ -149,8 +149,6 @@ export default class Matching extends React.Component { // eslint-disable-line r
         const next_state = {};
         next_state[type] = value;
         this.setState(next_state);
-        console.log("value:", value)
-        console.log("log:", this.state.query_tag)
     }
 
     render() {
