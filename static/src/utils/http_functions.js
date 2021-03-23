@@ -48,6 +48,18 @@ export function get_chatrooms(){
     return axios.get('/api/get_chatrooms');
 }
 
+export function create_group(name, tag){
+    return axios.post('/api/create_group',{name, tag,});
+}
+
+export function leave_group(room_id){
+    return axios.post('/api/leave_group',{room_id,});
+}
+
+export function delete_group(room_id){
+    return axios.post('api/delete_group',{room_id,})
+}
+
 export function get_room_members(room_id){
     return axios.post('/api/get_room_members',{room_id,});
 }
@@ -93,4 +105,19 @@ export function send_verification_email(email){
 
 export function reset_password(hash,new_password){
     return axios.post('/api/reset_password',{hash,new_password});
+}
+export function delete_messages(room_id){
+    return axios.post('api/delete_messages',{room_id,})
+}
+
+export function get_event(room_id){
+    return axios.post('api/get_event',{room_id,})
+}
+
+export function create_event(room_id, event_name, location, start_time, end_time, description){
+    return axios.post('api/create_event',{room_id, event_name, location, start_time, end_time, description,})
+}
+
+export function delete_event(room_id){
+    return axios.post('api/delete_event',{room_id,})
 }
