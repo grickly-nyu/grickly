@@ -84,16 +84,12 @@ export default class Matched extends React.Component { // eslint-disable-line re
             loading: false,
             cur_index: 0,
             suggested_rooms: suggested_rooms,
-            // cur_members: suggested_rooms[cur_index].members,
         };
 
     }
     
     handleDecline(){
         var count = Object.keys(this.state.suggested_rooms).length
-        console.log("declining!")
-        console.log(count)
-        console.log(this.state.cur_index)
         if (this.state.cur_index != (count - 1) ) {
             this.setState({
                 cur_index: this.state.cur_index + 1,
@@ -120,8 +116,7 @@ export default class Matched extends React.Component { // eslint-disable-line re
         this.dispatchNewRoute(path)
     }
 
-    // for text box input only
-    // actually not really need this. after text box input then submit button
+  
     _handleKeyPress(e) {
         if (e.key == 'Enter') {
             this.handleSubmit();
@@ -150,23 +145,8 @@ export default class Matched extends React.Component { // eslint-disable-line re
                 </div>
             );
         }
-        // if (!this.state.suggested_rooms.length) {
-        //     return <div>Didn't get a room</div>;
-        // }
         return (
             <div style={{ fontFamily: "Avenir" }}>
-                {/* <div style={sideStyle}>
-                <div style={{ width:'100%' }}> */}
-                    {/* {this.state.suggested_rooms.map(room => (
-                        <div 
-                        key={room.room_id}
-                        onClick={() => this.go_chatroom(room.room_id,room.name)}
-                        style={groupStyle}>
-                            <p className='text-center'>{room.name}</p>
-                        </div>
-                    ))} */}
-                {/* </div> */}
-            {/* </div> */}
             <div className="col-md-9  col-md-offset-3">
                 <Paper style={style}>
                 <h2 style={{fontWeight: 500}}>{this.state.query_tag}</h2>

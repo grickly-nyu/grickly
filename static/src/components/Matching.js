@@ -94,20 +94,12 @@ export default class Matching extends React.Component { // eslint-disable-line r
             suggested_rooms: [],
         };
     }
-    // progress(props) {
-    //     return (
-    //         <React.Fragment>
-    //         <CircularProgress variant="determinate" value={props.value} />
-    //         <LinearProgress variant="determinate" value={props.value} />
-    //         </React.Fragment>
-    //     )
-    // }
 
     dispatchNewRoute(route) {
         browserHistory.push(route);
-        // this.setState({
-        //     open: false,
-        // });
+        this.setState({
+            open: false,
+        });
     }
 
     handleSubmit(tag){
@@ -115,13 +107,10 @@ export default class Matching extends React.Component { // eslint-disable-line r
             alert('Input must not be empty, please re-enter');
             return 
         }
-        console.log('hello')
         get_suggestions(tag).then(response =>{
             var rooms = response.data.results
             for(var i = 0; i < response.data.results.length; i++) {
                 var obj =response.data.results[i];
-                console.log("current index is ", i, "and the room members are ", obj.members)
-                // console.log("object is: ", obj);
             }
             this.setState({ 
                 loading: false, 
@@ -136,8 +125,6 @@ export default class Matching extends React.Component { // eslint-disable-line r
                 loading: false,
                 cur_index: 0,
                 suggested_rooms: rooms,
-                // cur_room_name: rooms[0].name,
-                // cur_members: rooms[0].members,
             }
             var path = {
                 pathname:'/matched',
@@ -146,27 +133,7 @@ export default class Matching extends React.Component { // eslint-disable-line r
             this.dispatchNewRoute(path)
         })
         
-
-        // if (len(this.suggested_rooms) == 0) {
-        //     alert (" ")
-        // }
       }
-
-
-
-    // go_chatroom(room_id, room_name){
-    //     join_chatroom(room_id)
-    //     console.log(this.state)
-    //     var state_data = {room_id: room_id, name: room_name}
-    //     var path = {
-    //         pathname:'/chatroom',
-    //         state: state_data,
-    //     }
-    //     this.dispatchNewRoute(path)
-    // }
-
-    // for text box input only
-    // actually not really need this. after text box input then submit button
     _handleKeyPress(e) {
         if (e.key == 'Enter') {
             this.handleSubmit();
@@ -189,19 +156,6 @@ export default class Matching extends React.Component { // eslint-disable-line r
     render() {
         return (
             <div style={{ fontFamily: "Avenir" }}>
-                {/* <div style={sideStyle}>
-                    <div style={{ width:'100%' }}>
-                        {this.state.suggested_rooms.map(room => (
-                            <div 
-                            key={room.room_id}
-                            onClick={() => this.go_chatroom(room.room_id,room.name)}
-                            style={groupStyle}>
-                                <p className='text-center'>{room.name}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-          */}
             <div className="col-md-5  col-md-offset-5">
                     <Paper style={style}>
                         <div className="text-center">
