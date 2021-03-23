@@ -77,7 +77,6 @@ def get_messages():
     incoming = request.get_json()
     messages = Message.get_messages_from_room_id(incoming['room_id'])
     messages = [{'user_id': message.user_id, 'sendTime': message.sendTime, 'content': message.content} for message in messages]
-    print(messages)
     for message in messages:
         user = User.get_user_with_user_id(message['user_id'])
         message['username'] = str(user.username)
