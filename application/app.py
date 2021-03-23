@@ -6,6 +6,7 @@ from .chatroom import *
 from .event import *
 from .profile import *
 from .mail import *
+from .matching import *
 from index import app, db, socketio
 from sqlalchemy.exc import IntegrityError
 from .utils.auth import generate_token, requires_auth, verify_token

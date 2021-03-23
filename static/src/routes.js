@@ -18,6 +18,9 @@ import CreateGroup from './components/CreateGroup';
 import NotFound from './components/NotFound';
 import ForgotPassword from "./components/ForgotPassword";
 import ResetForgotPassword from "./components/ResetForgotPassword";
+import Matching from './components/Matching';
+import Matched from './components/Matched';
+
 import { DetermineAuth } from './components/DetermineAuth';
 import { requireAuthentication } from './components/AuthenticatedComponent';
 import { requireNoAuthentication } from './components/notAuthenticatedComponent';
@@ -36,6 +39,8 @@ export default (
         <Route path="reset_forgot_password" component={requireNoAuthentication(ResetForgotPassword)}/>
         <Route path="change-password" component={requireAuthentication(ChangePassword)} />
         <Route path="creategroup" component={requireAuthentication(CreateGroup)} />
+        <Route path="matching" component={requireAuthentication(Matching)} />
+        <Route path="matched" component={requireAuthentication(Matched)} />
         <Route path="*" component={DetermineAuth(NotFound)} />
     </Route>
 );
