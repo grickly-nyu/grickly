@@ -93,7 +93,6 @@ export default class Matched extends React.Component { // eslint-disable-line re
 
     }
    
-
     handleAccept(){
         var count = Object.keys(this.state.suggested_rooms).length
         if (this.state.cur_index == (count - 1) ) {
@@ -106,7 +105,6 @@ export default class Matched extends React.Component { // eslint-disable-line re
     }
     
     handleDecline(){
-        console.log(this.state.suggested_rooms[this.state.cur_index].members)
         var count = Object.keys(this.state.suggested_rooms).length
         if (this.state.cur_index < (count - 1) ) {
             this.setState({
@@ -163,7 +161,6 @@ export default class Matched extends React.Component { // eslint-disable-line re
                 </div>
             );
         }
-        // this.state.suggested_rooms[this.state.cur_index].members.map((name) => {name}) 
         return (
             <div style={{ fontFamily: "Avenir" }}>
             <div className="col-md-9  col-md-offset-3">
@@ -183,7 +180,7 @@ export default class Matched extends React.Component { // eslint-disable-line re
                         showExpandableButton={true}
                         />
                         <CardText expandable={true}>
-                                More information to be added: events happening  
+                                More information to be added  
                         </CardText>
                 
                     </Card>
