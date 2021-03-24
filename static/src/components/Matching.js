@@ -4,15 +4,9 @@ import { connect } from 'react-redux';
 import * as actionCreators from '../actions/auth';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
-
-import CircularProgress  from 'material-ui/CircularProgress';
 import RaisedButton from 'material-ui/RaisedButton';
-import axios from 'axios';
 import { browserHistory } from 'react-router';
-
-import { join_chatroom } from '../utils/http_functions'; 
 import { get_suggestions } from '../utils/http_functions'; 
-import { requirePropFactory } from '@material-ui/core';
 
 
 function mapStateToProps(state) {
