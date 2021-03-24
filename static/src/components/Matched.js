@@ -32,6 +32,11 @@ const nameStyle = {
     fontWeight: 550,
 };
 
+const subStyle = {
+    color: "#5a5a5a",
+    fontSize: "17px",
+}
+
 const style = {
     marginTop: 400,
     paddingTop: 40,
@@ -69,6 +74,11 @@ export default class Matched extends React.Component { // eslint-disable-line re
         var index = 0
         try {
             suggested_rooms = this.props.location.state.suggested_rooms;
+            padded_suggest_rooms = suggested_rooms.push({
+                'room_id': null,
+                'name' : '',
+                'members': [],
+            })
             query_tag = this.props.location.state.query_tag;
         }
         catch(err){
@@ -78,18 +88,29 @@ export default class Matched extends React.Component { // eslint-disable-line re
             query_tag: query_tag,
             loading: false,
             cur_index: 0,
-            suggested_rooms: suggested_rooms,
+            suggested_rooms: suggested_rooms
         };
 
+    }
+   
+    handleAccept(){
+        var count = Object.keys(this.state.suggested_rooms).length
+        if (this.state.cur_index == (count - 1) ) {
+            alert("Suggestions end, no room to enter!")
+        } else{
+            this.go_chatroom(this.state.suggested_rooms[this.state.cur_index].room_id,
+                this.state.suggested_rooms[this.state.cur_index].name)
+        }
+        return 
     }
     
     handleDecline(){
         var count = Object.keys(this.state.suggested_rooms).length
-        if (this.state.cur_index != (count - 1) ) {
+        if (this.state.cur_index < (count - 1) ) {
             this.setState({
                 cur_index: this.state.cur_index + 1,
             }) 
-        }
+        } 
         return 
     }
 
@@ -102,7 +123,6 @@ export default class Matched extends React.Component { // eslint-disable-line re
 
     go_chatroom(room_id, room_name){
         join_chatroom(room_id)
-        console.log(this.state)
         var state_data = {room_id: room_id, name: room_name}
         var path = {
             pathname:'/chatroom',
@@ -124,9 +144,8 @@ export default class Matched extends React.Component { // eslint-disable-line re
             return 
             // long tags are not allowed 
         }
-        console.log(value)
         const next_state = {};
-        next_state[type] = value;
+        next_state[type] = value; 
         this.setState(next_state)
     }
 
@@ -151,12 +170,15 @@ export default class Matched extends React.Component { // eslint-disable-line re
                         <CardHeader
                         title= {this.state.suggested_rooms[this.state.cur_index].name}
                         titleStyle= {style2}
-                        subtitle = {()=> ",".join.get_room_members(this.state.suggested_rooms[this.state.cur_index].room_id)}
+                        subtitle = { 
+                            "Members: " + this.state.suggested_rooms[this.state.cur_index].members.slice(0,10).map(name => `${name}`).join(', ') 
+                           }
+                        subtitleStyle={subStyle}
                         actAsExpander={true}
                         showExpandableButton={true}
                         />
                         <CardText expandable={true}>
-                       More information to be added 
+                                More information to be added  
                         </CardText>
                 
                     </Card>
@@ -168,9 +190,7 @@ export default class Matched extends React.Component { // eslint-disable-line re
                             style={{ marginTop: 250, 
                                 margin: 50, marginRight: 520, }}
                             label="Accept"
-                            onClick={() => this.go_chatroom(this.state.suggested_rooms[this.state.cur_index].room_id,
-                                this.state.suggested_rooms[this.state.cur_index].name
-                                                                            )}
+                            onClick={() => this.handleAccept()}
                             />
                             <RaisedButton
                                 style={{ marginTop: 250, 
