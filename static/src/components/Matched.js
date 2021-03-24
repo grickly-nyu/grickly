@@ -123,7 +123,6 @@ export default class Matched extends React.Component { // eslint-disable-line re
 
     go_chatroom(room_id, room_name){
         join_chatroom(room_id)
-        console.log(this.state)
         var state_data = {room_id: room_id, name: room_name}
         var path = {
             pathname:'/chatroom',
@@ -145,7 +144,6 @@ export default class Matched extends React.Component { // eslint-disable-line re
             return 
             // long tags are not allowed 
         }
-        console.log(value)
         const next_state = {};
         next_state[type] = value; 
         this.setState(next_state)
