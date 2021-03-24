@@ -147,7 +147,7 @@ export default class Matched extends React.Component { // eslint-disable-line re
         }
         console.log(value)
         const next_state = {};
-        next_state[type] = value; d
+        next_state[type] = value; 
         this.setState(next_state)
     }
 
