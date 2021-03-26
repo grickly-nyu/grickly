@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import RaisedButton from 'material-ui/raisedbutton';
+import RaisedButton from 'material-ui/RaisedButton';
 import * as actionCreators from '../actions/data';
 import { browserHistory } from 'react-router';
 
