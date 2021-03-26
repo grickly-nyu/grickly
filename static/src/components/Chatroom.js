@@ -11,6 +11,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { get_event, get_messages, get_chatrooms, get_room_members, leave_group, delete_messages, delete_group, delete_event } from '../utils/http_functions';
 import io from 'socket.io-client';
 
+
 function mapStateToProps(state) {
     return {
         isRegistering: state.auth.isRegistering,
@@ -188,7 +189,8 @@ export default class Chatroom extends React.Component { // eslint-disable-line r
     changeValue(e, type) {
         const value = e.target.value;
         const next_state = {};
-        next_state[type] = value;    
+        next_state[type] = value;
+        this.setState(next_state);
     }
 
     switchRoom(room){
@@ -319,8 +321,9 @@ export default class Chatroom extends React.Component { // eslint-disable-line r
                             type="content"
                             errorText={null}
                             style={textStyle}
-                            onChange={(e) => this.setState({content: e.target.value})}
-                            />
+                            onChange={(e) => this.changeValue(e, 'content')}
+                            value = {this.state.content}
+                        />
                     </div>
                 </Paper>
                 <div style={listStyle} className='text-center'>
@@ -340,5 +343,4 @@ export default class Chatroom extends React.Component { // eslint-disable-line r
         );
     }
 }
-
 
