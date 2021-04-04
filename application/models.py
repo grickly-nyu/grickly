@@ -1,11 +1,13 @@
 from index import db, bcrypt
-
+from sqlalchemy import Table, Column, Integer, ForeignKey
+from sqlalchemy.orm import relationship
 
 class User(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     email = db.Column(db.String(255), unique=True)
     password = db.Column(db.String(255))
     username = db.Column(db.String(255), unique=True)
+    children = relationship("User_info")
 
     def __init__(self, email, password, username):
         self.email = email
@@ -28,7 +30,23 @@ class User(db.Model):
     def get_user_with_user_id(user_id):
         return User.query.filter_by(id = user_id).first()
 
-            
+class User_info(db.Model):
+    user_id = db.Column(db.Integer(), ForeignKey('user.id'), primary_key=True)
+    created_at = db.Column(db.DateTime())
+    phone = db.Column(db.Integer())
+    
+    def __init__(self, user_id, created_at, phone):
+        self.user_id = user_id
+        self.created_at = created_at
+        self.phone = phone
+
+class Interest(db.Model):
+    user_id = db.Column(db.Integer(), ForeignKey('user.id'), primary_key=True)
+    interest = db.Column(db.String(255))
+    def __init__(self, user_id, interest):
+        self.user_id = user_id
+        self.interest = interest
+
 class Chatroom(db.Model):
     room_id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(255))
