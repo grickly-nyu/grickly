@@ -1,14 +1,12 @@
-/* eslint camelcase: 0, no-underscore-dangle: 0 */
-
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 
 import * as actionCreators from '../actions/auth';
-
 import { validateEmail } from '../utils/misc';
 
 function mapStateToProps(state) {
@@ -35,8 +33,8 @@ const style = {
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class RegisterView extends React.Component {
 
+export default class RegisterView extends React.Component {
     constructor(props) {
         super(props);
         const redirectRoute = '/login';
@@ -64,7 +62,6 @@ export default class RegisterView extends React.Component {
             this.setState({
                 email_error_text: null,
             });
-
         } else {
             this.setState({
                 email_error_text: 'Sorry, this is not a valid email',
@@ -92,13 +89,11 @@ export default class RegisterView extends React.Component {
                 disabled: false,
             });
         }
-        else{
+        else {
             this.setState({
                 disabled: true,
             });
         }
-
-
     }
 
     changeValue(e, type) {
@@ -174,13 +169,10 @@ export default class RegisterView extends React.Component {
                           label="Submit"
                           onClick={(e) => this.login(e)}
                         />
-
                     </div>
                 </Paper>
-
             </div>
         );
-
     }
 }
 

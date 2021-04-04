@@ -45,7 +45,7 @@ export const Home = () =>
     <div style={style}>
         <div className="text-center">
             <h1 style={titleStyle}>Grickly</h1>
-            <p style={pStyle}>A brand new way to enjoy life event</p>
+            <p style={pStyle}>A brand new way to enjoy life events</p>
             <div className="center container" style={{width: "250px"}}>
                 <RaisedButton
                     fullWidth={true}

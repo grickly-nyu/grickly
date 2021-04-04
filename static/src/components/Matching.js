@@ -1,13 +1,14 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actionCreators from '../actions/auth';
+import { browserHistory } from 'react-router';
+
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import { browserHistory } from 'react-router';
-import { get_suggestions } from '../utils/http_functions'; 
 
+import * as actionCreators from '../actions/auth';
+import { get_suggestions } from '../utils/http_functions'; 
 
 function mapStateToProps(state) {
     return {
@@ -23,59 +24,15 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
-const sideStyle = {
-    fontFamily: "Avenir",
-    marginTop: 64,
-    width: '20%',
-    height: '100vh',
-    position: 'fixed',
-    justifyContent: 'center',
-    display: 'flex',
-    borderStyle: 'none solid none none',
-    borderWidth: '1px',
-    borderColor: '#01012b',
-    fontSize: '20px',
-    fontWeight: 500,
-    backgroundColor: "rgba(255, 255, 255, 0.25)",
-};
-
-const groupStyle = {
-    color: '#ff577d',
-    borderStyle: 'none none solid none',
-    borderWidth: '1px',
-    borderColor: '#01012b',
-    paddingTop: 50,
-    paddingBottom: 35,
-    backgroundColor: "rgba(255, 255, 255, 0.10)",
-};
-
 const style = {
-    marginTop: 500,
+    marginTop: 150,
     paddingTop: 50,
     paddingBottom: 40,
-    width: '100%',
-    textAlign: 'center',
-    display: 'inline-block',
-    color: "white",
-    backgroundColor: "rgba(255, 255, 255, 0.25)",
+    width: "100%",
+    color: "black",
+    backgroundColor: "white",
     fontFamily: "Avenir",
 };
-
-const other_styles = {
-    errorStyle: {
-      color: "white",
-    },
-    underlineStyle: {
-      borderColor: "white",
-    },
-    floatingLabelStyle: {
-      color: "white",
-    },
-    floatingLabelFocusStyle: {
-      color: "white",
-    },
-  };
-
 
 @connect(mapStateToProps, mapDispatchToProps)
 
@@ -96,23 +53,20 @@ export default class Matching extends React.Component { // eslint-disable-line r
         });
     }
 
-    handleSubmit(tag){
-        if (tag == ''){
+    handleSubmit(tag) {
+        if (tag == '') {
             alert('Input must not be empty, please re-enter');
-            return 
+            return;
         }
-        get_suggestions(tag).then(response =>{
-            var rooms = response.data.results
-            for(var i = 0; i < response.data.results.length; i++) {
-                var obj =response.data.results[i];
-            }
+        get_suggestions(tag).then(response => {
+            var rooms = response.data.results;
             this.setState({ 
-                loading: false, 
-                suggested_rooms: rooms, });
-
+                loading: false,
+                suggested_rooms: rooms,
+            });
             if( rooms.length == 0){
                 alert('No matching found');
-                return 
+                return;
             }
             var state_data = {            
                 query_tag: tag,
@@ -124,10 +78,10 @@ export default class Matching extends React.Component { // eslint-disable-line r
                 pathname:'/matched',
                 state: state_data,
             }
-            this.dispatchNewRoute(path)
+            this.dispatchNewRoute(path);
         })
-        
-      }
+    }
+
     _handleKeyPress(e) {
         if (e.key == 'Enter') {
             this.handleSubmit();
@@ -136,9 +90,9 @@ export default class Matching extends React.Component { // eslint-disable-line r
 
     changeValue(e, type) {
         const value = e.target.value;
+        // long tags are not allowed 
         if (e.target.value.length > 10){
-            return 
-            // long tags are not allowed 
+            return;
         }
         const next_state = {};
         next_state[type] = value;
@@ -147,46 +101,54 @@ export default class Matching extends React.Component { // eslint-disable-line r
 
     render() {
         return (
-            <div style={{ fontFamily: "Avenir" }}>
-            <div className="col-md-5  col-md-offset-5">
-                    <Paper style={style}>
-                        <div className="text-center">
-                            <div className="col-md-15">
-                                <RaisedButton
-                                    style={{ marginTop: 50 }}
-                                label="life"
-                                onClick={() => this.handleSubmit("Life")}
-                                />
-                                <RaisedButton
-                                    style={{ marginTop: 50 }}
-                                label="poker"
-                                onClick={() => this.handleSubmit("Poker")}
-                                />
-                                <RaisedButton
-                                    style={{ marginTop: 50 }}
-                                label="study"
-                                onClick={() => this.handleSubmit("Study")}
-                                />
-                            </div>
-                            <div>
-                                <TextField
-                                    floatingLabelText="Or type your tag here"
-                                    type= 'query_tag'
-                                    errorText={null}
-                                onChange={(e) => this.changeValue(e,'query_tag')}
-                                />
-                                 <RaisedButton
-                                    disabled={this.state.disabled}
-                                    style={{ marginTop: 60 }}
-                                    label="Submit"
-                                    onClick={(e) => this.handleSubmit(this.state.query_tag)}
-                                />  
-                            </div>
-                        </div>
-                        <div>
+            <div className="container" style={{ fontFamily: "Avenir" }}>
+                <Paper style={style}>
+                    <div className="text-center">
+                        <h2 style={{marginBottom: 25, fontWeight: 900, color: "#77428D"}}>
+                            Match me to a group!
+                        </h2>
+                        <p style={{color: "#91989F", fontWeight: 700, fontSize: "22px"}}>
+                            Popular Tags
+                        </p>
+                        <RaisedButton
+                            style={{marginTop: 10, marginRight: 25}}
+                            label="poker"
+                            labelColor="#8B81C3"
+                            onClick={() => this.handleSubmit("Poker")}
+                        />
+                        <RaisedButton
+                            style={{marginTop: 10, marginRight: 25}}
+                            label="outdoor"
+                            labelColor="#8B81C3"
+                            onClick={() => this.handleSubmit("Outdoor")}
+                        />
+                        <RaisedButton
+                            style={{marginTop: 10, marginRight: 25}}
+                            label="study"
+                            labelColor="#8B81C3"
+                            onClick={() => this.handleSubmit("Study")}
+                        />
+                        <RaisedButton
+                            style={{marginTop: 10}}
+                            label="party"
+                            labelColor="#8B81C3"
+                            onClick={() => this.handleSubmit("Party")}
+                        />
+                        <br />
+                        <TextField
+                            floatingLabelText="Or type your tag here"
+                            type= 'query_tag'
+                            errorText={null}
+                            onChange={(e) => this.changeValue(e,'query_tag')}
+                        />
+                        <br />
+                        <RaisedButton
+                            style={{ marginTop: 50 }}
+                            label="Submit"
+                            onClick={(e) => this.handleSubmit(this.state.query_tag)}
+                        />  
                     </div>
-                    </Paper>
-                </div>
+                </Paper>
             </div>
         );
     }

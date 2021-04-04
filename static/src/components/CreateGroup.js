@@ -1,8 +1,8 @@
-/* eslint camelcase: 0, no-underscore-dangle: 0 */
-
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
+
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import DropDownMenu from 'material-ui/DropDownMenu';
@@ -10,9 +10,9 @@ import MenuItem from 'material-ui/MenuItem';
 import Paper from 'material-ui/Paper';
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
-import { create_event, create_group} from '../utils/http_functions';
-import { browserHistory } from 'react-router';
+
 import * as actionCreators from '../actions/auth';
+import { create_event, create_group} from '../utils/http_functions';
 
 function mapStateToProps(state) {
     return {
@@ -25,38 +25,40 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
+const moment = require('moment');
 const style = {
-    marginTop: 230,
+    marginTop: 150,
     paddingTop: 25,
     paddingBottom: 40,
-    width: '100%',
-    textAlign: 'center',
-    display: 'inline-block',
+    width: "100%",
     color: "#77428D",
-    backgroundColor: "rgba(255, 255, 255, 0.25)",
+    backgroundColor: "white",
     fontFamily: "Avenir",
 };
-
-const moment = require('moment');
-
 const styles = {
-    errorStyle: {
-      color: "#77428D",
+    pStyle: {
+        color: "#91989F",
+    },
+    vStyle: {
+        color: "black",
     },
     underlineStyle: {
-      borderColor: "#77428D",
+        borderColor: "#77428D",
+    },
+    underlineFocusStyle: {
+        borderColor: "#FFB11B", 
     },
     floatingLabelStyle: {
-      color: "#77428D",
+        color: "#8B81C3",
     },
     floatingLabelFocusStyle: {
-      color: "#77428D",
+        color: "#FFB11B",
     },
   };
 
 @connect(mapStateToProps, mapDispatchToProps)
-export default class CreateGroup extends React.Component {
 
+export default class CreateGroup extends React.Component {
     constructor(props) {
         super(props);
         const redirectRoute = '/chatroom';
@@ -81,7 +83,7 @@ export default class CreateGroup extends React.Component {
                 disabled: false,
             });
         }
-        else{
+        else {
             this.setState({
                 disabled: true,
             });
@@ -175,110 +177,110 @@ export default class CreateGroup extends React.Component {
 
     render() {
         return (
-            <div className="col-md-6 col-md-offset-3" onKeyPress={(e) => this._handleKeyPress(e)}>
+            <div className="container" onKeyPress={(e) => this._handleKeyPress(e)}>
                 <Paper style={style}>
                     <div className="text-center">
-                        <h2 style={{fontWeight: 500}}>Create a new group!</h2>
-                        <div className="col-md-12">
-                            <TextField
-                              inputStyle = {styles.errorStyle}
-                              hintText="Group name"
-                              hintStyle={styles.errorStyle}
-                              floatingLabelText="Group name"
-                              floatingLabelStyle={styles.floatingLabelStyle}
-                              type="name"
-                              errorText={null}
-                              onChange={(e) => this.changeValue(e, 'name')}
-                            />
-                        </div>
-                        <div className="col-md-12">
-                            <DropDownMenu 
-                                value={this.state.tag}
-                                onChange={this.handleTagChange}
-                                autoWidth={false}
-                                >
-                                <MenuItem value={""} primaryText="Group tag"  />
-                                <MenuItem value={"Poker"} primaryText="Poker" />
-                                <MenuItem value={"Outdoor"} primaryText="Outdoor" />
-                                <MenuItem value={"Study"} primaryText="Study" />
-                                <MenuItem value={"Party"} primaryText="Party" />
-                            </DropDownMenu>
-                        </div>
-                        <div className="col-md-12">
-                            <TextField
-                              inputStyle = {styles.errorStyle}
-                              hintText="Event title"
-                              hintStyle={styles.errorStyle}
-                              floatingLabelText="Event title"
-                              floatingLabelStyle={styles.floatingLabelStyle}
-                              type="event_name"
-                              errorText={null}
-                              onChange={(e) => this.changeValue(e, 'event_name')}
-                            />
-                        </div>
-                        <div className="col-md-12">
-                            <TextField
-                              inputStyle = {styles.errorStyle}
-                              hintText="Event Location"
-                              hintStyle={styles.errorStyle}
-                              floatingLabelText="Event Location"
-                              floatingLabelStyle={styles.floatingLabelStyle}
-                              type="location"
-                              errorText={null}
-                              onChange={(e) => this.changeValue(e, 'location')}
-                            />
-                        </div>
-                        <div className="col-md-12">
-                            <DatePicker 
-                                hintText="Event Start Date" 
-                                hintStyle={styles.errorStyle}
-                                inputStyle = {styles.errorStyle}
-                                onChange={(event, value) => this.handleDatetimeChange(event, value, 'start_date')}
-                            />
-                            <TimePicker hintText="Event Start Time" 
-                                hintStyle={styles.errorStyle}
-                                inputStyle = {styles.errorStyle}
-                                onChange={(event, value) => this.handleDatetimeChange(event, value, 'start_time')}
-                            />
-                        </div>
-                        <div className="col-md-12">
-                            <DatePicker 
-                                hintStyle={styles.errorStyle}
-                                inputStyle = {styles.errorStyle}
-                                hintText="Event End Date" 
-                                onChange={(event, value) => this.handleDatetimeChange(event, value, 'end_date')}
-                            />
-                            <TimePicker hintText="Event End Time" 
-                                hintStyle={styles.errorStyle}
-                                inputStyle = {styles.errorStyle}
-                                onChange={(event, value) => this.handleDatetimeChange(event, value, 'end_time')}
-                            />
-                        </div>
-                        <div className="col-md-12">
-                            <TextField
-                              inputStyle = {styles.errorStyle}
-                              hintText="Event Description"
-                              hintStyle={styles.errorStyle}
-                              floatingLabelText="Event Description"
-                              floatingLabelStyle={styles.floatingLabelStyle}
-                              type="description"
-                              errorText={null}
-                              onChange={(e) => this.changeValue(e, 'description')}
-                            />
-                        </div>
-
-                        <RaisedButton
-                          disabled={this.state.disabled}
-                          style={{ marginTop: 50 }}
-                          label="Submit"
-                          onClick={(e) => this.createGroup(e)}
+                        <h2 style={{ fontWeight: 900 }}>Create a new group!</h2>
+                        <TextField
+                            inputStyle = {styles.vStyle}
+                            hintText="Group name"
+                            hintStyle={styles.pStyle}
+                            floatingLabelText="Group name"
+                            floatingLabelStyle={styles.floatingLabelStyle}
+                            floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                            underlineFocusStyle={styles.underlineFocusStyle}
+                            type="name"
+                            errorText={null}
+                            onChange={(e) => this.changeValue(e, 'name')}
                         />
-
+                        <br />
+                        <DropDownMenu
+                            selectedMenuItemStyle={{color: "#FFB11B"}}
+                            labelStyle={{color: "#FFB11B"}}
+                            value={this.state.tag}
+                            onChange={this.handleTagChange}
+                            autoWidth={false}
+                        >
+                            <MenuItem value={""} primaryText="Group tag"  />
+                            <MenuItem value={"Poker"} primaryText="Poker" />
+                            <MenuItem value={"Outdoor"} primaryText="Outdoor" />
+                            <MenuItem value={"Study"} primaryText="Study" />
+                            <MenuItem value={"Party"} primaryText="Party" />
+                        </DropDownMenu>
+                        <br />
+                        <TextField
+                            inputStyle = {styles.vStyle}
+                            hintText="Event title"
+                            hintStyle={styles.pStyle}
+                            floatingLabelText="Event title"
+                            floatingLabelStyle={styles.floatingLabelStyle}
+                            floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                            underlineFocusStyle={styles.underlineFocusStyle}
+                            type="event_name"
+                            errorText={null}
+                            onChange={(e) => this.changeValue(e, 'event_name')}
+                        />
+                        <br />
+                        <TextField
+                            inputStyle = {styles.vStyle}
+                            hintText="Event Description"
+                            hintStyle={styles.pStyle}
+                            floatingLabelText="Event Description"
+                            floatingLabelStyle={styles.floatingLabelStyle}
+                            floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                            underlineFocusStyle={styles.underlineFocusStyle}
+                            type="description"
+                            errorText={null}
+                            onChange={(e) => this.changeValue(e, 'description')}
+                        />
+                        <br />
+                        <TextField
+                            inputStyle = {styles.vStyle}
+                            hintText="Event Location"
+                            hintStyle={styles.pStyle}
+                            floatingLabelText="Event Location"
+                            floatingLabelStyle={styles.floatingLabelStyle}
+                            floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+                            underlineFocusStyle={styles.underlineFocusStyle}
+                            type="location"
+                            errorText={null}
+                            onChange={(e) => this.changeValue(e, 'location')}
+                        />
+                        <br />
+                        <DatePicker 
+                            hintText="Event Start Date" 
+                            hintStyle={styles.pStyle}
+                            inputStyle = {styles.vStyle}
+                            onChange={(event, value) => this.handleDatetimeChange(event, value, 'start_date')}
+                        />
+                        <TimePicker
+                            hintText="Event Start Time" 
+                            hintStyle={styles.pStyle}
+                            inputStyle = {styles.vStyle}
+                            onChange={(event, value) => this.handleDatetimeChange(event, value, 'start_time')}
+                        />
+                        <DatePicker
+                            hintText="Event End Date" 
+                            hintStyle={styles.pStyle}
+                            inputStyle = {styles.vStyle}
+                            onChange={(event, value) => this.handleDatetimeChange(event, value, 'end_date')}
+                        />
+                        <TimePicker
+                            hintText="Event End Time" 
+                            hintStyle={styles.pStyle}
+                            inputStyle = {styles.vStyle}
+                            onChange={(event, value) => this.handleDatetimeChange(event, value, 'end_time')}
+                        />
+                        <br />
+                        <RaisedButton
+                            disabled={this.state.disabled}
+                            style={{ marginTop: 50 }}
+                            label="Submit"
+                            onClick={(e) => this.createGroup(e)}
+                        />
                     </div>
                 </Paper>
-
             </div>
         );
-
     }
 }
