@@ -1,14 +1,15 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as actionCreators from '../actions/auth';
+import { browserHistory } from 'react-router';
+
 import Paper from 'material-ui/Paper';
-import {Card, CardHeader, CardText} from 'material-ui/Card';
+import { Card, CardHeader, CardText } from 'material-ui/Card';
 import CircularProgress  from 'material-ui/CircularProgress';
 import RaisedButton from 'material-ui/RaisedButton';
-import { browserHistory } from 'react-router';
-import { join_chatroom } from '../utils/http_functions'; 
 
+import * as actionCreators from '../actions/auth';
+import { join_chatroom } from '../utils/http_functions'; 
 
 function mapStateToProps(state) {
     return {
@@ -19,49 +20,29 @@ function mapStateToProps(state) {
         registerStatusText: state.auth.registerStatusText
     };
 }
+
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
-
-
-const nameStyle = {
-    fontFamily: "Avenir",
-    paddingLeft: '5%',
-    color: '#F5FFFA',
-    fontWeight: 550,
-};
-
-const subStyle = {
-    color: "#5a5a5a",
-    fontSize: "17px",
-}
-
 const style = {
-    marginTop: 400,
+    marginTop: 150,
     paddingTop: 40,
     paddingBottom: 50,
     outerHeight:300,
-    width: '70%',
-    textAlign: 'center',
-    display: 'inline-block',
-    color: "white",
-    backgroundColor: "rgba(255, 255, 255, 0.25)",
-    fontFamily: "Avenir",
+    width: "100%",
+    color: "black",
+    backgroundColor: "white",
 };
-
-const style2 = {
-    marginTop: 20,
-    paddingTop: 15,
-    paddingBottom: 20,
-    innerHeight:20,
-    width: '30%',
-    textAlign: 'center',
-    display: 'inline-block',
-    color: "#ff2a6d",
+const titleStyle = {
+    padding: "30px",
+    fontWeight: 900,
+    color: "#77428D",
     fontSize: "32px",
-    backgroundColor: "rgba(255, 255, 255, 0.25)",
-    fontFamily: "Avenir",
+};
+const subStyle = {
+    color: "#91989F",
+    fontSize: "17px",
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
@@ -69,9 +50,8 @@ const style2 = {
 export default class Matched extends React.Component { // eslint-disable-line react/prefer-stateless-function
     constructor(props) {
         super(props);
-        var suggested_rooms = null
-        var query_tag = null
-        var index = 0
+        var suggested_rooms = null;
+        var query_tag = null;
         try {
             suggested_rooms = this.props.location.state.suggested_rooms;
             padded_suggest_rooms = suggested_rooms.push({
@@ -82,36 +62,33 @@ export default class Matched extends React.Component { // eslint-disable-line re
             query_tag = this.props.location.state.query_tag;
         }
         catch(err){
-            console.log();
+            console.log(err);
         }
         this.state = {
             query_tag: query_tag,
             loading: false,
             cur_index: 0,
-            suggested_rooms: suggested_rooms
+            total_count: Object.keys(suggested_rooms).length,
+            suggested_rooms: suggested_rooms,
         };
-
     }
    
-    handleAccept(){
-        var count = Object.keys(this.state.suggested_rooms).length
-        if (this.state.cur_index == (count - 1) ) {
-            alert("Suggestions end, no room to enter!")
-        } else{
-            this.go_chatroom(this.state.suggested_rooms[this.state.cur_index].room_id,
-                this.state.suggested_rooms[this.state.cur_index].name)
-        }
-        return 
+    handleAccept() {
+        this.go_chatroom(this.state.suggested_rooms[this.state.cur_index].room_id,
+            this.state.suggested_rooms[this.state.cur_index].name);
     }
     
-    handleDecline(){
-        var count = Object.keys(this.state.suggested_rooms).length
-        if (this.state.cur_index < (count - 1) ) {
+    handleDecline() {
+        if (this.state.cur_index < (this.state.total_count - 2)) {
             this.setState({
                 cur_index: this.state.cur_index + 1,
             }) 
-        } 
-        return 
+        } else {
+            alert("Suggestions end, you are going back to the first one!");
+            this.setState({
+                cur_index: 0,
+            }) 
+        }
     }
 
     dispatchNewRoute(route) {
@@ -121,16 +98,18 @@ export default class Matched extends React.Component { // eslint-disable-line re
         });
     }
 
-    go_chatroom(room_id, room_name){
-        join_chatroom(room_id)
-        var state_data = {room_id: room_id, name: room_name}
+    go_chatroom(room_id, room_name) {
+        join_chatroom(room_id);
+        var state_data = {
+            room_id: room_id,
+            name: room_name
+        };
         var path = {
             pathname:'/chatroom',
             state: state_data,
-        }
-        this.dispatchNewRoute(path)
+        };
+        this.dispatchNewRoute(path);
     }
-
   
     _handleKeyPress(e) {
         if (e.key == 'Enter') {
@@ -138,70 +117,59 @@ export default class Matched extends React.Component { // eslint-disable-line re
         }
     }
 
-    changeValue(e, type) {
-        const value = e.target.value;
-        if (e.target.value.length > 10){
-            return 
-            // long tags are not allowed 
-        }
-        const next_state = {};
-        next_state[type] = value; 
-        this.setState(next_state)
-    }
-
     render() {
-        if (this.state.loading) {
+        const loading = this.state.loading;
+        if (loading) {
             return (
                 <div>
-                <CircularProgress />
-                   {"Loading..."}
-                <CircularProgress color="secondary" />
+                    <CircularProgress />
+                    {"Loading..."}
+                    <CircularProgress color="secondary" />
                 </div>
             );
         }
         return (
-            <div style={{ fontFamily: "Avenir" }}>
-            <div className="col-md-9  col-md-offset-3">
+            <div className="container" style={{ fontFamily: "Avenir" }}>
                 <Paper style={style}>
-                <h2 style={{fontWeight: 500}}>{this.state.query_tag}</h2>
-
-                <div className="col-md-12">
-                <Card>
-                        <CardHeader
-                        title= {this.state.suggested_rooms[this.state.cur_index].name}
-                        titleStyle= {style2}
-                        subtitle = { 
-                            "Members: " + this.state.suggested_rooms[this.state.cur_index].members.slice(0,10).map(name => `${name}`).join(', ') 
-                           }
-                        subtitleStyle={subStyle}
-                        actAsExpander={true}
-                        showExpandableButton={true}
-                        />
-                        <CardText expandable={true}>
-                                More information to be added  
-                        </CardText>
-                
-                    </Card>
-                    </div>
-
                     <div className="text-center">
-                        <div className="col-md-15">
-                            <RaisedButton
-                            style={{ marginTop: 250, 
-                                margin: 50, marginRight: 520, }}
-                            label="Accept"
+                        <h2 style={{fontWeight: 500}}>{this.state.query_tag}</h2>
+                        <Card style={{width: "80%", marginLeft: "10%"}}>
+                            <CardHeader
+                                title= {this.state.suggested_rooms[this.state.cur_index].name}
+                                titleStyle= {titleStyle}
+                                subtitle = {
+                                    "Members: " + this.state.suggested_rooms[this.state.cur_index].members.slice(0,10).map(name => `${name}`).join(', ') 
+                                }
+                                subtitleStyle={subStyle}
+                                actAsExpander={false}
+                                showExpandableButton={false}
+                            />
+                            {/* <CardText expandable={true}>
+                                More information to be added. 
+                            </CardText> */}
+                        </Card>
+                        <RaisedButton
+                            style={{marginTop: 250, marginRight: 200}}
+                            label="Join this group!"
+                            labelColor="#FFB11B"
                             onClick={() => this.handleAccept()}
-                            />
-                            <RaisedButton
-                                style={{ marginTop: 250, 
-                                    marginInline: 50, }}
-                            label="Decline"
+                        />
+                        <RaisedButton
+                            style={{marginTop: 250}}
+                            labelColor="#8B81C3"
+                            label="Show me another one!"
                             onClick={() => this.handleDecline()}
-                            />
-                        </div>
+                        />
                     </div>
                 </Paper>
-            </div>
+                <div className="container text-center">
+                    <RaisedButton
+                        style={{marginTop: 35}}
+                        labelColor="#91989F"
+                        label="Return to matching"
+                        onClick={() => this.dispatchNewRoute("/matching")}
+                    />
+                </div>
             </div>
         );
     }
