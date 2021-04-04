@@ -3,8 +3,10 @@ from flask_socketio import SocketIO, emit, join_room, leave_room, \
     close_room, rooms, disconnect
 from .models import *
 from .chatroom import *
+from .event import *
 from .profile import *
 from .mail import *
+from .matching import *
 from index import app, db, socketio
 from sqlalchemy.exc import IntegrityError
 from .utils.auth import generate_token, requires_auth, verify_token
@@ -15,11 +17,9 @@ from datetime import datetime
 def index():
     return render_template('index.html')
 
-
 @app.route('/<path:path>', methods=['GET'])
 def any_root_path(path):
     return render_template('index.html')
-
 
 @app.route("/api/user", methods=["GET"])
 @requires_auth

@@ -2,7 +2,6 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from '../actions/auth';
-import io from 'socket.io-client'
 
 function mapStateToProps(state) {
     return {

@@ -7,7 +7,8 @@ from application.utils import auth
 class TestAPI(BaseTestConfig):
     some_user = {
         "email": "one@gmail.com",
-        "password": "something1"
+        "password": "something1",
+        "username": "test_user1"
     }
 
     def test_get_spa_from_index(self):
