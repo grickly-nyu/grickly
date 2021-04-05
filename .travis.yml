@@ -15,7 +15,7 @@ before_script:
 script:
   - ci/setup.sh
 after_success:
-  - pip install python-coveralls
+  - pip install coveralls
   - coveralls
 env:
   global:
