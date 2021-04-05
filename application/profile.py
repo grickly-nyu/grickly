@@ -1,10 +1,10 @@
 from flask import request, render_template, jsonify, url_for, redirect, g, session, Flask
 from flask_restful import abort
-from .models import *
-from .app import *
+from application.models import *
+from application.app import *
 from index import app, db
 from sqlalchemy.exc import IntegrityError
-from .utils.auth import generate_token, requires_auth, verify_token
+from application.utils.auth import generate_token, requires_auth, verify_token
 from sqlalchemy import text
 from datetime import datetime
 
