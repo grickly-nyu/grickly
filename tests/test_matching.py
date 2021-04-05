@@ -11,12 +11,16 @@ class TestMatch(BaseTestConfig):
     self.tag_o = {"tag": "Outdoor"}
     self.tag_l = {"tag": "Life"}
 
+    self.testrm_1 = {"room_id": "180"}
+    self.testrm_2 = {"room_id": "185"}
+    self.testrm_3 = {"room_id": "4"}
+
     def test_get_suggestions(self):
         token = self.app.post(
             "/api/get_token",
             data=json.dumps(self.default_user),
             content_type='application/json'
-    )
+        )
 
         res = self.app.post(
             "/api/get_suggestions",
@@ -53,18 +57,18 @@ class TestMatch(BaseTestConfig):
         )
         res = self.app.post(
             "/api/join_chatroom",
-            data=json.dumps({"room_id": "180"}),
+            data=json.dumps(self.testrm_1),
             content_type='application/json'
         )
         res1 = self.app.post(
             "/api/join_chatroom",
-            data=json.dumps({"room_id": "185"}),
+            data=json.dumps(self.testrm_2),
             content_type='application/json'
         )
 
         res2 = self.app.post(
             "/api/join_chatroom",
-            data=json.dumps({"room_id": "4"}),
+            data=json.dumps(self.testrm_3),
             content_type='application/json'
         )
         self.assertEqual(res.status_code,201)
