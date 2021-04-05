@@ -68,6 +68,7 @@ class TestAPI(BaseTestConfig):
                 data=json.dumps(self.some_user),
                 content_type='application/json'
         )
+
         self.assertEqual(res4.status_code, 403)
 
     def test_protected_route(self):
@@ -85,3 +86,10 @@ class TestAPI(BaseTestConfig):
         self.assertEqual(response2.status_code, 401)
         response3 = self.app.get('/api/user', headers=bad_headers)
         self.assertEqual(response3.status_code, 401)
+        
+    def test_get_user_with_email_and_password(self):
+        self.assertTrue(
+                User.get_user_with_email_and_password(
+                        self.default_user["email"],
+                        self.default_user["password"])
+        )
