@@ -23,4 +23,7 @@ before_script:
   #script to be written
   
 script:
-- ci/setup.sh
+  - ci/setup.sh
+
+after_success:
+  - coveralls
