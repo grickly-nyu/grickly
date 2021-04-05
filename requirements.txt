@@ -3,6 +3,7 @@ Bcrypt==3.2.0
 cffi==1.14.5
 click==7.1.2
 coverage==5.4
+dotenv==0.17.0
 Flask==1.1.2
 Flask-Bcrypt==0.7.1
 Flask-Migrate==2.7.0
