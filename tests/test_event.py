@@ -53,3 +53,11 @@ class TestEvent(BaseTestConfig):
                 content_type='application/json'
         )
         self.assertEqual(json.loads(res.data.decode("utf-8"))["results"], {'description': '', 'end_time': '', 'event_name': '', 'location': '', 'start_time': ''})
+
+    def test_event_models(self):
+        self.app.post(
+            "/api/create_event",
+            data=json.dumps(self.test_event),
+            content_type='application/json'
+        )
+        self.assertTrue(Event.get_event_with_room_id(1))
