@@ -1,10 +1,10 @@
 from flask import request, render_template, jsonify, url_for, redirect, g, session
 from flask_socketio import SocketIO, emit, join_room, leave_room, \
     close_room, rooms, disconnect
-from .models import *
+from application.models import *
 from index import app, db, socketio
 from sqlalchemy.exc import IntegrityError
-from .utils.auth import generate_token, requires_auth, verify_token
+from application.utils.auth import generate_token, requires_auth, verify_token
 from sqlalchemy import text
 from datetime import datetime
 
@@ -13,6 +13,10 @@ def dispatch(result):
 
 @app.route("/api/create_group", methods=["POST"])
 def create_group():
+    """ Create a group with name and tag
+    :param name: The name of the group that will be shown on matching and chatroom page
+    :param tag: The tag of the group that will be shown and categorized on matching page
+    """
     incoming = request.get_json()
     chatroom = Chatroom(
         name = incoming['name'],
@@ -30,12 +34,17 @@ def create_group():
 
 @app.route("/api/leave_group", methods=["POST"])
 def leave_group():
+    """ Leave the group by removing the current user from the group
+    :param room_id: the room_id of the group
+    """
     incoming = request.get_json()
     Participant.delete_participant_with_user_id_and_room_id(session['user_id'], incoming['room_id'])
     return jsonify(results = incoming['room_id'])
 
 @app.route("/api/get_chatrooms", methods=["GET"])
 def get_chartooms():
+    """ Get all chatrooms that the user is in
+    """
     result = dispatch(Chatroom.get_chatroom_with_user_id(session['user_id']))
     rooms = [{'room_id': row[0], 'name': row[1]} for row in result]
     for room in rooms:
@@ -46,12 +55,18 @@ def get_chartooms():
 
 @app.route("/api/delete_group", methods=["POST"])
 def delete_group():
+    """ Remove the group from the table and the event and messages the group has
+    :param room_id: the room_id of the group
+    """
     incoming = request.get_json()
     Chatroom.delete_chatroom_with_room_id(incoming['room_id'])
     return jsonify(results = incoming['room_id'])
 
 @app.route("/api/get_room_members", methods=["POST"])
 def get_room_members():
+    """ Get all the room members in the current chatroom/group
+    :param room_id: the room_id of the group
+    """
     incoming = request.get_json()
     res = dispatch(Chatroom.get_room_members_with_room_id(incoming['room_id']))
     members = [{'user_id': row[0], 'username': row[1]} for row in res]
@@ -59,6 +74,10 @@ def get_room_members():
 
 @app.route("/api/send_message", methods=["POST"])
 def send_message():
+    """ Send a message to the chatroom.
+    :param room_id: the room_id of the group
+    :param content: the content of the message
+    """
     incoming = request.get_json()
     message = Message(
         user_id = session['user_id'],
@@ -74,6 +93,9 @@ def send_message():
 
 @app.route("/api/get_messages", methods=["POST"])
 def get_messages():
+    """ Get all the messages the chatroom has
+    :param room_id: the room_id of the group
+    """
     incoming = request.get_json()
     messages = Message.get_messages_from_room_id(incoming['room_id'])
     messages = [{'user_id': message.user_id, 'sendTime': message.sendTime, 'content': message.content} for message in messages]
@@ -84,12 +106,17 @@ def get_messages():
 
 @app.route("/api/delete_messages", methods=["POST"])
 def delete_messages():
+    """ Delete all messages from the chatroom
+    :param room_id: the room_id of the group
+    """
     incoming = request.get_json()
     Message.delete_messages_from_room_id(incoming['room_id'])
     return jsonify(results = incoming['room_id'])
 
 @socketio.on('send message')
 def recieved_message(json, methods=['GET', 'POST']):
+    """ Get received message from the socketio on the client
+    """
     json['username'] = session['username']
     socketio.emit('server message', json) 
     message = Message(

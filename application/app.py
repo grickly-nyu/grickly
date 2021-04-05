@@ -1,15 +1,15 @@
 from flask import request, render_template, jsonify, url_for, redirect, g, session
 from flask_socketio import SocketIO, emit, join_room, leave_room, \
     close_room, rooms, disconnect
-from .models import *
-from .chatroom import *
-from .event import *
-from .profile import *
-from .mail import *
-from .matching import *
+from application.models import *
+from application.chatroom import *
+from application.event import *
+from application.profile import *
+from application.mail import *
+from application.matching import *
 from index import app, db, socketio
 from sqlalchemy.exc import IntegrityError
-from .utils.auth import generate_token, requires_auth, verify_token
+from application.utils.auth import generate_token, requires_auth, verify_token
 from sqlalchemy import text
 from datetime import datetime
 
@@ -29,6 +29,8 @@ def get_user():
 
 @app.route("/api/create_user", methods=["POST"])
 def create_user():
+    """ Only execute once when the user registered.
+    """
     incoming = request.get_json()
     user = User(
         email=incoming["email"],
@@ -53,6 +55,8 @@ def create_user():
 
 @app.route("/api/get_token", methods=["POST"])
 def get_token():
+    """ Get the token of current user
+    """
     incoming = request.get_json()
     user = User.get_user_with_email_and_password(incoming["email"], incoming["password"])
     if user:
@@ -65,6 +69,8 @@ def get_token():
 
 @app.route("/api/is_token_valid", methods=["POST"])
 def is_token_valid():
+    """ Validate whether the user has permission to view a certain page.
+    """
     incoming = request.get_json()
     is_valid = verify_token(incoming["token"])
 
