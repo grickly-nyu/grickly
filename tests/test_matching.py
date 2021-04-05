@@ -6,10 +6,10 @@ from application.utils import auth
 
 
 class TestMatch(BaseTestConfig):
-    self.tagP = {"tag": "Poker"}
-    self.tagS = {"tag": "Study"}
-    self.tagO = {"tag": "Outdoor"}
-    self.tagL = {"tag": "Life"}
+    self.tag_p = {"tag": "Poker"}
+    self.tag_s = {"tag": "Study"}
+    self.tag_o = {"tag": "Outdoor"}
+    self.tag_l = {"tag": "Life"}
 
     def test_get_suggestions(self):
         token = self.app.post(
@@ -20,18 +20,18 @@ class TestMatch(BaseTestConfig):
 
         res = self.app.post(
             "/api/get_suggestions",
-            data=json.dumps(self.tagP),
+            data=json.dumps(self.tag_p),
             content_type='application/json'
         )
         res1 = self.app.post(
             "/api/get_suggestions",
-            data=json.dumps(self.tagS),
+            data=json.dumps(self.tag_s),
             content_type='application/json'
         )
 
         res2 = self.app.post(
             "/api/get_suggestions",
-            data=json.dumps(self.tagO),
+            data=json.dumps(self.tag_o),
             content_type='application/json'
         )
         self.assertEqual(res.status_code,200)
@@ -40,7 +40,7 @@ class TestMatch(BaseTestConfig):
 
         res3 = self.app.post(
             "/api/get_suggestions",
-            data=json.dumps(self.tagL),
+            data=json.dumps(self.tag_l),
             content_type='application/json'
         )
         self.assertEqual(res2.status_code,204)
