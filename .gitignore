@@ -13,3 +13,4 @@ static/dist
 .python-version
 run.sh
 .editorconfig
+static/package-lock.json
