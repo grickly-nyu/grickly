@@ -4,6 +4,9 @@ from setup import basedir
 
 load_dotenv()
 class BaseConfig(object):
+    """
+    Base Configuration for placeholder
+    """
     SECRET_KEY = "SO_SECURE"
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI_base')

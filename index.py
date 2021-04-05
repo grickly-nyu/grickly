@@ -4,6 +4,9 @@ from config import BaseConfig
 from flask_bcrypt import Bcrypt
 from flask_socketio import SocketIO
 
+"""
+This file is purely for app initialization.
+"""
 app = Flask(__name__, static_folder="./static/dist", template_folder="./static")
 
 

@@ -15,21 +15,42 @@ from datetime import datetime
 
 @app.route('/', methods=['GET'])
 def index():
+    """
+    Return Index
+
+    :return: returns index webpage
+    """
     return render_template('index.html')
 
 @app.route('/<path:path>', methods=['GET'])
 def any_root_path(path):
+    """
+    Redirect root access to index
+
+    :return: returns index webpage
+    """
+
     return render_template('index.html')
 
 @app.route("/api/user", methods=["GET"])
 @requires_auth
 def get_user():
+    """
+    Get function for current user
+
+    :return: returns current user in JSON
+    """
     return jsonify(result=g.current_user)
 
 
 @app.route("/api/create_user", methods=["POST"])
 def create_user():
-    """ Only execute once when the user registered.
+    """
+    Create a new user in database.
+    It checks for duplicate email address
+
+    :return: returns user id and token in JSON if no duplicate user is found; if found, return error in JSON
+
     """
     incoming = request.get_json()
     user = User(
@@ -55,8 +76,12 @@ def create_user():
 
 @app.route("/api/get_token", methods=["POST"])
 def get_token():
-    """ Get the token of current user
+
     """
+    Get function for current user token
+
+    :return: returns current token in JSON if success; if fail, return error in JSON
+    """ 
     incoming = request.get_json()
     user = User.get_user_with_email_and_password(incoming["email"], incoming["password"])
     if user:
@@ -69,7 +94,11 @@ def get_token():
 
 @app.route("/api/is_token_valid", methods=["POST"])
 def is_token_valid():
-    """ Validate whether the user has permission to view a certain page.
+
+    """
+    Validate token
+
+    :return: return valid message in JSON if valid; if not, return false in JSON
     """
     incoming = request.get_json()
     is_valid = verify_token(incoming["token"])
