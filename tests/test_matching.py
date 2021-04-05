@@ -11,9 +11,9 @@ class TestMatch(BaseTestConfig):
     self.tag_o = {"tag": "Outdoor"}
     self.tag_l = {"tag": "Life"}
 
-    self.testrm_1 = {"room_id": "180"}
-    self.testrm_2 = {"room_id": "185"}
-    self.testrm_3 = {"room_id": "4"}
+    self.testrm_1 = {"room_id": 180}
+    self.testrm_2 = {"room_id": 185}
+    self.testrm_3 = {"room_id": 4}
 
     def test_get_suggestions(self):
         token = self.app.post(
