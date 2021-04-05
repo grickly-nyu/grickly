@@ -177,8 +177,8 @@ class Participant(db.Model):
     room_id : int
         room_id from db
     """
-    user_id = db.Column(db.Integer(), primary_key=True)
-    room_id = db.Column(db.Integer(), primary_key=True)
+    user_id = db.Column(db.Integer(), ForeignKey('user.id'), primary_key=True)
+    room_id = db.Column(db.Integer(), ForeignKey('chatroom.room_id'), primary_key=True)
     def __init__(self, user_id, room_id):
         """
         Initialize model Participant

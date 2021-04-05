@@ -34,7 +34,6 @@ class TestAPI(BaseTestConfig):
                 data=json.dumps(self.some_user),
                 content_type='application/json'
         )
-
         self.assertEqual(res2.status_code, 409)
 
     def test_get_token_and_verify_token(self):

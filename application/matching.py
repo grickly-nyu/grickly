@@ -1,5 +1,5 @@
 from flask import request, render_template, jsonify, url_for, redirect, g, session
-from .models import *
+from application.models import *
 from index import app, db
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy import text
