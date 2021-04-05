@@ -71,8 +71,8 @@ class Chatroom(db.Model):
             db.session.commit()
 
 class Participant(db.Model):
-    user_id = db.Column(db.Integer(), primary_key=True)
-    room_id = db.Column(db.Integer(), primary_key=True)
+    user_id = db.Column(db.Integer(), ForeignKey('user.id'), primary_key=True)
+    room_id = db.Column(db.Integer(), ForeignKey('chatroom.room_id'), primary_key=True)
     def __init__(self, user_id, room_id):
         self.user_id = user_id
         self.room_id = room_id
