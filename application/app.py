@@ -1,15 +1,15 @@
 from flask import request, render_template, jsonify, url_for, redirect, g, session
 from flask_socketio import SocketIO, emit, join_room, leave_room, \
     close_room, rooms, disconnect
-from .models import *
-from .chatroom import *
-from .event import *
-from .profile import *
-from .mail import *
-from .matching import *
+from application.models import *
+from application.chatroom import *
+from application.event import *
+from application.profile import *
+from application.mail import *
+from application.matching import *
 from index import app, db, socketio
 from sqlalchemy.exc import IntegrityError
-from .utils.auth import generate_token, requires_auth, verify_token
+from application.utils.auth import generate_token, requires_auth, verify_token
 from sqlalchemy import text
 from datetime import datetime
 
