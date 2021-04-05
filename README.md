@@ -1,7 +1,7 @@
 # Grickly #
 
 [![Build Status](https://travis-ci.org/grickly-nyu/grickly.svg?branch=main)](https://travis-ci.org/grickly-nyu/grickly)
-
+[![Coverage Status](https://coveralls.io/repos/github/grickly-nyu/grickly/badge.svg?branch=main)](https://coveralls.io/github/grickly-nyu/grickly?branch=main)
 Grickly is the senior design project for Ge, Hengning, Kejian, Lujie, and Sicong at New York University. It is a proof of concept for a new way of socializing for active participants of life events. The user can be matched to events, form his/her interest groups, and hang out with different kinds of people round the world. More details about the project can be found in project management document under `documents` of this repository. 
 
 The application is built with a Flask JWT Backend, a React/Redux Front-End, and Material UI framework.
