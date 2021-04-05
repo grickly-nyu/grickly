@@ -61,3 +61,4 @@ class TestEvent(BaseTestConfig):
             content_type='application/json'
         )
         self.assertTrue(Event.get_event_with_room_id(1))
+    
