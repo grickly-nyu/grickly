@@ -13,6 +13,9 @@ def dispatch(result):
 
 @app.route("/api/get_event", methods=["POST"])
 def get_event():
+    """ Get the event information of the group
+    :param room_id: the room_id of the group
+    """
     incoming = request.get_json()
     event = Event.get_event_with_room_id(incoming['room_id'])
     if event:
@@ -23,6 +26,14 @@ def get_event():
 
 @app.route("/api/create_event", methods=["POST"])
 def create_event():
+    """ Create an event with name, location, start and end time and description
+    :param room_id: the room_id of the group
+    :param event_name: the name of the event
+    :param location: the location of the event
+    :param start_time: start date and time of the event
+    :param end_time: end date and time of the event
+    :param description: the description of the event
+    """
     incoming = request.get_json()
     try:
         start_time = incoming['start_time'][:-1].replace('T', ' '),
@@ -46,6 +57,9 @@ def create_event():
 
 @app.route("/api/delete_event", methods=["POST"])
 def delete_event():
+    """ Delete the event of the group
+    :param room_id: the room_id of the group
+    """
     incoming = request.get_json()
     Event.delete_event_with_room_id(incoming['room_id'])
     return jsonify(results = incoming['room_id'])
