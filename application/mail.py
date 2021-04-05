@@ -18,6 +18,11 @@ def dispatch(result):
 
 @app.route("/api/send_verification_email",methods=["POST"])
 def send_verification_email():
+   """
+   send_verification_email->Boolean
+   Sends an email containing a password reset link to the user’s email.
+   Return True if successful.
+   """
    incoming=request.get_json()
    msg = Message('Reset your password for Grickly', sender = 'grickly.nyu@gmail.com', recipients = [incoming["email"]])
    info = dispatch(db.engine.execute("select password from user where email='"+incoming["email"]+"'"))
@@ -26,4 +31,4 @@ def send_verification_email():
    password_hash=info[0][0]
    msg.body = "Click the link to reset your password. http://localhost:3000/reset_forgot_password?hash="+password_hash
    mail.send(msg)
-   return jsonify(result=True)
+   return jsonify(result=True),200

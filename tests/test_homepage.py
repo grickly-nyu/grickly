@@ -68,7 +68,6 @@ class TestAPI(BaseTestConfig):
                 data=json.dumps(self.some_user),
                 content_type='application/json'
         )
-
         self.assertEqual(res4.status_code, 403)
 
     def test_protected_route(self):
