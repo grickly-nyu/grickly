@@ -14,3 +14,4 @@ static/dist
 run.sh
 .editorconfig
 static/package-lock.json
+.coverage
