@@ -2,7 +2,10 @@ import os
 from dotenv import load_dotenv
 from setup import basedir
 
-load_dotenv()
+try:
+    load_dotenv()
+except FileNotFoundError:
+    pass
 class BaseConfig(object):
     """
     Base Configuration for placeholder
