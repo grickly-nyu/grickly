@@ -21,3 +21,4 @@ class TestingConfig(object):
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URI_test')
     DEBUG_TB_ENABLED = True
     PRESERVE_CONTEXT_ON_EXCEPTION = False
+
