@@ -1,8 +1,8 @@
 import os
 from dotenv import load_dotenv
 from setup import basedir
-
-load_dotenv()
+try:
+    load_dotenv()
 class BaseConfig(object):
     """
     Base Configuration for placeholder
