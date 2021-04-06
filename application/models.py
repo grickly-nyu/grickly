@@ -269,7 +269,7 @@ class Event(db.Model):
     end_time : str
         event end time
     """
-    room_id = db.Column(db.Integer(), primary_key=True)
+    room_id = db.Column(db.Integer(), ForeignKey('chatroom.room_id'), primary_key=True)
     name = db.Column(db.String(45))
     location = db.Column(db.String(45))
     description = db.Column(db.String(255))
