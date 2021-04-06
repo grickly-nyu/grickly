@@ -49,7 +49,6 @@ def join_chatroom():
     :return: a JSON Response object, results being the user_id of current session.
     """
     incoming = request.get_json()
-    check = dispatch(db.engine.execute("SELECT room_id, user_id FROM participant WHERE room_id ="+ str(incoming["room_id"])+ "AND user_id = "+str(session["user_id"])))
     participant = Participant(
         user_id = session['user_id'],
         room_id = incoming['room_id'],

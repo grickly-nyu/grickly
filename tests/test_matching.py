@@ -70,9 +70,9 @@ class TestMatch(BaseTestConfig):
             data=json.dumps(self.testrm_3),
             content_type='application/json'
         )
-        # self.assertEqual(res.status_code,201)
-        # self.assertEqual(res1.status_code,201)
-        # self.assertEqual(res2.status_code,201)
+        self.assertEqual(res.status_code,201)
+        self.assertEqual(res1.status_code,201)
+        self.assertEqual(res2.status_code,201)
 
 
 
