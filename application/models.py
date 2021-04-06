@@ -179,6 +179,7 @@ class Participant(db.Model):
     """
     user_id = db.Column(db.Integer(), ForeignKey('user.id'), primary_key=True)
     room_id = db.Column(db.Integer(), ForeignKey('chatroom.room_id'), primary_key=True)
+    # __table_args__ = (db.UniqueConstraint(('user_id', 'room_id')))
     def __init__(self, user_id, room_id):
         """
         Initialize model Participant
