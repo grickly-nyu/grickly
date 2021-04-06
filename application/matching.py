@@ -35,8 +35,6 @@ def get_suggestions():
         res_mem = dispatch(db.engine.execute("SELECT distinct user.id, username FROM user join participant on user.id = participant.user_id where room_id ="+str(room['room_id'])))
         res_mem = [ row[1] for row in res_mem]
         room['members'] = res_mem
-    if len(result) == 0:
-        return jsonify(results = suggested_rooms),204
     return jsonify(results = suggested_rooms),200
 
 
