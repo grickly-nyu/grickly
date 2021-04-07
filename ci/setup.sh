@@ -11,4 +11,4 @@ update_all() {
     npm build:production
 }
 
-time python test.py --cov-report=term --cov=application/ tests/
+time python -m pytest --cov=application/ tests/
