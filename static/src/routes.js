@@ -15,6 +15,7 @@ import Chatroom from './components/Chatroom';
 import Profile from './components/Profile';
 import ChangePassword from './components/ChangePassword';
 import CreateGroup from './components/CreateGroup';
+import CreateEvent from './components/CreateEvent';
 import NotFound from './components/NotFound';
 import ForgotPassword from "./components/ForgotPassword";
 import ResetForgotPassword from "./components/ResetForgotPassword";
@@ -39,6 +40,7 @@ export default (
         <Route path="reset_forgot_password" component={requireNoAuthentication(ResetForgotPassword)}/>
         <Route path="change-password" component={requireAuthentication(ChangePassword)} />
         <Route path="creategroup" component={requireAuthentication(CreateGroup)} />
+        <Route path="createevent" component={requireAuthentication(CreateEvent)} />
         <Route path="matching" component={requireAuthentication(Matching)} />
         <Route path="matched" component={requireAuthentication(Matched)} />
         <Route path="*" component={DetermineAuth(NotFound)} />

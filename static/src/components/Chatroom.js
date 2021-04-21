@@ -104,7 +104,6 @@ export default class Chatroom extends React.Component {
     
     async componentDidMount() {
         get_chatrooms().then(response =>{
-            console.log('response', response);
             this.setState({
                 rooms: response.data.results,
                 loading: false,
@@ -295,7 +294,8 @@ export default class Chatroom extends React.Component {
                                     showExpandableButton={true}
                                 />
                                 <CardText expandable={true}>
-                                    <p>Event description: {this.state.event.description}
+                                    <p>Event title: {this.state.event.event_name}
+                                    <br/>Event description: {this.state.event.description}
                                     <br/>Loaction: {this.state.event.location}
                                     <br/>From {this.state.event.start_time}
                                     <br/>To {this.state.event.end_time}
