@@ -26,12 +26,6 @@ def get_suggestions():
     query_tag = incoming["query_tag"]
     result = dispatch(db.engine.execute("SELECT room_id,\
          name FROM chatroom WHERE tag = '" + str(query_tag) + "'"))
-    result2 = dispatch(db.engine.execute("SELECT chatroom.room_id\
-         FROM chatroom WHERE chatroom.room_id NOT IN \
-        (SELECT chatroom.room_id FROM participant \
-            JOIN chatroom on chatroom.room_id\
-             = participant.room_id WHERE participant.user_id = "+str(session["user_id"])+") \
-            AND tag = '" + str(query_tag) + "'"))
 
     suggested_rooms = [{'room_id': row[0], 'name': row[1]} for row in result]
     for room in suggested_rooms:

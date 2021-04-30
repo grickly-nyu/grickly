@@ -38,11 +38,11 @@ def create_event():
     """
     incoming = request.get_json()
     try:
-        start_time = incoming['start_time'][:-1].replace('T', ' '),
+        start_time = incoming['start_time'][:-1].replace('T', ' ')
     except:
         start_time = None
     try:
-        end_time = incoming['end_time'][:-1].replace('T', ' '),
+        end_time = incoming['end_time'][:-1].replace('T', ' ')
     except:
         end_time = None
     event = Event(
