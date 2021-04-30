@@ -54,7 +54,6 @@ class TestChatroom(BaseTestConfig):
                 data=json.dumps({"room_id": 1}),
                 content_type='application/json'
         )
-        print(json.loads(res.data.decode("utf-8"))["results"])
         self.assertEqual(json.loads(res.data.decode("utf-8"))["results"], [])
 
     def test_leave_group(self):
