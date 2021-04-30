@@ -48,6 +48,14 @@ class TestChatroom(BaseTestConfig):
         )
         self.assertEqual(json.loads(res.data.decode("utf-8"))["results"], [{'user_id': 1, 'username': 'default_user'}])
     
+    def test_get_messages(self):
+        res = self.app.post(
+                "/api/get_messages",
+                data=json.dumps({"room_id": 1}),
+                content_type='application/json'
+        )
+        self.assertEqual(json.loads(res.data.decode("utf-8"))["results"], [])
+
     def test_leave_group(self):
         res = self.app.post(
                 "/api/leave_group",
@@ -67,4 +75,5 @@ class TestChatroom(BaseTestConfig):
         self.assertTrue(Chatroom.get_chatroom_with_user_id(user.id))
         self.assertTrue(Chatroom.get_room_members_with_room_id(1))
         self.assertTrue(Chatroom.get_chatroom_with_room_id(1))
-        
+    
+    
