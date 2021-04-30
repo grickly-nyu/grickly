@@ -1,14 +1,13 @@
-from flask import request, render_template, jsonify, url_for, redirect, g, session
-from flask_socketio import SocketIO, emit, join_room, leave_room, \
-    close_room, rooms, disconnect
-from application.models import *
-from index import app, db, socketio
-from sqlalchemy.exc import IntegrityError
-from application.utils.auth import generate_token, requires_auth, verify_token
-from sqlalchemy import text
-from datetime import datetime
+"""
+APIs to manage the events.
+"""
+from flask import request, jsonify
+from application.models import Event
+from index import app, db
+
 
 def dispatch(result):
+    """DB result parser"""
     return [row for row in result]
 
 @app.route("/api/get_event", methods=["POST"])
@@ -19,9 +18,12 @@ def get_event():
     incoming = request.get_json()
     event = Event.get_event_with_room_id(incoming['room_id'])
     if event:
-        results = {'event_name': event.name, 'location': event.location, 'start_time': event.start_time, 'end_time': event.end_time, 'description': event.description}
+        results = {'event_name': event.name,
+        'location': event.location, 'start_time': event.start_time,
+        'end_time': event.end_time, 'description': event.description}
     else:
-        results = {'event_name': "", 'location': "", 'start_time': "", 'end_time': "", 'description': ""}
+        results = {'event_name': "", 'location': "",
+        'start_time': "", 'end_time': "", 'description': ""}
     return jsonify(results = results)
 
 @app.route("/api/create_event", methods=["POST"])
@@ -36,11 +38,11 @@ def create_event():
     """
     incoming = request.get_json()
     try:
-        start_time = incoming['start_time'][:-1].replace('T', ' '),
+        start_time = incoming['start_time'][:-1].replace('T', ' ')
     except:
         start_time = None
     try:
-        end_time = incoming['end_time'][:-1].replace('T', ' '),
+        end_time = incoming['end_time'][:-1].replace('T', ' ')
     except:
         end_time = None
     event = Event(

@@ -1,14 +1,14 @@
-from flask import request, render_template, jsonify, url_for, redirect, g, session
-from flask_socketio import SocketIO, emit, join_room, leave_room, \
-    close_room, rooms, disconnect
-from application.models import *
-from index import app, db, socketio
-from sqlalchemy.exc import IntegrityError
-from application.utils.auth import generate_token, requires_auth, verify_token
-from sqlalchemy import text
+"""module chatroom
+    APIs that enables real time chatting through multiple clients.
+"""
 from datetime import datetime
+from flask import request, jsonify, session
+from flask_socketio import SocketIO
+from application.models import User, Chatroom, Participant, Message
+from index import app, db, socketio
 
 def dispatch(result):
+    """DB result parser"""
     return [row for row in result]
 
 @app.route("/api/create_group", methods=["POST"])
@@ -98,7 +98,8 @@ def get_messages():
     """
     incoming = request.get_json()
     messages = Message.get_messages_from_room_id(incoming['room_id'])
-    messages = [{'user_id': message.user_id, 'sendTime': message.sendTime, 'content': message.content} for message in messages]
+    messages = [{'user_id': message.user_id, 
+                'sendTime': message.sendTime, 'content': message.content} for message in messages]
     for message in messages:
         user = User.get_user_with_user_id(message['user_id'])
         message['username'] = str(user.username)
@@ -118,7 +119,7 @@ def recieved_message(json, methods=['GET', 'POST']):
     """ Get received message from the socketio on the client
     """
     json['username'] = session['username']
-    socketio.emit('server message', json) 
+    socketio.emit('server message', json)
     message = Message(
         user_id = session['user_id'],
         room_id = json["room_id"],

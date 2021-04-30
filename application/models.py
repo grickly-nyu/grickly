@@ -1,5 +1,6 @@
+"""Initializing all the needed sqlalchemy modules"""
 from index import db, bcrypt
-from sqlalchemy import Table, Column, Integer, ForeignKey
+from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 
 class User(db.Model):
@@ -10,7 +11,7 @@ class User(db.Model):
     ----------
     id : id
         user id in db
-    email : str 
+    email : str
         user email in db
     password : str
         user password after hashing in db
@@ -59,6 +60,7 @@ class User(db.Model):
             return None
 
     def get_user_with_user_id(user_id):
+        """get user information with user id."""
         return User.query.filter_by(id = user_id).first()
 
 class User_info(db.Model):
@@ -79,7 +81,7 @@ class User_info(db.Model):
     user_id = db.Column(db.Integer(), ForeignKey('user.id'), primary_key=True)
     created_at = db.Column(db.DateTime())
     phone = db.Column(db.Integer())
-    
+
     def __init__(self, user_id, created_at, phone):
         """
         Initialize User_Info model
@@ -138,15 +140,17 @@ class Chatroom(db.Model):
 
         :return: return room_id and names
         """
-        return db.engine.execute("SELECT room_id, name FROM chatroom natural join participant where user_id =" + str(user_id))
+        return db.engine.execute("SELECT room_id, name FROM chatroom natural \
+            join participant where user_id =" + str(user_id))
 
     def get_room_members_with_room_id(room_id):
         """
         Get function for room members in the same room
-        
+
         :return: return room members' user.id and username
         """
-        return db.engine.execute("SELECT distinct user.id, username FROM user join participant on user.id = participant.user_id where room_id =" + str(room_id))
+        return db.engine.execute("SELECT distinct user.id, username FROM user \
+            join participant on user.id = participant.user_id where room_id =" + str(room_id))
 
     def get_chatroom_with_room_id(room_id):
         """
@@ -186,7 +190,7 @@ class Participant(db.Model):
         """
         self.user_id = user_id
         self.room_id = room_id
-    
+
     def get_participant_with_user_id_and_room_id(user_id, room_id):
         """
         Get function for participants in the same room with user_id
@@ -295,7 +299,7 @@ class Event(db.Model):
         :return: return event with the room_id
         """
         return Event.query.filter_by(room_id=room_id).first()
-    
+
     def delete_event_with_room_id(room_id):
         """
         Delete function for event with room_id
@@ -304,5 +308,3 @@ class Event(db.Model):
         if event:
             db.session.delete(event)
             db.session.commit()
-
-
