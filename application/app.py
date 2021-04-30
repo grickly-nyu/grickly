@@ -1,17 +1,17 @@
-from flask import request, render_template, jsonify, url_for, redirect, g, session
-from flask_socketio import SocketIO, emit, join_room, leave_room, \
-    close_room, rooms, disconnect
-from application.models import *
+"""
+The module that handles user sign up and creating new user.
+"""
+from sqlalchemy.exc import IntegrityError
+from flask import request, render_template, jsonify, g, session
+from application.models import User
 from application.chatroom import *
 from application.event import *
 from application.profile import *
 from application.mail import *
 from application.matching import *
-from index import app, db, socketio
-from sqlalchemy.exc import IntegrityError
+from index import app, db
+
 from application.utils.auth import generate_token, requires_auth, verify_token
-from sqlalchemy import text
-from datetime import datetime
 
 @app.route('/', methods=['GET'])
 def index():
@@ -49,7 +49,8 @@ def create_user():
     Create a new user in database.
     It checks for duplicate email address
 
-    :return: returns user id and token in JSON if no duplicate user is found; if found, return error in JSON
+    :return: returns user id and token in JSON if no duplicate user is found;
+    if found, return error in JSON
 
     """
     incoming = request.get_json()
@@ -66,9 +67,7 @@ def create_user():
         return jsonify(message="User with that email already exists"), 409
 
     new_user = User.query.filter_by(email=incoming["email"]).first()
-    
     db.engine.execute("insert into user_info values("+str(new_user.id)+",now(),null)")
-    
     return jsonify(
         id=user.id,
         token=generate_token(new_user)
@@ -81,7 +80,7 @@ def get_token():
     Get function for current user token
 
     :return: returns current token in JSON if success; if fail, return error in JSON
-    """ 
+    """
     incoming = request.get_json()
     user = User.get_user_with_email_and_password(incoming["email"], incoming["password"])
     if user:
@@ -107,4 +106,3 @@ def is_token_valid():
         return jsonify(token_is_valid=True)
     else:
         return jsonify(token_is_valid=False), 403
-

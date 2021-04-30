@@ -1,3 +1,4 @@
+"""APIs that enables authentication, came with the framework."""
 from functools import wraps
 from flask import request, g, jsonify
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
