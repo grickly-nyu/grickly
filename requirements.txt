@@ -33,4 +33,4 @@ mysqlclient==2.0.3
 flask-socketio==4.3.2
 python-engineio==3.14.2
 flask-mail==0.9.1
-flask-restful==0.3.8p
+flask-restful==0.3.8
