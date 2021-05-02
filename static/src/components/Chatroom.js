@@ -2,13 +2,12 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import io from 'socket.io-client';
-
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
 import { List, ListItem } from 'material-ui/List';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import io from 'socket.io-client';
 
 import * as actionCreators from '../actions/auth';
 import { get_event, get_messages, get_chatrooms, get_room_members, leave_group, delete_messages, delete_group, delete_event } from '../utils/http_functions';
@@ -19,7 +18,6 @@ function mapStateToProps(state) {
         registerStatusText: state.auth.registerStatusText,
     };
 }
-
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
@@ -74,7 +72,6 @@ const listStyle = {
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
-
 export default class Chatroom extends React.Component {
     constructor(props) {
         super(props)
@@ -175,7 +172,7 @@ export default class Chatroom extends React.Component {
     
     _handleKeyPress(e) {
         if (e.key == 'Enter') {
-            if (this.state.content) {
+            if (this.state.content){
                 this.handleMessageSubmit(e);
             }
             else{
@@ -261,7 +258,7 @@ export default class Chatroom extends React.Component {
             this.switchRoom(this.state.rooms[0])
             this.dispatchNewRoute('/chatroom')
         }
-        else {
+        else{
             this.dispatchNewRoute('/chatroom')
         }
             
@@ -293,20 +290,32 @@ export default class Chatroom extends React.Component {
                                     titleStyle={nameStyle}
                                     showExpandableButton={true}
                                 />
+                            {this.state.event.event_name?
                                 <CardText expandable={true}>
-                                    <p>Event title: {this.state.event.event_name}
-                                    <br/>Event description: {this.state.event.description}
-                                    <br/>Loaction: {this.state.event.location}
-                                    <br/>From {this.state.event.start_time}
-                                    <br/>To {this.state.event.end_time}
+                                    <p style={{color: "#91989F"}}><b>Event Title:</b> {this.state.event.event_name}
+                                    <br/><b>Event Description:</b> {this.state.event.description}
+                                    <br/><b>Loaction:</b> {this.state.event.location}
+                                    <br/>From <b>{this.state.event.start_time}</b>
+                                    <br/>To <b>{this.state.event.end_time}</b>
                                     </p>
-                                <RaisedButton
+                                    <RaisedButton
                                     style={{marginTop: 20}}
                                     labelColor="#91989F"
                                     label={"Leave Group"}
                                     onClick={() => this.leaveRoom(this.state.room_id)}
-                                /> 
+                                    /> 
                                 </CardText>
+                            :
+                                <CardText expandable={true}>
+                                    <p style={{color: "#91989F"}}> No event related to this group. </p>
+                                    <RaisedButton
+                                    style={{marginTop: 20}}
+                                    labelColor="#91989F"
+                                    label={"Leave Group"}
+                                    onClick={() => this.leaveRoom(this.state.room_id)}
+                                    />   
+                                </CardText>
+                            }
                             </Card>
                             {this.state.messages.map(message => (
                                 <div

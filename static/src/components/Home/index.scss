@@ -1,0 +1,40 @@
+// Code adapted from https://codepen.io/josephwong2004/pen/pogbrOv.
+$yellow: #F6C555;
+$purple: #9E7A7A;
+$extra-large: 110px;
+
+@mixin center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.line-text {
+    position: relative;
+    display: inline-block;
+    font-size: $extra-large;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-style: italic;
+    color: transparent;
+    -webkit-text-stroke-width: $extra-large*0.057;
+    -webkit-text-stroke-color: #77428D;
+    white-space: nowrap;
+    $x: 12px;
+    $y: 15px;
+    $step: 1px;
+    text-shadow: $x $y $yellow,
+                 $x + $step $y + $step $purple,
+                 $x + $step * 2 $y + $step * 2 $purple,
+                 $x + $step * 3 $y + $step * 3 $purple,
+                 $x + $step * 4 $y + $step * 4 $purple,
+                 $x + $step * 5 $y + $step * 5 $purple,
+                 $x + $step * 6 $y + $step * 6 $purple,
+                 $x + $step * 7 $y + $step * 7 $purple,
+                 $x + $step * 8 $y + $step * 8 $purple,
+                 $x + $step * 9 $y + $step * 9 $purple,
+                 $x + $step * 10 $y + $step * 10 $purple,
+                 $x + $step * 11 $y + $step * 11 $purple,
+                 $x + $step * 12 $y + $step * 12 $purple,
+                 $x + $step * 13 $y + $step * 13 $purple,
+}

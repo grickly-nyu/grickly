@@ -19,6 +19,7 @@ import CreateEvent from './components/CreateEvent';
 import NotFound from './components/NotFound';
 import ForgotPassword from "./components/ForgotPassword";
 import ResetForgotPassword from "./components/ResetForgotPassword";
+import ContactUs from "./components/ContactUs";
 import Matching from './components/Matching';
 import Matched from './components/Matched';
 
@@ -35,6 +36,7 @@ export default (
         <Route path="analytics" component={requireAuthentication(Analytics)} />
         <Route path="chatrooms" component={requireAuthentication(Chatrooms)} />
         <Route path="chatroom" component={requireAuthentication(Chatroom)} />
+        <Route path="contact-us" component={requireNoAuthentication(ContactUs)} />
         <Route path="profile" component={requireAuthentication(Profile)} />
         <Route path="forgot_password" component={requireNoAuthentication(ForgotPassword)}/>
         <Route path="reset_forgot_password" component={requireNoAuthentication(ResetForgotPassword)}/>

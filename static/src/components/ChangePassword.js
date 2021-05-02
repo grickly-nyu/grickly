@@ -33,7 +33,7 @@ const style = {
 const titleStyle = {
     color: "#77428D",
     fontWeight: 900,
-    fontSize: "45px",
+    fontSize: "40px",
     fontFamily: "Avenir",
 }
 
@@ -50,13 +50,11 @@ export default class ChangePassword extends React.Component { // eslint-disable-
     }
     
     handleMessageSubmit(){
-        if (this.state.new_password && this.state.old_password && this.state.re_enter) {
-            if(this.state.new_password!=this.state.re_enter){
+        if (this.state.new_password && this.state.old_password && this.state.re_enter){
+            if (this.state.new_password!=this.state.re_enter){
                 alert("Conflicts between new password and re_enter, please enter the same password.");
             }
             else{
-                // change_password(this.state.old_password,this.state.new_password);
-
                 change_password(this.state.old_password,this.state.new_password).then(response =>{
                     if (!response.data.result){
                         alert(response.data.message);
@@ -77,6 +75,7 @@ export default class ChangePassword extends React.Component { // eslint-disable-
             this.handleMessageSubmit();
         }
     }
+
     changeValue(e, type) {
         const value = e.target.value;
         const next_state = {};
@@ -88,8 +87,8 @@ export default class ChangePassword extends React.Component { // eslint-disable-
         return (
             <div className="container">
                 <Paper style={style}>
-                    <h2 style={titleStyle}>Change Password</h2>
-                    <p>
+                    <h2 style={titleStyle} className="text-center">Change Password</h2>
+                    <p style={{color: "#91989F", fontSize: "18px"}} className="text-center">
                         Please provide a valid new password. It shouldn't be empty nor the same with the previous password.
                     </p>
                     <div className="text-center">
@@ -121,10 +120,16 @@ export default class ChangePassword extends React.Component { // eslint-disable-
                         />
                         <br />
                         <RaisedButton
-                            style={{ marginTop: 50 }}
-                            label="Change my password"
+                            style={{ marginTop: 35, marginRight: 50  }}
+                            label="submit change of password"
                             labelColor="#FFB11B"
                             onClick={() => this.handleMessageSubmit()}
+                        />
+                        <RaisedButton
+                            style={{ marginTop: 35 }}
+                            label="back to my profile"
+                            labelColor="#91989F"
+                            onClick={() => browserHistory.push("/profile")}
                         />
                     </div>
                 </Paper>

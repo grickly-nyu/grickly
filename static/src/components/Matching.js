@@ -2,7 +2,6 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -24,6 +23,17 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
+const Emoji = props => (
+    <span
+        className="emoji"
+        role="img"
+        aria-label={props.label ? props.label : ""}
+        aria-hidden={props.label ? "false" : "true"}
+    >
+        {props.symbol}
+    </span>
+);
+
 const style = {
     marginTop: 150,
     paddingTop: 50,
@@ -35,7 +45,6 @@ const style = {
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
-
 export default class Matching extends React.Component { // eslint-disable-line react/prefer-stateless-function
     constructor(props) {
         super(props);
@@ -105,7 +114,7 @@ export default class Matching extends React.Component { // eslint-disable-line r
                 <Paper style={style}>
                     <div className="text-center">
                         <h2 style={{marginBottom: 25, fontWeight: 900, color: "#77428D"}}>
-                            Match me to a group!
+                            Match me to a group! <Emoji symbol="⭐"/>
                         </h2>
                         <p style={{color: "#91989F", fontWeight: 700, fontSize: "22px"}}>
                             Popular Tags
@@ -145,6 +154,7 @@ export default class Matching extends React.Component { // eslint-disable-line r
                         <RaisedButton
                             style={{ marginTop: 50 }}
                             label="Submit"
+                            labelColor="#FFB11B"
                             onClick={(e) => this.handleSubmit(this.state.query_tag)}
                         />  
                     </div>
