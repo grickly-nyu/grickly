@@ -19,6 +19,7 @@ psycopg2==2.8.6
 py==1.10.0
 py-bcrypt==0.4
 pycparser==2.20
+pylint==2.8.2
 pytest==6.2.2
 pytest-cov==2.11.1
 pytest-flask==1.1.0
@@ -32,4 +33,4 @@ mysqlclient==2.0.3
 flask-socketio==4.3.2
 python-engineio==3.14.2
 flask-mail==0.9.1
-flask-restful==0.3.8
+flask-restful==0.3.8p
