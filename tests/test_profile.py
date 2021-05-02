@@ -55,3 +55,11 @@ class TestProfile(BaseTestConfig):
                 content_type='application/json'
         )
         self.assertEqual(res.status_code,200)
+
+    def test_validate_email(self):
+        res = self.app.post(
+                "/api/validate_email",
+                data=json.dumps({"hash": User.hashed_password(self.default_user['password'])}),
+                content_type='application/json'
+        )
+        self.assertEqual(res.status_code,401)
