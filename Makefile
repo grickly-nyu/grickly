@@ -9,6 +9,7 @@ help:
 	@echo "To run the project type make run"
 	@echo "To test the project type make test"
 	@echo "To doc the project type make doc"
+	@echo "To prod the project type make prod"
 	@echo "------------------------------------"
 
 setup:
@@ -27,5 +28,4 @@ doc:
 	python -m pydoc -b
 
 prod:
-	python test.py --cov-report term --cov=application tests/
 	git push
