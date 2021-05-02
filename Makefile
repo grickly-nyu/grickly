@@ -17,11 +17,15 @@ setup:
 
 test:
 	python test.py --cov-report term --cov=application tests/
+	pylint application
 	
 run:
-	echo $(DATABASE_URI_base)
 	export DATABASE_URL= DATABASE_URI_base && python manage.py runserver &
 	cd static && npm start
 doc:
 	export PYTHONPATH="$PWD"
 	python -m pydoc -b
+
+prod:
+	python test.py --cov-report term --cov=application tests/
+	git push
