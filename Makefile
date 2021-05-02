@@ -2,7 +2,7 @@ include .env
 export
 
 .DEFAULT_GOAL = help
-
+.PHONY: all test clean
 help:
 	@echo "---------------HELP-----------------"
 	@echo "To setup the project type make setup"
@@ -15,15 +15,11 @@ help:
 setup:
 	pip install -r requirements.txt
 	cd static && npm install
-
-test:
-	python test.py --cov-report term --cov=application tests/
-	pylint application
 	
 run:
 	export DATABASE_URL= DATABASE_URI_base && python manage.py runserver &
 	cd static && npm start
-	
+
 doc:
 	export PYTHONPATH="$PWD"
 	python -m pydoc -b
@@ -31,3 +27,7 @@ doc:
 prod:
 	make test
 	git push
+
+test:
+	python test.py --cov-report term --cov=application tests/
+	cd application && python lint.py
