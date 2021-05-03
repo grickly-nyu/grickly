@@ -70,17 +70,6 @@ def get_others_profile():
     info = get_profile_dict(incoming["user_id"])
     return jsonify(results=info)
 
-@app.route("/api/get_event_info", methods=["POST"])
-def get_event_info():
-    """
-    get the location and starttime for a event.
-    """
-    incoming = request.get_json()
-    res=dispatch(db.engine.execute(\
-        "select location,start_time from event_info where room_id = "+
-            str(incoming["room_id"])))
-    return jsonify(location=res[0][0],start_time=res[0][1])
-
 def get_user_by_hash(password_hash):
     """
     get_user_by_hash(password_hash)-->user_id
