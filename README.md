@@ -46,7 +46,7 @@ To prod the project, use:
 $ make prod
 ```
 
-Languages and Tools required for the project:
+## Languages and Tools required for the project:
 
 * Python 2.7+ or 3.x
 * Pytest
