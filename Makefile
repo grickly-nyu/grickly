@@ -1,6 +1,3 @@
-include .env
-export
-
 .DEFAULT_GOAL = help
 .PHONY: all test clean
 help:
@@ -17,8 +14,7 @@ setup:
 	cd static && npm install
 	
 run:
-	export DATABASE_URL= DATABASE_URI_base && python manage.py runserver &
-	cd static && npm start
+	python manage.py runserver & cd static && npm start
 
 doc:
 	export PYTHONPATH="$PWD"
