@@ -46,6 +46,9 @@ To prod the project, use:
 $ make prod
 ```
 
+## Read Our Documentations
+Feel free to read our [project management plan](https://github.com/grickly-nyu/grickly/blob/main/documents/Project%20Management%20Plan-001.pdf) and [API documentation](https://github.com/grickly-nyu/grickly/blob/main/documents/API%20Design%20Doc.pdf).
+
 ## Languages and Tools required for the project:
 
 * Python 2.7+ or 3.x
