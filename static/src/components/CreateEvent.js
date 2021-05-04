@@ -2,7 +2,6 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
@@ -46,16 +45,12 @@ const styles = {
     underlineFocusStyle: {
         borderColor: "#FFB11B", 
     },
-    floatingLabelStyle: {
-        color: "#8B81C3",
-    },
     floatingLabelFocusStyle: {
         color: "#FFB11B",
     },
   };
 
 @connect(mapStateToProps, mapDispatchToProps)
-
 export default class CreateGroup extends React.Component {
     constructor(props) {
         super(props);
@@ -112,7 +107,6 @@ export default class CreateGroup extends React.Component {
             this.isDisabled();
         });
     }
-
     
     handleDatetimeChange(event, value, type){
         const next_state = {};
@@ -161,7 +155,7 @@ export default class CreateGroup extends React.Component {
                 name: this.state.room_name,
             },
         }
-        if(empty) {
+        if (empty) {
             create_event(
                 null,
                 null,
@@ -183,8 +177,6 @@ export default class CreateGroup extends React.Component {
         }
         this.dispatchNewRoute(path);
     }
-
-
 
     render() {
         return (

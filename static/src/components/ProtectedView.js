@@ -1,38 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import { bindActionCreators } from 'redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import * as actionCreators from '../actions/data';
-import { browserHistory } from 'react-router';
-
-const style = {
-    paddingTop: 200,
-    color: "#77428D",
-    fontFamily: "Avenir",
-}
-
-const titleStyle = {
-    fontWeight: 900,
-    fontSize: "50px",
-    fontFamily: "Avenir",
-}
-
-const pStyle = {
-    fontFamily: "Avenir",
-    color: "#91989F",
-    fontSize: "25px",
-    fontWeight: 400,
-    paddingBottom: "40px",
-}
-
-const buttonStyle = {
-    color: "#FFB11B",
-    marginRight: "40px"
-}
-
-const buttonStyle2 = {
-    color: "#91989F",
-}
+import { get_profile } from '../utils/http_functions';
 
 function mapStateToProps(state) {
     return {
@@ -42,15 +14,63 @@ function mapStateToProps(state) {
         isFetching: state.data.isFetching,
     };
 }
-
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
+const Emoji = props => (
+    <span
+        className="emoji"
+        role="img"
+        aria-label={props.label ? props.label : ""}
+        aria-hidden={props.label ? "false" : "true"}
+    >
+        {props.symbol}
+    </span>
+);
+const style = {
+    paddingTop: 200,
+    color: "#77428D",
+    fontFamily: "Avenir",
+};
+const titleStyle = {
+    fontWeight: 900,
+    fontSize: "50px",
+    fontFamily: "Avenir",
+};
+const pStyle = {
+    fontFamily: "Avenir",
+    color: "#91989F",
+    fontSize: "25px",
+    fontWeight: 400,
+    paddingBottom: "40px",
+};
+const buttonStyle = {
+    color: "#FFB11B",
+    marginRight: "40px"
+};
+const buttonStyle2 = {
+    color: "#91989F",
+};
+
 @connect(mapStateToProps, mapDispatchToProps)
 export default class ProtectedView extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            name:null,
+        };
+    }
+    
     componentDidMount() {
         this.fetchData();
+        get_profile().then(response =>{
+            this.setState({
+                name: response.data.results["username"],
+            });
+            console.log(response)
+        })
+        console.log(this.state.name)
     }
 
     dispatchNewRoute(route) {
@@ -59,7 +79,6 @@ export default class ProtectedView extends React.Component {
             open: false,
         });
     }
-
 
     fetchData() {
         const token = this.props.token;
@@ -73,8 +92,8 @@ export default class ProtectedView extends React.Component {
                     ? <h1>Loading data...</h1>
                     :
                     <div className="center container">
-                        <p style={titleStyle}>Welcome back to Grickly, {this.props.userName}!</p>
-                        <p style={pStyle}>Are you ready to find your buddies?</p>
+                        <p style={titleStyle}>Welcome back to Grickly, {this.state.name}!</p>
+                        <p style={pStyle}>Are you ready to find your buddies? <Emoji symbol="🤓"/></p>
                         <RaisedButton
                             style={buttonStyle}
                             labelColor="#FFB11B"

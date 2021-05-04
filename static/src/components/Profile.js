@@ -5,6 +5,7 @@ import * as actionCreators from '../actions/auth';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+
 import {get_profile, modify_profile} from '../utils/http_functions';
 import { browserHistory } from 'react-router';
 
@@ -14,7 +15,6 @@ function mapStateToProps(state) {
         registerStatusText: state.auth.registerStatusText,
     };
 }
-
 function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
@@ -30,16 +30,14 @@ const style = {
     backgroundColor: "white",
     fontFamily: "Avenir",
 };
-
 const titleStyle = {
     color: "#77428D",
     fontWeight: 900,
-    fontSize: "45px",
+    fontSize: "40px",
     fontFamily: "Avenir",
 }
 
 @connect(mapStateToProps, mapDispatchToProps)
-
 export default class Profile extends React.Component { // eslint-disable-line react/prefer-stateless-function
     constructor(props) {
         super(props);
@@ -55,7 +53,7 @@ export default class Profile extends React.Component { // eslint-disable-line re
   
     handleMessageSubmit(){
         if (this.state.new_username) {
-            if (this.state.new_username == this.state.username) {
+            if (this.state.new_username == this.state.username){
                 alert("Why you changing to the original user name? Input something new!")
             }
             else{
@@ -111,9 +109,9 @@ export default class Profile extends React.Component { // eslint-disable-line re
         return (
             <div className="container">
                 <Paper style={style}>
-                    <h2 style={titleStyle}>Profile</h2>
-                    <p style={{color: "#91989F"}}>
-                        You can change your user name here.
+                    <h2 className="text-center" style={titleStyle}>My Profile</h2>
+                    <p className="text-center" style={{color: "#91989F", fontSize: "18px"}}>
+                        You may change your user name here.
                     </p>
                     <br />
                     <p style={{fontSize: "20px", fontWeight: 550}}>
@@ -136,7 +134,7 @@ export default class Profile extends React.Component { // eslint-disable-line re
                     </p>
                     <div className="text-center">
                         <RaisedButton
-                            style={{ marginTop: 50, marginRight: 50 }}
+                            style={{ marginTop: 35, marginRight: 50 }}
                             labelColor="#FFB11B"
                             label="submit change of profile"
                             onClick={() => this.handleMessageSubmit()}
@@ -153,4 +151,3 @@ export default class Profile extends React.Component { // eslint-disable-line re
         );
     }
 }
-

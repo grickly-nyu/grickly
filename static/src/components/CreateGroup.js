@@ -2,7 +2,6 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import DropDownMenu from 'material-ui/DropDownMenu';
@@ -23,6 +22,17 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
+const Emoji = props => (
+    <span
+        className="emoji"
+        role="img"
+        aria-label={props.label ? props.label : ""}
+        aria-hidden={props.label ? "false" : "true"}
+    >
+        {props.symbol}
+    </span>
+);
+
 const style = {
     marginTop: 150,
     paddingTop: 25,
@@ -32,6 +42,7 @@ const style = {
     backgroundColor: "white",
     fontFamily: "Avenir",
 };
+
 const styles = {
     pStyle: {
         color: "#91989F",
@@ -45,16 +56,12 @@ const styles = {
     underlineFocusStyle: {
         borderColor: "#FFB11B", 
     },
-    floatingLabelStyle: {
-        color: "#8B81C3",
-    },
     floatingLabelFocusStyle: {
         color: "#FFB11B",
     },
   };
 
 @connect(mapStateToProps, mapDispatchToProps)
-
 export default class CreateGroup extends React.Component {
     constructor(props) {
         super(props);
@@ -122,8 +129,6 @@ export default class CreateGroup extends React.Component {
             }
             this.dispatchNewRoute(path)
         });
-        
- 
     }
 
     render() {
@@ -131,7 +136,7 @@ export default class CreateGroup extends React.Component {
             <div className="container" onKeyPress={(e) => this._handleKeyPress(e)}>
                 <Paper style={style}>
                     <div className="text-center">
-                        <h2 style={{ fontWeight: 900 }}>Create a new group!</h2>
+                        <h2 style={{ fontWeight: 900 }}>Create a new group! <Emoji symbol="💓"/></h2>
                         <TextField
                             inputStyle = {styles.vStyle}
                             hintText="Group name"

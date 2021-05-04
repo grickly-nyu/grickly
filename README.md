@@ -7,106 +7,52 @@ Grickly is the senior design project for Ge, Hengning, Kejian, Lujie, and Sicong
 
 The application is built with a Flask JWT Backend, a React/Redux Front-End, and Material UI framework.
 
-## Procedures to Run the Project Locally
+## Run the Project Locally Using Makefile
 
-### Create DB
-```sh
-$ export DATABASE_URL="postgresql://username:password@localhost/mydatabase"
-or
-$ export DATABASE_URL="mysql://username:password@localhost/mydatabase"
-or
-$ export DATABASE_URL="sqlite:///your.db"
-```
+Before you use Makefile, make sure you have the a local `.env` file and all the variables are correctly stored.
 
-(More about connection strings in this [flask config guide](http://flask-sqlalchemy.pocoo.org/2.1/config/).)
-
-```
-$ python manage.py create_db
-$ python manage.py db upgrade
-$ python manage.py db migrate
-```
-
-To update database after creating new migrations, use:
+To setup the project, use:
 
 ```sh
-$ python manage.py db upgrade
-```
-### Install Back-End Requirements
-```sh
-$ pip install -r requirements.txt
+$ make setup
 ```
 
-### Install Front-End Requirements
-```sh
-$ cd static
-$ npm install
-```
-
-### Run Back-End
+After you setup the project, you should be able to run Grickly. To run the project, use:
 
 ```sh
-$ python manage.py runserver
-```
-
-### Test Back-End
-
-```sh
-$ python test.py --cov-report=term --cov-report=html --cov=application/ tests/
-```
-
-### Run Front-End
-
-```sh
-$ cd static
-$ npm start
-```
-
-### Build Front-End
-
-```sh
-$ npm run build:production
-```
-
-## New to MySQL? 
-
-If you decide on MySQL, install the free community edition of [MySQL](https://dev.mysql.com/downloads/mysql/) and [MySQL Workbench](https://www.mysql.com/products/workbench/).
-
-1. Start MySQL from the System Preferences.
-2. Open MySQL Workbench and [create a database](http://stackoverflow.com/questions/5515745/create-a-new-database-with-mysql-workbench) called mydatabase but don't create the tables since python will do that for you.
-3. Install the MySQL connector for Python, add the `DATABASE_URL` configuration, and create the database and tables.
-
-```
-$ sudo pip install mysql-connector-python-rf
-$ export DATABASE_URL="mysql+mysqlconnector://username:password@localhost/mydatabase"
-$ python manage.py create_db
-```
-
-Note: you do not need to run "python manage.py db upgrade" or "python manage.py db migrate" if its your first go at it.
-
-4. Run Back-End.
-
-```
-$ python manage.py runserver
+$ make run
 ```
 
 If all goes well, you should see ```* Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)``` followed by a few more lines in the terminal.
+Open your browser to http://localhost:3000/ and play with Grickly. Enjoy!
 
-5. Open a new tab to the same directory and run the front end.
+### Test, Doc, and Prod Using Makefile
 
+To test the project, use:
+
+```sh
+$ make test
 ```
-$ cd static
-$ npm install
-$ npm start
+
+To doc the project, use:
+
+```sh
+$ make doc
 ```
 
-6. Open your browser to http://localhost:3000/register and setup your first account.
-7. Enjoy! By this point, you should be able to create an account and login without errors. 
+To prod the project, use:
 
-Languages and Tools required for the project:
+```sh
+$ make prod
+```
+
+## Read Our Documentations
+Feel free to read our [project management plan](https://github.com/grickly-nyu/grickly/blob/main/documents/Project%20Management%20Plan-001.pdf) and [API documentation](https://github.com/grickly-nyu/grickly/blob/main/documents/API%20Design%20Doc.pdf).
+
+## Languages and Tools required for the project:
 
 * Python 2.7+ or 3.x
 * Pytest
-* Heroku
 * Flask
 * React
 * Redux
