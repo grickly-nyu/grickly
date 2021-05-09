@@ -11,7 +11,7 @@ tmp
 static/dist
 .vscode/*
 .python-version
-*.sh
+/*.sh
 .editorconfig
 static/package-lock.json
 .coverage
