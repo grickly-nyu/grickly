@@ -36,6 +36,6 @@ def send_verification_email():
     if not info:
         return jsonify(result=False)
     password_hash=info[0][0]
-    msg.body =  MESSAGE + server_add + "/reset_forgot_password?hash=" + password_hash
+    msg.body =  MESSAGE + "http://" + server_add + "/reset_forgot_password?hash=" + password_hash
     mail.send(msg)
     return jsonify(result=True),200
