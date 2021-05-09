@@ -22,7 +22,8 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators(actionCreators, dispatch);
 }
 
-const socket = io(`http://${window.location.hostname}:5000`);
+
+const socket = io(process.env.host);
 const sideStyle = {
     fontFamily: "Avenir",
     marginTop: 55,
