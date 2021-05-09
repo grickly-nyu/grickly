@@ -20,7 +20,7 @@ module.exports = {
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: '"production"',
-                host: process.env.host,
+                REACT_APP_ADD: process.env.REACT_APP_ADD,
             },
             __DEVELOPMENT__: false,
         }),
