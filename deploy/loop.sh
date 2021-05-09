@@ -1,5 +1,5 @@
 while true
 do
 	./auto.sh
-	sleep 300
+	sleep 100
 done
