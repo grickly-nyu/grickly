@@ -10,5 +10,5 @@ update_all() {
     npm install
     npm build:production
 }
-
+export SERVER_ADDRESS="localhost:3000"
 time python -m pytest --cov=application/ tests/

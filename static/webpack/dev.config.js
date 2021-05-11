@@ -1,6 +1,6 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-
+require("dotenv").config();
 module.exports = {
     devtool: 'cheap-module-eval-source-map',
     entry: [
@@ -18,11 +18,11 @@ module.exports = {
             loader: 'style!css?localIdentName=[path][name]--[local]!postcss-loader!sass',
         }],
     },
-
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: '"development"',
+                REACT_APP_ADD: process.env.REACT_APP_ADD
             },
             __DEVELOPMENT__: true,
         }),

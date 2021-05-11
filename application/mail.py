@@ -1,10 +1,11 @@
 """ This is the module that sends the verification email."""
 # from flask import Flask
+import os
 from flask_mail import Mail, Message
 from flask import request, jsonify
 from index import app, db
 
-
+server_add = os.getenv('SERVER_ADDRESS')
 app.config['MAIL_SERVER']='smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = 'grickly.nyu@gmail.com'
@@ -34,7 +35,7 @@ def send_verification_email():
                      incoming["email"]+"'"))
     if not info:
         return jsonify(result=False)
-    password_hash=info[0][0]
-    msg.body =  MESSAGE + "http://localhost:3000/reset_forgot_password?hash="+password_hash
+    password_hash = info[0][0]
+    msg.body =  MESSAGE + "http://" + server_add + "/reset_forgot_password?hash=" + password_hash
     mail.send(msg)
     return jsonify(result=True),200

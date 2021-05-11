@@ -117,6 +117,7 @@
     "yargs": "^6.5.0"
   },
   "dependencies": {
+    "dotenv": "^9.0.1",
     "moment": "^2.29.1",
     "socket.io": "^3.1.1"
   }
