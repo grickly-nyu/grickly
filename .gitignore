@@ -15,3 +15,4 @@ static/dist
 .editorconfig
 static/package-lock.json
 .coverage
+.pylintrc
